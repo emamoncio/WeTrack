@@ -190,6 +190,12 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .updform{background:var(--surface-2);border:1px solid var(--ring);border-radius:12px;padding:14px;margin:8px 0 14px}
 .updform textarea{min-height:70px}
 .updform .togs{margin:4px 0 10px}
+.miss{display:inline-block;font-size:11.5px;font-weight:650;padding:1px 9px;border-radius:999px;border:1px solid var(--warn);color:var(--ink-2);background:color-mix(in srgb,var(--warn) 16%,transparent);white-space:nowrap}
+.missbox{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 60%,transparent);border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:13.5px}
+.missbox .nt{white-space:pre-wrap;color:var(--ink-2);margin-top:8px;font-size:13px}
+.notescard{border-color:color-mix(in srgb,var(--warn) 60%,transparent);background:color-mix(in srgb,var(--warn) 10%,var(--surface))}
+.notescard textarea{min-height:130px}
+.optlinks{display:flex;gap:18px;flex-wrap:wrap;margin:-4px 0 18px 4px}
 .tagpill{display:inline-block;font-size:11px;font-weight:640;padding:1px 8px;border-radius:999px;border:1px solid var(--ring);background:var(--chip);color:var(--brand);margin:0 3px 3px 0;white-space:nowrap}
 .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
 .idcell{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--brand);font-weight:600;white-space:nowrap}
@@ -237,7 +243,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .panel .ph{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--grid);padding:15px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;z-index:2}
 .panel .pb{padding:20px 22px 60px}
 .kv{display:grid;grid-template-columns:180px 1fr;gap:7px 16px;font-size:13.5px}
-@media (max-width:600px){.kv{grid-template-columns:1fr}}
+@media (max-width:600px){.kv{grid-template-columns:1fr}.panel .ph{flex-wrap:wrap;padding:12px 16px}.panel .ph>div:last-child{width:100%;justify-content:flex-end}}
 .kv dt{color:var(--ink-muted);font-weight:600}
 .kv dd{margin:0;overflow-wrap:anywhere}
 .sec{margin-top:22px}
@@ -338,7 +344,7 @@ const COUNTRIES=[["AFG","Afghanistan",1],["BGD","Bangladesh",1],["BTN","Bhutan",
 const CNAME=Object.fromEntries(COUNTRIES.map(c=>[c.iso,c.name]));
 const ALL_ISO=COUNTRIES.map(c=>c.iso);
 const GROUPINGS=[
-  {code:"ASEAN",label:"ASEAN",members:["BRN","KHM","IDN","LAO","MYS","MMR","PHL","SGP","THA","VNM"]},
+  {code:"ASEAN",label:"ASEAN",members:["BRN","KHM","IDN","LAO","MYS","MMR","PHL","SGP","THA","TLS","VNM"]},   // Timor-Leste joined on 26 October 2025
   {code:"SAARC",label:"SAARC",members:["AFG","BGD","BTN","IND","MDV","NPL","PAK","LKA"]},
   {code:"PIC",label:"Pacific Island Countries",members:["COK","FJI","KIR","MHL","FSM","NRU","NIU","PLW","PNG","WSM","SLB","TON","TUV","VUT"]},
   {code:"BIMSTEC",label:"BIMSTEC",members:["BGD","BTN","IND","MMR","NPL","LKA","THA"]},
@@ -351,7 +357,7 @@ const ER=[["3.1","3.1  Wider and more effective use of WIPO's global IP systems"
   ["4.3","4.3  Increased IP knowledge and skills in all Member States"],
   ["4.4","4.4  More innovators, creators, SMEs and universities leverage IP successfully"],
   ["4.5","4.5  Enhanced IP infrastructure for IP Offices"]];
-const TYPES=[["PROJECT","Project"],["ACTIVITY","Standalone activity"],["COMPONENT","Component of a larger project"]];
+const TYPES=[["PROJECT","Project"],["ACTIVITY","Standalone activity"],["COMPONENT","Component of a larger project"],["SUPPORT","Workplan support line"]];
 const STATUS=[["NOT_STARTED","Not started"],["IN_PROGRESS","In progress"],["COMPLETED","Completed"],["ON_HOLD","On hold"]];
 const SCLASS={NOT_STARTED:"plan",IN_PROGRESS:"imp",COMPLETED:"comp",ON_HOLD:"hold"};
 const RATING=[["ON_TRACK","On track"],["DELAYS","Some delays"],["OFF_TRACK","Off track"]];
@@ -359,7 +365,7 @@ const RCLASS={ON_TRACK:"comp",DELAYS:"hold",OFF_TRACK:"crit"};
 const STALE_DAYS=30;
 const DOCSTAGE=[["NONE","No document yet"],["CONCEPT","Concept note"],["DRAFT","Draft prepared"],["INT_REVIEW","Under internal review"],["NAT_REVIEW","Under national stakeholder review"],["APPROVED","Approved"]];
 const FUNDING=[["RB","DAP regular budget"],["ICDAP","ICDAP"],["FIT_ROK","FIT / Republic of Korea"],["FIT_JP","FIT / Japan"],["FIT_AU","FIT / Australia"],["OTHER","Other source (specify)"]];
-const THEMES=[["WOMEN","Women"],["YOUTH","Youth"],["SME","SMEs"],["STARTUP","Start-ups"],["LOCAL_COMM","Local and indigenous communities"],["PWD","Persons with disabilities"],["UNIVERSITY","Universities and research"],["CREATIVE","Creative industries"],["AI","Artificial intelligence"],["GREEN","Green technology"],["GI","GIs and branding"],["TK","Traditional knowledge"],["IPO_MODERN","IP office modernisation"],["TECH_TRANSFER","Technology transfer"]];
+const THEMES=[["WOMEN","Women"],["YOUTH","Youth"],["SME","SMEs"],["STARTUP","Start-ups"],["LOCAL_COMM","Local and indigenous communities"],["PWD","Persons with disabilities"],["UNIVERSITY","Universities and research"],["CREATIVE","Creative industries"],["AI","Artificial intelligence"],["GREEN","Green technology"],["GI","GIs and branding"],["TK","Traditional knowledge"],["IPO_MODERN","IP office modernisation"],["TECH_TRANSFER","Technology transfer"],["ENTERPRISE","Established enterprises and industry"],["GLOBAL_SYS","Madrid, PCT, Hague and Lisbon systems"],["POLICY","IP policy, strategy and law"],["COPYRIGHT","Copyright and collective management"],["ENFORCE","IP enforcement"]];
 const SEGMENTS=[["TOTAL","Total"],["WOMEN","Women"],["YOUTH","Youth"],["SME","SMEs"],["PWD","Persons with disabilities"],["LOCAL_COMM","Local communities"]];
 const ENTITY_TYPE=[["INDIVIDUAL","individuals"],["ENTERPRISE","enterprises"],["INSTITUTION","institutions"],["HOUSEHOLD","households"]];
 const QUALIFIER=[["EXACT","exact"],["MINIMUM","at least"],["ESTIMATE","estimate"]];
@@ -368,11 +374,12 @@ const TOOLS=[["T01","WIPO NIPS methodology"],["T02","WIPO Guides for businesses 
 const IPTYPE=[["TRADEMARK","Trademark"],["PATENT","Patent"],["DESIGN","Industrial design"],["GI","Geographical indication"],["COLLECTIVE","Collective mark"],["COPYRIGHT","Copyright"],["UTILITY","Utility model"]];
 const IPSTAGE=[["FILED","Application filed"],["REGISTERED","Registered"]];
 const MSTATUS=[["PLANNED","Planned"],["IN_PROGRESS","In progress"],["ACHIEVED","Achieved"],["DELAYED","Delayed"],["CANCELLED","Cancelled"]];
-const DOCTYPES=[["PROJECT_DOC","Project document"],["CONCEPT","Concept note"],["COMPLETION","Completion report"],["EVALUATION","Evaluation report"],["WORKPLAN","Workplan extract"],["PHOTO","Photographs"],["OTHER","Other"]];
+const DOCTYPES=[["PROJECT_DOC","Project document"],["CONCEPT","Concept note"],["COMPLETION","Completion report"],["EVALUATION","Evaluation report"],["WORKPLAN","Workplan extract"],["PHOTO","Photographs"],["STORY","Published impact story"],["OTHER","Other"]];
 const L=Object.fromEntries([["type",TYPES],["er",ER],["status",STATUS],["doc",DOCSTAGE],["fund",FUNDING],["theme",THEMES],["seg",SEGMENTS],["ent",ENTITY_TYPE],["q",QUALIFIER],["rs",RSTATUS],["rag",RATING],["tool",TOOLS],["ip",IPTYPE],["ipst",IPSTAGE],["ms",MSTATUS],["dt",DOCTYPES],["bucket",BUCKETS]].map(([k,v])=>[k,Object.fromEntries(v)]));
 const WORKPLAN_YEARS=(()=>{const y=new Date().getFullYear();return [y-2,y-1,y,y+1,y+2].map(String);})();
 const DESC_TEMPLATE="Context: the problem or opportunity in the beneficiary country, in one or two sentences.\n\nWhat the project does: the main activities, in the order they happen.\n\nWho benefits: the specific group, with numbers where known.\n\nExpected result: what will be different when the project closes, stated so it can be checked.";
-function requiredDocs(status){
+function requiredDocs(status,type){
+  if(type==="SUPPORT") return [];   // ongoing workplan budget lines have no project document
   return {NOT_STARTED:["CONCEPT"],IN_PROGRESS:["PROJECT_DOC"],COMPLETED:["PROJECT_DOC","COMPLETION"],ON_HOLD:["PROJECT_DOC"]}[status]||[];
 }
 
@@ -409,13 +416,20 @@ function satFromCounts(r){const n=k=>Number(r[k]||0),pos=n("satVS")+n("satS"),to
 function pctOf(a,b){a=Number(a||0);b=Number(b||0);return b>0?Math.round(a/b*1000)/10:null;}
 function lastUpd(r){return (r.updates||[]).slice().sort((a,b)=>String(b.id).localeCompare(String(a.id)))[0]||null;}
 function daysSince(d){return d?Math.floor((Date.parse(todayISO())-Date.parse(d))/864e5):null;}
+function stPill(st){return st?`<span class="pill ${SCLASS[st]||""}"><span class="d"></span>${esc(L.status[st]||st)}</span>`:'<span class="muted">not set</span>';}
 function ragPill(rag){return rag?`<span class="pill ${RCLASS[rag]||""}"><span class="d"></span>${esc(L.rag[rag]||rag)}</span>`:'<span class="pill plan"><span class="d"></span>No update yet</span>';}
 function andList(a){return a.length<2?a.join(""):a.slice(0,-1).join(", ")+" and "+a[a.length-1];}
 /* "5 individuals and 3 enterprises"; qualifiers optional; people=true says participants instead of individuals */
 function benefText(rs,seg,o={}){return andList(benefBy(rs,seg).map(x=>(o.qual?(x.q==="MINIMUM"?"at least ":x.q==="ESTIMATE"?"an estimated ":""):"")+fmt(x.n)+" "+(o.people&&x.ent==="INDIVIDUAL"?"participants":L.ent[x.ent])));}
 function toast(msg,err){const t=$("#toast");t.textContent=msg;t.classList.toggle("err",!!err);t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),err?6000:3600);}
 const normCode=c=>String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
-const uname=id=>(USERS.find(u=>u.id===id)||{}).name||id||"";
+const uname=id=>id==="IMPORT"?"Imported from 2026 reports":((USERS.find(u=>u.id===id)||{}).name||id||"");
+const hasSurvey=r=>SURVEY_KEYS.some(k=>r[k]!==""&&r[k]!=null)||(r.satisfaction!==""&&r.satisfaction!=null);
+function datesText(r){const e=r.end||r.expEnd;
+  if(!r.start)return e?(r.end?"Ended ":"Expected to end ")+niceDate(e)+", start date not set":"Not set yet";
+  return niceRange(r.start,e)+(e?(r.end?"":" (end expected)"):", end not set");}
+const BI_YEAR=(y=>y-(y%2))(new Date().getFullYear());   // WIPO biennium: 2026-27, 2028-29, ...
+const BI_LABEL=BI_YEAR+"-"+String(BI_YEAR+1).slice(2);
 const store={get(k){try{return JSON.parse(sessionStorage.getItem(k));}catch(e){return null;}},
   set(k,v){try{sessionStorage.setItem(k,JSON.stringify(v));}catch(e){}},del(k){try{sessionStorage.removeItem(k);}catch(e){}}};
 
@@ -423,6 +437,8 @@ const store={get(k){try{return JSON.parse(sessionStorage.getItem(k));}catch(e){r
    Same rules as the backend (Code.gs validate_). */
 function requirements(r,all){
   const d=/^\d{4}-\d{2}-\d{2}$/;
+  // work finished before the current biennium is kept for reference: budget and funding not required
+  const past=r.status==="COMPLETED"&&d.test(r.end||"")&&r.end<BI_YEAR+"-01-01";
   const items=[
     ["Record type"+(r.type==="COMPONENT"?" and parent project":""), !!r.type&&(r.type!=="COMPONENT"||all.some(p=>p.id===r.parentId&&p.id!==r.id))],
     ["Expected Result", !!r.er],
@@ -431,13 +447,13 @@ function requirements(r,all){
   if(r.inWorkplan) items.push(["Workplan title and year", !!String(r.workplanTitle||"").trim()&&!!r.workplanYear]);
   items.push(
     ["Status", !!r.status],
-    ["Funding source"+(r.funding==="OTHER"?" (which one)":""), !!r.funding&&(r.funding!=="OTHER"||!!String(r.fundingOther||"").trim())],
+    ...(past&&!r.funding?[]:[["Funding source"+(r.funding==="OTHER"?" (which one)":""), !!r.funding&&(r.funding!=="OTHER"||!!String(r.fundingOther||"").trim())]]),
     ["Project manager", !!r.managerId],
-    ["A country or a regional grouping", (r.countries||[]).length>0||(r.groupings||[]).length>0],
+    ["A country or a regional grouping", (r.countries||[]).length>0||(r.groupings||[]).length>0||!!String(r.otherCountries||"").trim()],
     ["At least one area or topic", (r.themes||[]).length>0],
     ["Start date", d.test(r.start||"")],
     [r.status==="COMPLETED"?"End date":"Expected completion date", d.test((r.status==="COMPLETED"?r.end:r.expEnd)||"")],
-    ["Allocated budget", r.budget!==""&&r.budget!=null&&!isNaN(Number(r.budget))&&Number(r.budget)>=0],
+    ...(past&&(r.budget===""||r.budget==null)?[]:[["Allocated budget", r.budget!==""&&r.budget!=null&&!isNaN(Number(r.budget))&&Number(r.budget)>=0]]),
     ["Description", !!String(r.desc||"").trim()]);
   return items.map(([label,ok])=>({label,ok}));
 }
@@ -459,6 +475,7 @@ const RemoteApi={
   async login(userId,code){ return this.call({action:"login",userId,code}); },
   async list(token){ const j=await this.call({action:"list",token}); if(Array.isArray(j.users)&&j.users.length) USERS=j.users; return j.records; },
   async save(token,record,baseUpdatedAt){ return (await this.call({action:"save",token,record,baseUpdatedAt})).record; },
+  async progress(token,id,update,remove){ return (await this.call({action:"progress",token,id,update,remove})).record; },
   async del(token,id){ return this.call({action:"delete",token,id}); },
   codeHint(){ return ""; },
 };
@@ -495,10 +512,9 @@ const DemoApi=(()=>{
       rec.milestones=(rec.milestones||[]).filter(m=>String(m.name||"").trim());
       rec.docs=(rec.docs||[]).filter(d=>d.name||d.url);
       rec.tools=(rec.tools||[]).filter(x=>x.iso&&x.tool);
-      { const before=ex?(ex.updates||[]):[], sent=new Set((rec.updates||[]).filter(x=>x.id).map(x=>x.id)), st=nowStamp();
-        const kept=before.filter(x=>!u.admin||sent.has(x.id));
+      { const before=ex?(ex.updates||[]):[], st=nowStamp();   // stored updates are always kept
         const fresh=(rec.updates||[]).filter(x=>!x.id&&String(x.note||"").trim()).map((x,i)=>({id:st+"-"+u.id+"-"+i,date:todayISO(),rag:x.rag||"ON_TRACK",note:String(x.note).trim(),next:String(x.next||"").trim(),by:u.id}));
-        rec.updates=kept.concat(fresh).sort((a,b)=>String(b.id).localeCompare(String(a.id))); }
+        rec.updates=before.concat(fresh).sort((a,b)=>String(b.id).localeCompare(String(a.id))); }
       if(ex){ rec.createdBy=ex.createdBy; }
       else {
         const tag=(rec.countries.length===1?rec.countries[0]:(rec.groupings[0]||rec.countries[0]||"REG"));
@@ -509,6 +525,16 @@ const DemoApi=(()=>{
       rec.updatedBy=u.id; rec.updatedAt=nowStamp();
       if(ex) recs[recs.indexOf(ex)]=rec; else recs.push(rec);
       return wait(clone(rec));
+    },
+    async progress(t,id,upd,remove){
+      const u=who(t), r=recs.find(x=>x.id===id); if(!r) throw ApiError("That record no longer exists.","INVALID");
+      let ups=r.updates||[];
+      if(remove){ if(!u.admin) throw ApiError("Only administrators can remove a progress update.","FORBIDDEN"); ups=ups.filter(x=>x.id!==remove); }
+      else{ if(!may(u,r)) throw ApiError("Only the project manager, named teammates and administrators can add a progress update.","FORBIDDEN");
+        const note=String((upd||{}).note||"").trim(); if(!note) throw ApiError("Write a line about the progress first.","INVALID");
+        ups=[{id:nowStamp()+"-"+u.id+"-0",date:todayISO(),rag:(upd.rag in RCLASS)?upd.rag:"ON_TRACK",note,next:String(upd.next||"").trim(),by:u.id}].concat(ups); }
+      r.updates=ups.sort((a,b)=>String(b.id).localeCompare(String(a.id)));
+      return wait(clone(r));
     },
     async del(t,id){
       const u=who(t); if(!u.admin) throw ApiError("Only administrators can delete records.","FORBIDDEN");
@@ -590,7 +616,7 @@ async function refresh(){
 function blank(){return {id:"",type:"PROJECT",parentId:"",er:"",buckets:[],copyright:false,title:"",inWorkplan:false,workplanTitle:"",workplanYear:"",
   desc:"",managerId:ME?ME.id:"",team:[],counterpart:"",countries:[],groupings:[],status:"",docStage:"NONE",funding:"",fundingOther:"",
   start:"",end:"",expEnd:"",budget:"",spendNow:"",themes:[],docs:[],benef:[{seg:"TOTAL",n:"",ent:"INDIVIDUAL",q:"EXACT",rs:"REPORTED"}],
-  milestones:[],tools:[],satisfaction:"",respondents:"",filings:[],da:[],sustainability:"",updates:[],participants:"",questionnaires:"",platform:"",surveyDoc:"",satVS:"",satS:"",satN:"",satD:"",satVD:"",satDK:"",entryCorrect:"",entryResp:"",exitCorrect:"",exitResp:""};}
+  milestones:[],tools:[],satisfaction:"",respondents:"",filings:[],da:[],sustainability:"",updates:[],otherCountries:"",reviewNotes:"",participants:"",questionnaires:"",platform:"",surveyDoc:"",satVS:"",satS:"",satN:"",satD:"",satVD:"",satDK:"",entryCorrect:"",entryResp:"",exitCorrect:"",exitResp:""};}
 function sel(key,list,val,ph){return `<select data-k="${key}"><option value="">${ph||"Select…"}</option>`+list.map(([v,l])=>`<option value="${esc(v)}" ${String(v)===String(val)?"selected":""}>${esc(l)}</option>`).join("")+"</select>";}
 function groupState(d,code){const g=GRP[code];const n=g.members.filter(m=>d.countries.includes(m)).length;return n===0?"off":n===g.members.length?"full":"partial";}
 
@@ -601,18 +627,23 @@ function renderForm(){
   }
   const d=draft, isNew=!editing;
   const parents=DB.filter(r=>r.type!=="COMPONENT"&&r.id!==d.id);
+  const stored=editing?rec(editing):null, showNotes=!!(stored&&String(stored.reviewNotes||"").trim());
+  const showSurvey=d.er==="4.3"||hasSurvey(d)||!!d._openSurvey, showTools=d.er==="4.2"||(d.tools||[]).length>0||!!d._openTools;
   $("#v-form").innerHTML=`
   <div class="pagehead"><div>
     <h1>${isNew?"New record":"Edit record <span class='idcell' style='font-size:19px'>"+esc(d.id)+"</span>"}</h1>
     <p class="sub">${isNew?"Choose the Expected Result first; the form then shows only what that result needs.":"Changes are saved for everyone as soon as you press Save."}</p>
   </div></div>
   <div class="cols"><div>
+  ${showNotes?`<div class="card notescard"><h2>Notes to check</h2>
+    <p class="muted" style="margin:0 0 8px">Left by the import of past reports. Correct the record, then delete each point you have checked.</p>
+    <textarea data-k="reviewNotes">${esc(d.reviewNotes)}</textarea></div>`:""}
 
   <fieldset class="fieldset">
     <div class="legend"><div class="n">1</div><h3>What is this record?</h3></div>
     <div class="grid2">
       <div class="f"><label>Record type <span class="req">required</span></label>${sel("type",TYPES,d.type)}
-        <span class="hint">Only records typed Project count in project totals.</span></div>
+        <span class="hint">${d.type==="SUPPORT"?"An ongoing workplan budget line. It is not counted as a project.":"Only records typed Project count in project totals."}</span></div>
       <div class="f ${d.type==="COMPONENT"?"":"hidden"}"><label>Parent project <span class="req">required</span></label>
         ${sel("parentId",parents.map(p=>[p.id,p.id+" · "+(p.title.length>50?p.title.slice(0,50)+"…":p.title)]),d.parentId)}
         <span class="hint">Links the two records. Components are never counted twice.</span></div>
@@ -663,6 +694,9 @@ function renderForm(){
     <p class="legend-help">A grouping fills in all its countries. Remove any that do not apply.</p>
     <div class="f"><label>Regional grouping <span class="opt">optional</span></label><div class="togs" id="grptogs"></div></div>
     <div class="f"><label>Beneficiary countries <span class="req" id="creq">required</span></label><div id="cpick"></div></div>
+    <div class="f"><label>Countries outside Asia and the Pacific <span class="opt">optional</span></label>
+      <input type="text" data-k="otherCountries" value="${esc(d.otherCountries)}" placeholder="e.g. Albania, Ecuador">
+      <span class="hint">For cross-regional work. Type the names.</span></div>
   </fieldset>
 
   <fieldset class="fieldset">
@@ -704,13 +738,15 @@ function renderForm(){
     <div id="benefrows"></div><button type="button" class="addbtn" data-addb="1">+ Add a beneficiary line</button>
   </fieldset>
 
-  <fieldset class="fieldset ${d.er==="4.2"?"":"hidden"}">
-    <div class="legend"><div class="n">8</div><h3>Tools and methodologies used</h3><span class="when">ER 4.2</span></div>
+  ${showSurvey&&showTools?"":`<div class="optlinks">${showSurvey?"":`<button type="button" class="linkbtn" data-open="_openSurvey">+ Add satisfaction or skills survey results</button>`}${showTools?"":`<button type="button" class="linkbtn" data-open="_openTools">+ Record WIPO tools used</button>`}</div>`}
+
+  <fieldset class="fieldset ${showTools?"":"hidden"}">
+    <div class="legend"><div class="n">8</div><h3>Tools and methodologies used</h3><span class="when">${d.er==="4.2"?"ER 4.2":"optional, counts for ER 4.2"}</span></div>
     <div id="toolrows"></div><button type="button" class="addbtn" data-add="tools">+ Record a tool used in a country</button>
   </fieldset>
 
-  <fieldset class="fieldset ${d.er==="4.3"?"":"hidden"}">
-    <div class="legend"><div class="n">8</div><h3>Satisfaction and skills survey</h3><span class="when">ER 4.3</span></div>
+  <fieldset class="fieldset ${showSurvey?"":"hidden"}">
+    <div class="legend"><div class="n">8</div><h3>Satisfaction and skills survey</h3><span class="when">${d.er==="4.3"?"ER 4.3":"optional, goes into the ER 4.3 survey file"}</span></div>
     <p class="legend-help">Same fields as the ER 4.3 tracking files. Copy the TOTALS line of the event's survey tab.</p>
     <div class="grid3">
       <div class="f"><label>Participants</label><input type="number" min="0" data-k="participants" data-sv="1" value="${esc(d.participants)}"></div>
@@ -733,7 +769,7 @@ function renderForm(){
 
   <fieldset class="fieldset">
     <div class="legend"><div class="n">9</div><h3>Documents</h3></div>
-    <p class="legend-help">Links to the SharePoint copies.</p>
+    <p class="legend-help">Links to the SharePoint copies and to published impact stories.</p>
     <div id="docrows"></div><button type="button" class="addbtn" data-add="docs">+ Add a document link</button>
   </fieldset>
 
@@ -770,7 +806,7 @@ function buildGroups(){
 }
 function buildPicker(){
   const d=draft, host=$("#cpick");
-  $("#creq").textContent=d.groupings.length?"optional when a grouping is picked":"required";
+  $("#creq").textContent=d.groupings.length?"optional when a grouping is picked":String(d.otherCountries||"").trim()?"optional when other countries are named":"required";
   host.innerHTML=`<div class="picker"><div class="chips">${d.countries.map(c=>`<span class="chip"><b>${c}</b>${esc(CNAME[c]||c)}<button type="button" data-rmc="${c}" aria-label="Remove ${esc(CNAME[c]||c)}">×</button></span>`).join("")||'<span class="muted" style="padding:3px 4px">No country selected</span>'}</div>
     <input type="text" id="csearch" placeholder="Type a country name or ISO code…" aria-label="Add a country"><div class="opts hidden" id="copts"></div></div>`;
   const inp=$("#csearch"),opts=$("#copts");
@@ -839,13 +875,13 @@ function refreshRail(){ surveyCalc();
   const items=requirements(draft,DB), done=items.filter(x=>x.ok).length;
   $("#reqbox").innerHTML=`<div class="muted">${done} of ${items.length} done</div><div class="progress"><i style="width:${done/items.length*100}%"></i></div>
     <ul class="checklist">${items.map(x=>`<li class="${x.ok?"done":"need"}"><span class="bx">${x.ok?"✓":""}</span><span>${esc(x.label)}</span></li>`).join("")}</ul>`;
-  const need=requiredDocs(draft.status), have=new Set(draft.docs.map(x=>x.type));
+  const need=requiredDocs(draft.status,draft.type), have=new Set(draft.docs.map(x=>x.type));
   $("#docchk").innerHTML=need.length?need.map(t=>`<li class="${have.has(t)?"done":"need"}"><span class="bx">${have.has(t)?"✓":""}</span><span>${esc(L.dt[t])}${have.has(t)?"":", missing"}</span></li>`).join(""):'<li class="muted">Choose a status first.</li>';
 }
 function wireForm(){
   const root=$("#v-form"), d=draft, RERENDER=["er","status","type","funding","managerId"];
   root.oninput=e=>{const t=e.target;
-    if(t.dataset.k&&!RERENDER.includes(t.dataset.k)){d[t.dataset.k]=t.value;refreshRail();}
+    if(t.dataset.k&&!RERENDER.includes(t.dataset.k)){d[t.dataset.k]=t.value;refreshRail();if(t.dataset.k==="otherCountries")buildPicker();}
     if(t.dataset.b!==undefined){const b=d.benef[+t.dataset.b];b[t.dataset.bk]=t.value;delete b._auto;}
     if(t.dataset.r){d[t.dataset.r][+t.dataset.i][t.dataset.rk]=t.value;
       if(t.dataset.rk==="desc"){const m=d.milestones[+t.dataset.i],w=words(m.desc),el=$("#wc"+t.dataset.i);
@@ -859,6 +895,7 @@ function wireForm(){
   };
   root.onclick=e=>{
     const b=e.target.closest("[data-bool]"); if(b){d[b.dataset.bool]=b.dataset.v==="1";renderForm();return;}
+    const op=e.target.closest("[data-open]"); if(op){d[op.dataset.open]=true;renderForm();return;}
     const g=e.target.closest("[data-grp]"); if(g){const code=g.dataset.grp,gr=GRP[code],st=groupState(d,code);
       if(st==="full"){d.countries=d.countries.filter(c=>!gr.members.includes(c));d.groupings=d.groupings.filter(x=>x!==code);}
       else{gr.members.forEach(m=>{if(!d.countries.includes(m))d.countries.push(m);});if(!d.groupings.includes(code))d.groupings.push(code);}
@@ -884,7 +921,7 @@ async function save(){
   const miss=missing(draft,DB);
   if(miss.length){toast("Still needed: "+miss.join(", "),true);return;}
   const btns=document.querySelectorAll("[data-save]"); btns.forEach(b=>{b.disabled=true;b.textContent="Saving…";});
-  const payload=clone(draft); const base=payload._base; delete payload._base;
+  const payload=clone(draft); const base=payload._base; delete payload._base; delete payload._openSurvey; delete payload._openTools;
   const num=v=>v===""||v==null||isNaN(Number(v))?"":Number(v);
   payload.budget=num(payload.budget); payload.satisfaction=num(payload.satisfaction); payload.respondents=num(payload.respondents);
   SURVEY_KEYS.forEach(k=>{payload[k]=num(payload[k]);}); { const c=satFromCounts(payload); if(c!==null) payload.satisfaction=c; }
@@ -900,14 +937,16 @@ async function save(){
 /* ============================================================= DATABASE */
 const ALLCOLS=[
   {k:"id",l:"ID",on:true},{k:"title",l:"Project",on:true},{k:"workplan",l:"Workplan",on:false},{k:"type",l:"Type",on:false},
-  {k:"buckets",l:"Bucket",on:true},{k:"er",l:"ER",on:true},{k:"status",l:"Status",on:true},{k:"progress",l:"Progress",on:true},{k:"countries",l:"Countries",on:true},
+  {k:"buckets",l:"Bucket",on:true},{k:"er",l:"ER",on:true},{k:"status",l:"Status",on:true},{k:"missing",l:"To fill in",on:true},{k:"progress",l:"Progress",on:true},{k:"countries",l:"Countries",on:true},
   {k:"manager",l:"Manager",on:true},{k:"team",l:"Team",on:false},{k:"benef",l:"Beneficiaries",on:false},{k:"milestones",l:"Milestones",on:true},
   {k:"budget",l:"Budget",on:true},{k:"spent",l:"Spent",on:true},{k:"pct",l:"% used",on:false},{k:"funding",l:"Funding",on:false},
   {k:"start",l:"Start",on:false},{k:"end",l:"End / expected",on:false},{k:"docs",l:"Docs",on:false},{k:"updated",l:"Last update",on:false}];
 let COLS=ALLCOLS.filter(c=>c.on).map(c=>c.k), SHOWCOLS=false;
-let FILT={q:"",er:"",status:"",funding:"",bucket:"",country:"",mine:false};
+const NOFILT={q:"",er:"",status:"",type:"",funding:"",bucket:"",country:"",mine:false,incomplete:false};
+let FILT={...NOFILT};
 function passes(r){const f=FILT;
-  if(f.q){const q=f.q.toLowerCase();if(![r.title,r.id,r.workplanTitle,r.counterpart,uname(r.managerId)].some(x=>String(x||"").toLowerCase().includes(q)))return false;}
+  if(f.q){const q=f.q.toLowerCase();if(![r.title,r.id,r.workplanTitle,r.counterpart,r.otherCountries,uname(r.managerId)].some(x=>String(x||"").toLowerCase().includes(q)))return false;}
+  if(f.type&&r.type!==f.type)return false; if(f.incomplete&&!missing(r,DB).length)return false;
   if(f.er&&r.er!==f.er)return false; if(f.status&&r.status!==f.status)return false; if(f.funding&&r.funding!==f.funding)return false;
   if(f.bucket&&!(r.buckets||[]).includes(f.bucket))return false; if(f.country&&!(r.countries||[]).includes(f.country))return false;
   if(f.mine&&!(r.managerId===ME.id||(r.team||[]).includes(ME.id)))return false; return true;}
@@ -918,20 +957,21 @@ function cell(r,k){switch(k){
   case"type":return esc(L.type[r.type]||r.type);
   case"buckets":return (r.buckets||[]).map(b=>`<span class="tagpill">${esc(L.bucket[b])}</span>`).join("")||'<span class="muted">none</span>';
   case"er":return esc(r.er);
-  case"status":return `<span class="pill ${SCLASS[r.status]||""}"><span class="d"></span>${esc(L.status[r.status]||r.status)}</span>`;
-  case"countries":return `<span class="mono">${(r.countries||[]).slice(0,4).join(" ")}${(r.countries||[]).length>4?" +"+(r.countries.length-4):""}</span>`;
-  case"progress":{const u=lastUpd(r);return u?`${ragPill(u.rag)}<div class="muted" style="margin-top:3px">${esc(niceDate(u.date))}</div>`:ragPill("");}
+  case"status":return stPill(r.status);
+  case"countries":return `<span class="mono">${(r.countries||[]).slice(0,4).join(" ")}${(r.countries||[]).length>4?" +"+(r.countries.length-4):""}</span>${r.otherCountries?`<div class="muted" title="${esc(r.otherCountries)}">+ other</div>`:""}`;
+  case"missing":{const m=missing(r,DB);return m.length?`<span class="miss" title="${esc(m.join(", "))}">${m.length} to fill in</span>`:'<span class="muted">complete</span>';}
+  case"progress":{const u=lastUpd(r);return u?`${ragPill(u.rag)}<div class="muted" style="margin-top:3px">${esc(niceDate(u.date))}</div>`:r.status==="COMPLETED"?'<span class="muted">none</span>':ragPill("");}
   case"manager":return esc(uname(r.managerId));
   case"team":return (r.team||[]).map(t=>esc(uname(t))).join(", ")||'<span class="muted">none</span>';
   case"benef":return benefBy(r,"TOTAL").length?esc(benefBy(r,"TOTAL").map(x=>fmt(x.n)+" "+L.ent[x.ent]).join(", ")):'<span class="muted">none</span>';
   case"milestones":return `${(r.milestones||[]).filter(m=>m.st==="ACHIEVED").length} / ${(r.milestones||[]).length}`;
-  case"budget":return fmt(r.budget);
+  case"budget":return r.budget===""||r.budget==null?'<span class="muted">not set</span>':fmt(r.budget);
   case"spent":return latestSpend(r)?fmt(latestSpend(r)):'<span class="muted">none</span>';
   case"pct":return r.budget?Math.round(latestSpend(r)/r.budget*100)+"%":'<span class="muted">n/a</span>';
   case"funding":return esc(r.funding==="OTHER"?r.fundingOther||"Other":L.fund[r.funding]);
   case"start":return esc(r.start);
   case"end":return esc(r.end||r.expEnd);
-  case"docs":{const need=requiredDocs(r.status),have=new Set((r.docs||[]).map(x=>x.type)),miss=need.filter(t=>!have.has(t)).length;
+  case"docs":{const need=requiredDocs(r.status,r.type),have=new Set((r.docs||[]).map(x=>x.type)),miss=need.filter(t=>!have.has(t)).length;
     return `${(r.docs||[]).length}${miss?` <span style="color:var(--crit);font-weight:700">· ${miss} missing</span>`:""}`;}
   case"updated":return `${esc(String(r.updatedAt||"").slice(0,10))}<div class="muted">${esc(uname(r.updatedBy))}</div>`;}
   return "";}
@@ -950,11 +990,13 @@ function renderDB(){
   <div class="filterbar">
     <div class="fb grow"><label for="fq">Search</label><input type="text" id="fq" value="${esc(FILT.q)}" placeholder="Title, ID, workplan title, counterpart, manager"></div>
     <div class="fb"><label for="fer">ER</label><select id="fer"><option value="">All</option>${ER.map(([v])=>`<option value="${v}" ${FILT.er===v?"selected":""}>ER ${v}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fty">Type</label><select id="fty"><option value="">All</option>${TYPES.map(([v,l])=>`<option value="${v}" ${FILT.type===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
     <div class="fb"><label for="fst">Status</label><select id="fst"><option value="">All</option>${STATUS.map(([v,l])=>`<option value="${v}" ${FILT.status===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
     <div class="fb"><label for="ffu">Funding</label><select id="ffu"><option value="">All</option>${FUNDING.map(([v,l])=>`<option value="${v}" ${FILT.funding===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
     <div class="fb"><label for="fbu">Bucket</label><select id="fbu"><option value="">All</option>${BUCKETS.map(([v,l])=>`<option value="${v}" ${FILT.bucket===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
     <div class="fb"><label for="fco">Country</label><select id="fco"><option value="">All</option>${COUNTRIES.map(c=>`<option value="${c.iso}" ${FILT.country===c.iso?"selected":""}>${esc(c.name)}</option>`).join("")}</select></div>
     <div class="fb"><label>&nbsp;</label><button class="tog" id="fmine" aria-pressed="${FILT.mine}">Only mine</button></div>
+    <div class="fb"><label>&nbsp;</label><button class="tog" id="finc" aria-pressed="${FILT.incomplete}">Incomplete only</button></div>
     <div class="fb"><label>&nbsp;</label><button class="btn ghost sm" id="fclear">Clear</button></div>
   </div>
   <div class="colpick ${SHOWCOLS?"":"hidden"}"><div class="cc">${ALLCOLS.map(c=>`<button class="tog" data-col="${c.k}" aria-pressed="${COLS.includes(c.k)}">${esc(c.l)}</button>`).join("")}</div></div>
@@ -968,8 +1010,9 @@ function renderDB(){
   on("#fer","onchange",e=>{FILT.er=e.target.value;renderDB();}); on("#fst","onchange",e=>{FILT.status=e.target.value;renderDB();});
   on("#ffu","onchange",e=>{FILT.funding=e.target.value;renderDB();}); on("#fbu","onchange",e=>{FILT.bucket=e.target.value;renderDB();});
   on("#fco","onchange",e=>{FILT.country=e.target.value;renderDB();});
-  on("#fmine","onclick",()=>{FILT.mine=!FILT.mine;renderDB();});
-  on("#fclear","onclick",()=>{FILT={q:"",er:"",status:"",funding:"",bucket:"",country:"",mine:false};renderDB();});
+  on("#fmine","onclick",()=>{FILT.mine=!FILT.mine;renderDB();}); on("#finc","onclick",()=>{FILT.incomplete=!FILT.incomplete;renderDB();});
+  on("#fty","onchange",e=>{FILT.type=e.target.value;renderDB();});
+  on("#fclear","onclick",()=>{FILT={...NOFILT};renderDB();});
   on("#dbrefresh","onclick",refresh); on("#dbcols","onclick",()=>{SHOWCOLS=!SHOWCOLS;renderDB();}); on("#dbcsv","onclick",()=>downloadCSV(rows));
   $("#v-db").onclick=e=>{
     const ed=e.target.closest("[data-edit]"); if(ed){e.stopPropagation();startEdit(ed.dataset.edit);return;}
@@ -980,11 +1023,11 @@ function renderDB(){
 function startEdit(id){closePanel();editing=id;draft=null;go("form");}
 
 function downloadCSV(rows){
-  const head=["ID","Working title","Workplan title","Workplan year","Record type","Parent","Portfolio bucket","Copyright","ER","Status","Document stage","Funding","Project manager","Teammates","National counterpart","Countries (ISO3)","Regional groupings","Areas and topics","Start","End","Expected completion","Budget CHF","Spent to date CHF","Latest progress rating","Latest progress date","Latest progress","Next steps","Beneficiaries (reported)","Beneficiaries by type","Women","Youth","SMEs","Milestones achieved","Milestones total","IP filings","Satisfaction %","Respondents","DA recommendations","Description","Last updated","Updated by"];
+  const head=["ID","Working title","Workplan title","Workplan year","Record type","Parent","Portfolio bucket","Copyright","ER","Status","Document stage","Funding","Project manager","Teammates","National counterpart","Countries (ISO3)","Regional groupings","Other countries","Areas and topics","Start","End","Expected completion","Budget CHF","Spent to date CHF","Latest progress rating","Latest progress date","Latest progress","Next steps","Beneficiaries (reported)","Beneficiaries by type","Women","Youth","SMEs","Milestones achieved","Milestones total","IP filings","Satisfaction %","Respondents","DA recommendations","Description","Last updated","Updated by","Still to fill in","Notes to check"];
   const out=rows.map(r=>[r.id,r.title,r.workplanTitle,r.workplanYear,L.type[r.type],r.parentId,(r.buckets||[]).map(b=>L.bucket[b]).join("; "),r.copyright?"Yes":"No",r.er,L.status[r.status],L.doc[r.docStage]||"",
-    r.funding==="OTHER"?r.fundingOther:L.fund[r.funding],uname(r.managerId),(r.team||[]).map(uname).join("; "),r.counterpart,(r.countries||[]).join("; "),(r.groupings||[]).join("; "),
+    r.funding==="OTHER"?r.fundingOther:L.fund[r.funding],uname(r.managerId),(r.team||[]).map(uname).join("; "),r.counterpart,(r.countries||[]).join("; "),(r.groupings||[]).join("; "),r.otherCountries||"",
     (r.themes||[]).map(t=>L.theme[t]).join("; "),r.start,r.end,r.expEnd,r.budget,latestSpend(r),...(u=>[u?L.rag[u.rag]:"",u?u.date:"",u?u.note:"",u?u.next:""])(lastUpd(r)),total(r,"TOTAL")||"",benefText(r,"TOTAL"),total(r,"WOMEN")||"",total(r,"YOUTH")||"",total(r,"SME")||"",
-    (r.milestones||[]).filter(m=>m.st==="ACHIEVED").length,(r.milestones||[]).length,(r.filings||[]).reduce((a,f)=>a+Number(f.n||0),0),r.satisfaction,r.respondents,(r.da||[]).join("; "),r.desc,String(r.updatedAt||"").slice(0,10),uname(r.updatedBy)]);
+    (r.milestones||[]).filter(m=>m.st==="ACHIEVED").length,(r.milestones||[]).length,(r.filings||[]).reduce((a,f)=>a+Number(f.n||0),0),r.satisfaction,r.respondents,(r.da||[]).join("; "),r.desc,String(r.updatedAt||"").slice(0,10),uname(r.updatedBy),missing(r,DB).join(", "),r.reviewNotes||""]);
   const q=v=>{const s=String(v==null?"":v);return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
   const csv="﻿"+[head].concat(out).map(r=>r.map(q).join(",")).join("\r\n");
   saveBlob(new Blob([csv],{type:"text/csv;charset=utf-8"}),`WeTrack DAP ${todayISO()}.csv`);
@@ -994,7 +1037,7 @@ function saveBlob(blob,name){const a=document.createElement("a");a.href=URL.crea
 /* -------------------------------------------------------- detail panel */
 function openPanel(id){
   const r=rec(id); if(!r)return; viewing=id;
-  const need=requiredDocs(r.status),have=new Set((r.docs||[]).map(x=>x.type)),kids=DB.filter(x=>x.parentId===r.id);
+  const need=requiredDocs(r.status,r.type),have=new Set((r.docs||[]).map(x=>x.type)),kids=DB.filter(x=>x.parentId===r.id),gaps=missing(r,DB);
   const kv=(k,v)=>`<dt>${esc(k)}</dt><dd>${v}</dd>`;
   $("#panel").innerHTML=`<div class="ph"><div><div class="idcell">${esc(r.id)}</div><div style="font-weight:660;font-size:16px;line-height:1.3;margin-top:2px">${esc(r.title)}</div></div>
     <div style="display:flex;gap:8px;align-items:center;flex:none">
@@ -1002,32 +1045,35 @@ function openPanel(id){
       ${ME.admin?`<button class="btn ghost sm" id="pdel">Delete</button>`:""}
       <button class="iconbtn" id="pclose">Close</button></div></div>
   <div class="pb">
+  ${gaps.length||r.reviewNotes?`<div class="missbox" id="pmiss">${gaps.length?`<b>Still to fill in:</b> ${esc(gaps.join(", "))}.`:"<b>Nothing missing.</b>"}${canEdit(r)?` <button class="linkbtn" id="pfill">${gaps.length?"Fill in now":"Open the record"}</button>`:""}
+    ${r.reviewNotes?`<div class="nt"><b>Notes to check</b>\n${esc(r.reviewNotes)}</div>`:""}</div>`:""}
   <div class="sec" style="margin-top:0"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h4 style="margin:0">Progress</h4>
     ${canEdit(r)?`<button class="btn sm" id="pupd">Add progress update</button>`:""}</div>
     <div id="updform"></div>
     ${(r.updates||[]).length?(r.updates||[]).slice().sort((a,b)=>String(b.id).localeCompare(String(a.id))).map(u=>`<div class="upd ${esc(u.rag)}">${ragPill(u.rag)}
-      <div class="meta">${esc(niceDate(u.date))} · ${esc(uname(u.by))}</div><p>${esc(u.note)}</p>${u.next?`<p><b>Next:</b> ${esc(u.next)}</p>`:""}</div>`).join("")
+      <div class="meta">${esc(niceDate(u.date))} · ${esc(uname(u.by))}${ME.admin?` · <button class="linkbtn danger" data-rmupd="${esc(u.id)}">Remove</button>`:""}</div><p>${esc(u.note)}</p>${u.next?`<p><b>Next:</b> ${esc(u.next)}</p>`:""}</div>`).join("")
       :'<p class="muted" style="margin:8px 0 0">No progress update yet.</p>'}
   </div>
   <dl class="kv">
-    ${kv("Status",`<span class="pill ${SCLASS[r.status]||""}"><span class="d"></span>${esc(L.status[r.status])}</span>`)}
+    ${kv("Status",stPill(r.status))}
     ${kv("Record type",esc(L.type[r.type]))}
     ${r.parentId?kv("Component of",`<span class="idcell">${esc(r.parentId)}</span> ${esc((rec(r.parentId)||{}).title||"")}`):""}
     ${kids.length?kv("Components",kids.map(k=>`<span class="idcell">${esc(k.id)}</span> ${esc(k.title)}`).join("<br>")):""}
-    ${kv("Expected Result","ER "+esc(r.er))}
+    ${kv("Expected Result",r.er?"ER "+esc(r.er):'<span class="muted">not set</span>')}
     ${kv("Portfolio bucket",(r.buckets||[]).map(b=>`<span class="tagpill">${esc(L.bucket[b])}</span>`).join("")||'<span class="muted">none</span>')}
     ${kv("Copyright project",r.copyright?"Yes":"No")}
     ${kv("In the workplan",r.inWorkplan?"Yes, "+esc(r.workplanYear):'<span class="muted">No</span>')}
     ${r.inWorkplan?kv("Workplan title",esc(r.workplanTitle)):""}
-    ${kv("Project manager",esc(uname(r.managerId)))}
+    ${kv("Project manager",r.managerId?esc(uname(r.managerId)):'<span class="muted">not set</span>')}
     ${kv("Teammates",(r.team||[]).map(t=>esc(uname(t))).join(", ")||'<span class="muted">none</span>')}
     ${kv("National counterpart",esc(r.counterpart)||'<span class="muted">none</span>')}
-    ${kv("Countries",(r.countries||[]).map(c=>`${esc(CNAME[c]||c)} <span class="mono">(${c})</span>`).join(", ")||'<span class="muted">none</span>')}
+    ${kv("Countries",(r.countries||[]).map(c=>`${esc(CNAME[c]||c)} <span class="mono">(${c})</span>`).join(", ")||(r.otherCountries?"":'<span class="muted">none</span>'))}
+    ${r.otherCountries?kv("Outside Asia and the Pacific",esc(r.otherCountries)):""}
     ${kv("Regional grouping",(r.groupings||[]).map(g=>esc(GRP[g]?GRP[g].label:g)).join(", ")||'<span class="muted">none</span>')}
-    ${kv("Areas and topics",(r.themes||[]).map(t=>`<span class="tagpill">${esc(L.theme[t])}</span>`).join(""))}
-    ${kv("Dates",`${esc(niceRange(r.start,r.end||r.expEnd))}${r.end?"":" (end expected)"}`)}
-    ${kv("Funding",esc(r.funding==="OTHER"?r.fundingOther:L.fund[r.funding]))}
-    ${kv("Budget",`CHF ${fmt(r.budget)} allocated · CHF ${fmt(latestSpend(r))} spent${r.budget?` · ${Math.round(latestSpend(r)/r.budget*100)}% used`:""}`)}
+    ${kv("Areas and topics",(r.themes||[]).map(t=>`<span class="tagpill">${esc(L.theme[t]||t)}</span>`).join("")||'<span class="muted">none</span>')}
+    ${kv("Dates",esc(datesText(r)))}
+    ${kv("Funding",r.funding?esc(r.funding==="OTHER"?r.fundingOther:L.fund[r.funding]):'<span class="muted">not set</span>')}
+    ${kv("Budget",r.budget===""||r.budget==null?`<span class="muted">not set</span>${latestSpend(r)?` · CHF ${fmt(latestSpend(r))} spent`:""}`:`CHF ${fmt(r.budget)} allocated · CHF ${fmt(latestSpend(r))} spent${r.budget?` · ${Math.round(latestSpend(r)/r.budget*100)}% used`:""}`)}
     ${kv("Project document stage",esc(L.doc[r.docStage]||"none"))}
     ${kv("Last update",`${esc(String(r.updatedAt||"").replace("T"," ").slice(0,16))} by ${esc(uname(r.updatedBy))}`)}
   </dl>
@@ -1040,13 +1086,18 @@ function openPanel(id){
   ${(r.da||[]).length?`<div class="sec"><h4>DA recommendations</h4><div>${r.da.map(x=>`<span class="tagpill">Rec ${esc(x)}</span>`).join("")}</div></div>`:""}
   ${r.sustainability?`<div class="sec"><h4>Sustainability</h4><div style="font-size:13.5px;color:var(--ink-2)">${esc(r.sustainability)}</div></div>`:""}
   <div class="sec"><h4>Documents</h4>
-    ${(r.docs||[]).map(x=>`<div class="dl"><span class="ic">${esc((L.dt[x.type]||"?").slice(0,2).toUpperCase())}</span><span>${/^https?:\/\//i.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name||x.url)}</a>`:esc(x.name)}<div class="muted">${esc(L.dt[x.type]||"")}</div></span></div>`).join("")||'<div class="muted">No documents linked.</div>'}
+    ${(r.docs||[]).map(x=>`<div class="dl"><span class="ic">${x.type==="STORY"?"ST":esc((L.dt[x.type]||"?").slice(0,2).toUpperCase())}</span><span>${/^https?:\/\//i.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name||x.url)}</a>`:esc(x.name)}<div class="muted">${esc(L.dt[x.type]||"")}</div></span></div>`).join("")||'<div class="muted">No documents linked.</div>'}
     <ul class="checklist" style="margin-top:10px">${need.map(t=>`<li class="${have.has(t)?"done":"need"}"><span class="bx">${have.has(t)?"✓":""}</span><span>${esc(L.dt[t])} ${have.has(t)?"linked":"required at this status, missing"}</span></li>`).join("")}</ul></div>
   </div>`;
   $("#panel").classList.add("open"); $("#scrim").classList.add("open");
   $("#pclose").onclick=closePanel;
   const pe=$("#pedit"); if(pe)pe.onclick=()=>startEdit(id);
   const pu=$("#pupd"); if(pu)pu.onclick=()=>openUpdForm(r);
+  const pf=$("#pfill"); if(pf)pf.onclick=()=>startEdit(id);
+  document.querySelectorAll("#panel [data-rmupd]").forEach(b=>{let armed=0;b.onclick=async()=>{
+    if(Date.now()-armed>4000){armed=Date.now();b.textContent="Click again to remove";return;}
+    b.disabled=true;try{const saved=await Api.progress(TOKEN,id,null,b.dataset.rmupd);DB=DB.map(x=>x.id===saved.id?saved:x);toast("Update removed");openPanel(id);if(VIEW!=="form")VIEWS[VIEW]();}
+    catch(e){b.disabled=false;handleErr(e);}};});
   const pd=$("#pdel"); if(pd){let armed=0;pd.onclick=async()=>{
     if(Date.now()-armed>4000){armed=Date.now();pd.textContent="Click again to delete";pd.className="btn danger sm";return;}
     pd.disabled=true;try{await Api.del(TOKEN,id);DB=DB.filter(x=>x.id!==id);closePanel();toast("Deleted "+id);go("db");}catch(e){handleErr(e);pd.disabled=false;}};}
@@ -1068,8 +1119,13 @@ function openUpdForm(r){
     if(!note){toast("Write a line about the progress first.",true);$("#unote").focus();return;}
     const btn=$("#usave"); btn.disabled=true; btn.textContent="Saving…";
     try{
-      const cur=rec(r.id), payload=clone(cur); payload.spendNow=""; payload.updates=[{rag,note,next}].concat(cur.updates||[]);
-      const saved=await Api.save(TOKEN,payload,cur.updatedAt);
+      let saved;
+      try{ saved=await Api.progress(TOKEN,r.id,{rag,note,next}); }
+      catch(e){   // server script not updated yet: fall back to saving the whole record
+        if(!/unknown action/i.test(e.message||"")) throw e;
+        const cur=rec(r.id), payload=clone(cur); payload.spendNow=""; payload.updates=[{rag,note,next}].concat(cur.updates||[]);
+        saved=await Api.save(TOKEN,payload,cur.updatedAt);
+      }
       DB=DB.map(x=>x.id===saved.id?saved:x); toast("Progress update saved"); openPanel(saved.id);
       if(VIEW!=="form") VIEWS[VIEW]();
     }catch(e){btn.disabled=false;btn.textContent="Save update";handleErr(e);}
@@ -1080,11 +1136,14 @@ $("#scrim").onclick=()=>{closePanel();closeModal();};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closePanel();closeModal();}});
 
 /* ============================================================ DASHBOARD */
-let DASH={fund:"",asOf:""};
+let DASH={fund:"",asOf:"",period:"BI",support:false,allProg:false};
+const PROG_ROWS=15;
 function renderDash(){
-  const live=!DASH.asOf, D=live?todayISO():qRange(DASH.asOf)[1], Q=live?null:DASH.asOf;
-  const set=DB.filter(r=>!DASH.fund||r.funding===DASH.fund);
-  const achieved=set.filter(r=>r.type!=="COMPONENT"&&((r.milestones||[]).some(m=>m.st==="ACHIEVED"&&m.date&&m.date<=D)||(r.status==="COMPLETED"&&r.end&&r.end<=D)));
+  const live=!DASH.asOf, D=live?todayISO():qRange(DASH.asOf)[1], Q=live?null:DASH.asOf, BS=BI_YEAR+"-01-01";
+  // biennium view: leave out work that was already finished before the biennium started
+  const set=DB.filter(r=>(!DASH.fund||r.funding===DASH.fund)&&(DASH.period==="ALL"||!(r.end&&r.end<BS)));
+  // ER 4.1 KPI: projects with a milestone achieved, or completed, within the biennium (each counted once)
+  const achieved=set.filter(r=>r.er==="4.1"&&r.type!=="COMPONENT"&&r.type!=="SUPPORT"&&((r.milestones||[]).some(m=>m.st==="ACHIEVED"&&m.date&&m.date>=BS&&m.date<=D)||(r.status==="COMPLETED"&&r.end&&r.end>=BS&&r.end<=D)));
   const toolC=new Set(set.flatMap(r=>(r.tools||[]).map(t=>t.iso)).filter(Boolean));
   const sat=set.filter(r=>r.satisfaction!==""&&r.satisfaction!=null&&Number(r.respondents)>0&&r.start<=D);
   const satDen=sat.reduce((a,r)=>a+Number(r.respondents),0), satAvg=satDen?Math.round(sat.reduce((a,r)=>a+Number(r.satisfaction)*Number(r.respondents),0)/satDen):0;
@@ -1104,7 +1163,7 @@ function renderDash(){
   const tile=(k,v,t,p,cls)=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="t">${t}</div>${p!==undefined?`<div class="meter"><i class="${cls||""}" style="width:${Math.max(0,Math.min(100,p))}%"></i></div>`:""}</div>`;
   const asOfOpts=[];for(let q=qShift(CUR_Q,-1),i=0;i<6;i++,q=qShift(q,-1))asOfOpts.push(q);
   // progress overview: active records, most urgent first
-  const act=set.filter(r=>r.status!=="COMPLETED"&&r.type!=="COMPONENT").map(r=>{const u=lastUpd(r),age=u?daysSince(u.date):null;return {r,u,age,stale:!u||age>STALE_DAYS};});
+  const act=set.filter(r=>r.status!=="COMPLETED"&&r.type!=="COMPONENT"&&(DASH.support||r.type!=="SUPPORT")).map(r=>{const u=lastUpd(r),age=u?daysSince(u.date):null;return {r,u,age,stale:!u||age>STALE_DAYS};});
   const rank=x=>x.u&&x.u.rag==="OFF_TRACK"?0:x.u&&x.u.rag==="DELAYS"?1:x.stale?2:3;
   act.sort((a,b)=>rank(a)-rank(b)||(b.age??1e9)-(a.age??1e9));
   const nRag=k=>act.filter(x=>x.u&&x.u.rag===k&&!x.stale).length, nStale=act.filter(x=>x.stale).length;
@@ -1114,25 +1173,27 @@ function renderDash(){
     <button class="btn sm" id="dashreport">Reports</button></div>
   <div class="filterbar">
     <div class="fb"><label for="dfund">Budget source</label><select id="dfund"><option value="">All sources</option>${FUNDING.map(([v,l])=>`<option value="${v}" ${DASH.fund===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="dper">Period</label><select id="dper"><option value="BI" ${DASH.period==="BI"?"selected":""}>${BI_LABEL} biennium</option><option value="ALL" ${DASH.period==="ALL"?"selected":""}>All years</option></select></div>
     <div class="fb"><label for="dasof">Position as at</label><select id="dasof"><option value="">Today</option>${asOfOpts.map(q=>`<option value="${q}" ${DASH.asOf===q?"selected":""}>End of ${qShort(q)}</option>`).join("")}</select></div>
-    <div class="fb grow"><label>&nbsp;</label><div class="muted" style="padding-bottom:6px">${live?"Today's position.":"As at "+niceDate(D)+": only milestones, starts and spend dated on or before then."}${DASH.fund?" "+set.length+" of "+DB.length+" records in scope.":""}</div></div>
+    <div class="fb grow"><label>&nbsp;</label><div class="muted" style="padding-bottom:6px">${live?"Today's position.":"As at "+niceDate(D)+": only milestones, starts and spend dated on or before then."}${DASH.period==="BI"?" Work finished before "+BI_YEAR+" is left out.":""}${DASH.fund||DASH.period==="BI"?" "+set.length+" of "+DB.length+" records in scope.":""}</div></div>
   </div>
-  <h2>Project progress</h2>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>Project progress</h2>
+    <button class="tog" id="dsup" aria-pressed="${DASH.support}">Include workplan support lines</button></div>
   <div class="tiles">
     ${tile("On track",nRag("ON_TRACK"),"active records, updated in the last "+STALE_DAYS+" days")}
     ${tile("Some delays",nRag("DELAYS"),"active records, updated in the last "+STALE_DAYS+" days")}
     ${tile("Off track",nRag("OFF_TRACK"),"active records, updated in the last "+STALE_DAYS+" days")}
     ${tile("No recent update",nStale,"no progress update in the last "+STALE_DAYS+" days")}
   </div>
-  ${act.length?`<div class="tw" style="margin-bottom:22px"><table id="progtable"><thead><tr><th>Project</th><th>Manager</th><th>Progress</th><th>Latest update</th></tr></thead><tbody>
-    ${act.map(x=>`<tr class="clickable" data-view="${esc(x.r.id)}"><td style="min-width:220px"><span class="idcell">${esc(x.r.id)}</span><div>${esc(x.r.title)}</div></td>
+  ${act.length?`<div class="tw" style="margin-bottom:${act.length>PROG_ROWS?8:22}px"><table id="progtable"><thead><tr><th>Project</th><th>Manager</th><th>Progress</th><th>Latest update</th></tr></thead><tbody>
+    ${(DASH.allProg?act:act.slice(0,PROG_ROWS)).map(x=>`<tr class="clickable" data-view="${esc(x.r.id)}"><td style="min-width:220px"><span class="idcell">${esc(x.r.id)}</span><div>${esc(x.r.title)}</div></td>
       <td>${esc(uname(x.r.managerId))}</td>
       <td>${x.u&&!x.stale?ragPill(x.u.rag):x.u?ragPill(x.u.rag)+'<div style="color:var(--crit);font-size:12px;font-weight:650;margin-top:3px">'+x.age+' days ago</div>':ragPill("")}${x.u&&!x.stale?`<div class="muted" style="margin-top:3px">${esc(niceDate(x.u.date))}</div>`:""}</td>
       <td style="max-width:460px;font-size:13px">${x.u?esc(clip(x.u.note,220))+(x.u.next?`<div class="muted" style="margin-top:3px"><b>Next:</b> ${esc(clip(x.u.next,120))}</div>`:""):'<span class="muted">Open the record and press Add progress update.</span>'}</td></tr>`).join("")}
-  </tbody></table></div>`:""}
+  </tbody></table></div>${act.length>PROG_ROWS?`<p style="margin:0 0 22px"><button class="linkbtn" id="dallprog">${DASH.allProg?"Show the "+PROG_ROWS+" most urgent only":"Show all "+act.length+" active records"}</button></p>`:""}`:""}
   <h2>Corporate indicators</h2>
   <div class="tiles">
-    ${tile("ER 4.1",achieved.length,"projects that achieved benefits or completed milestones. Biennium target 80.",achieved.length/80*100,"")}
+    ${tile("ER 4.1",achieved.length,"ER 4.1 projects with a milestone achieved or completed in "+BI_LABEL+". Biennium target 80.",achieved.length/80*100,"")}
     ${tile("ER 4.2",toolC.size,"Member States using WIPO tools and methodologies",toolC.size/38*100,"")}
     ${tile("ER 4.3",satAvg?satAvg+"%":"none yet",satDen?`participant satisfaction, ${fmt(satDen)} respondents. Target 90%.`:"no satisfaction scores recorded yet",satAvg,satAvg>=90?"ok":"")}
     ${tile("IP filings",fmt(filings),"filings and registrations from these projects")}
@@ -1168,7 +1229,7 @@ function renderDash(){
     ${tile("Beneficiaries",fmt(cr.reduce((a,r)=>a+total(r,"TOTAL"),0)),benefBy(cr,"TOTAL").length>1?benefText(cr,"TOTAL"):"reported")}
     ${tile("Countries",new Set(cr.flatMap(r=>r.countries||[])).size,"Asia-Pacific countries involved")}
   </div>
-  ${cr.length?`<div class="tw" style="margin-bottom:18px"><table><thead><tr><th>ID</th><th>Project</th><th>Status</th><th>Manager</th><th>Budget</th><th>Spent</th></tr></thead><tbody>${cr.map(r=>`<tr class="clickable" data-view="${esc(r.id)}"><td class="idcell">${esc(r.id)}</td><td>${esc(r.title)}</td><td><span class="pill ${SCLASS[r.status]||""}"><span class="d"></span>${esc(L.status[r.status])}</span></td><td>${esc(uname(r.managerId))}</td><td class="num">${fmt(r.budget)}</td><td class="num">${fmt(spendAt(r,Q))}</td></tr>`).join("")}</tbody></table></div>`:""}
+  ${cr.length?`<div class="tw" style="margin-bottom:18px"><table><thead><tr><th>ID</th><th>Project</th><th>Status</th><th>Manager</th><th>Budget</th><th>Spent</th></tr></thead><tbody>${cr.map(r=>`<tr class="clickable" data-view="${esc(r.id)}"><td class="idcell">${esc(r.id)}</td><td>${esc(r.title)}</td><td>${stPill(r.status)}</td><td>${esc(uname(r.managerId))}</td><td class="num">${r.budget===""||r.budget==null?'<span class="muted">not set</span>':fmt(r.budget)}</td><td class="num">${fmt(spendAt(r,Q))}</td></tr>`).join("")}</tbody></table></div>`:""}
   <h2 style="margin-top:24px">ICDAP portfolio</h2>
   <div class="tiles">
     ${tile("ICDAP projects",ic.length,ic.filter(r=>r.status==="IN_PROGRESS").length+" in progress")}
@@ -1179,6 +1240,9 @@ function renderDash(){
   <p class="muted">The ICDAP panel always covers all ICDAP records, whatever the budget filter.</p>`;
   $("#dfund").onchange=e=>{DASH.fund=e.target.value;renderDash();};
   $("#dasof").onchange=e=>{DASH.asOf=e.target.value;renderDash();};
+  $("#dper").onchange=e=>{DASH.period=e.target.value;renderDash();};
+  $("#dsup").onclick=()=>{DASH.support=!DASH.support;renderDash();};
+  const ap=$("#dallprog"); if(ap)ap.onclick=()=>{DASH.allProg=!DASH.allProg;renderDash();};
   $("#dashreport").onclick=openReport;
   $("#v-dash").onclick=e=>{const vw=e.target.closest("[data-view]");if(vw)openPanel(vw.dataset.view);};
 }
@@ -1190,15 +1254,17 @@ function reportData(q){
   DB.forEach(r=>{
     const ms=(r.milestones||[]).filter(m=>m.st==="ACHIEVED"&&inQ(m.date)).sort((a,b)=>a.date.localeCompare(b.date));
     const completed=r.status==="COMPLETED"&&inQ(r.end);
-    if(ms.length||completed) rows.push({r,ms,completed});
+    // a component or activity that only closed (no milestone) is not a project result: activities are listed as events
+    if(ms.length||(completed&&(r.type==="PROJECT"||r.type==="SUPPORT"))) rows.push({r,ms,completed});
   });
   rows.sort((a,b)=>(b.completed-a.completed)||a.r.title.localeCompare(b.r.title));
-  const events=DB.filter(r=>r.type==="ACTIVITY"&&(inQ(r.start)||inQ(r.end))).sort((a,b)=>a.start.localeCompare(b.start));
-  const trainings=DB.filter(r=>r.er==="4.3"&&r.satisfaction!==""&&r.satisfaction!=null&&Number(r.respondents)>0&&r.start<=qe&&(r.end||r.expEnd||qe)>=qs);
+  // events that took place: planned or postponed ones are left out
+  const events=DB.filter(r=>r.type==="ACTIVITY"&&(r.status==="COMPLETED"||r.status==="IN_PROGRESS")&&(inQ(r.start)||inQ(r.end))).sort((a,b)=>(a.start||a.end||"").localeCompare(b.start||b.end||""));
+  const surveys=DB.filter(r=>hasSurvey(r)&&inQ(r.start));
   const photos=rows.flatMap(x=>(x.r.docs||[]).filter(d=>d.type==="PHOTO"&&/^https?:/i.test(d.url)).map(d=>({d,r:x.r})));
   const stories=rows.filter(x=>x.completed&&x.r.sustainability);
   const nMs=rows.reduce((a,x)=>a+x.ms.length,0);
-  return {q,qs,qe,rows,events,trainings,photos,stories,
+  return {q,qs,qe,rows,events,surveys,photos,stories,
     nCompleted:rows.filter(x=>x.completed).length, nMs, nProjects:rows.filter(x=>x.ms.length).length,
     msCompleted:rows.filter(x=>x.completed).reduce((a,x)=>a+x.ms.length,0), msOngoing:rows.filter(x=>!x.completed).reduce((a,x)=>a+x.ms.length,0)};
 }
@@ -1218,7 +1284,7 @@ function openReport(){
     </div>
     <div class="actions" style="justify-content:flex-end"><button class="btn ghost" id="rcancel">Close</button></div>`;
   const prev=()=>{const x=reportData($("#rq").value);
-    $("#rprev").innerHTML=`<div class="stat"><span>Milestones achieved</span><b>${x.nMs}</b><span>Projects with milestones</span><b>${x.nProjects}</b><span>Projects completed</span><b>${x.nCompleted}</b><span>Events held</span><b>${x.events.length}</b><span>Trainings with satisfaction scores</span><b>${x.trainings.length}</b></div>`
+    $("#rprev").innerHTML=`<div class="stat"><span>Milestones achieved</span><b>${x.nMs}</b><span>Projects with milestones</span><b>${x.nProjects}</b><span>Projects completed</span><b>${x.nCompleted}</b><span>Events held</span><b>${x.events.length}</b><span>Surveys recorded</span><b>${x.surveys.length}</b></div>`
       +(x.nMs||x.nCompleted?"":'<p class="muted" style="margin:-6px 0 12px">Nothing recorded for this quarter yet. The report will still download, with every section marked to complete.</p>');};
   $("#rq").onchange=prev; prev();
   $("#rcancel").onclick=closeModal;
@@ -1251,8 +1317,9 @@ const WPR_STATUS={IN_PROGRESS:"ongoing",COMPLETED:"completed",NOT_STARTED:"plann
 const XL={
   async er41(q){
     const ExcelJS=await loadExcel(), [,qEnd]=qRange(q), y=q.slice(0,4);
-    const rows=DB.filter(r=>r.er==="4.1"&&r.type!=="COMPONENT"&&r.start&&r.start<=qEnd&&(r.status!=="COMPLETED"||!r.end||r.end>=(Number(y)-1)+"-01-01"))
-      .sort((a,b)=>(a.start||"").localeCompare(b.start||""));
+    // cumulative, like DDC's tracker: every ER 4.1 project started by the end of the quarter, plus planned ones without a start date
+    const rows=DB.filter(r=>r.er==="4.1"&&r.type!=="COMPONENT"&&r.type!=="SUPPORT"&&(!r.start||r.start<=qEnd))
+      .sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999")||a.title.localeCompare(b.title));
     const wb=new ExcelJS.Workbook(); wb.creator="WeTrack"; const ws=wb.addWorksheet("Tracking ");
     const H=["Project","Budget Unit","Division/Unit","Expected Result ","Project Title","Areas/Topics \n(e.g. women / local communities / youth / people with disabilities / SMEs ) ","Beneficiaries (number of beneficiaries) ","Start Date","End Date ","Expected date of completion ","Role (Lead, Co-Lead, Supporting)","Lead/Co-Lead Implementing Area (if supporting)","Status\n(on going or completed) ","Project Document Available? \nY/N (Y* - other document)","Date of last version of project document","Project Doc Identifier \n(BudgetUnit_Number_Country) - example: 0421_01_Tunisia","Brief Project Description","Indicate if copyright project transferred from CCIS","Indicate if copyright project ","Milestones/Benefits/Progress","Has it been reported for WPR 2022/23 \n(Y/N)","Has it been reported for WPR 2024 \n(Y/N)","Is this the first time it is being reported for WPR 2025\n(Y/N)","Comments"];
     [15,20,30,24,63,54,53,16,15,40,20,20,18,23,24,45,65,30,30,106,27,27,26,28].forEach((w,i)=>ws.getColumn(i+1).width=w);
@@ -1284,7 +1351,8 @@ const XL={
   },
   async er43(q){
     const ExcelJS=await loadExcel(), [qs,qe]=qRange(q);
-    const ev=DB.filter(r=>r.er==="4.3"&&r.start&&r.start>=qs&&r.start<=qe).sort((a,b)=>a.start.localeCompare(b.start));
+    // every event with survey results that started in the quarter, whatever its Expected Result
+    const ev=DB.filter(r=>hasSurvey(r)&&r.start&&r.start>=qs&&r.start<=qe).sort((a,b)=>a.start.localeCompare(b.start));
     const N=v=>v===""||v==null?null:Number(v);
     const wb=new ExcelJS.Workbook(); wb.creator="WeTrack";
     const base=["Tab No.","Name of Activity/Event ","Copyright Development","Year","Date(s)","No. of Participants ","How many received the questionnaire?","Number of Respondents","Platform used to collect feedback (physical distribution, SurveyMonkey etc…)","Supporting Doc. Name","Response rate"];
@@ -1330,7 +1398,7 @@ function buildReport(x){
   const bullet=(children,lvl=0)=>body.push(P(children,{numbering:{reference:"bul",level:lvl},spacing:{after:80}}));
   const div=`[${DIVISION}]`;
   const qn=x.q.slice(-1);
-  const period=r=>niceRange(r.start,r.end||r.expEnd);
+  const period=r=>r.start?niceRange(r.start,r.end||r.expEnd):niceDate(r.end||r.expEnd);
   const body=[];
 
   body.push(P(todo(`Draft generated from WeTrack on ${niceDate(todayISO())}. Complete the sections in yellow and delete this line before submitting.`),{spacing:{after:240}}));
@@ -1357,14 +1425,16 @@ function buildReport(x){
   if(ong.length) projectBullets(ong); else bullet([T("No milestones recorded this quarter.",{italics:true})]);
 
   body.push(sub("Highlights on IP trainings (WIPO Academy)",1));
-  if(x.trainings.length) x.trainings.forEach(r=>bullet([T(r.title,{bold:true}),T(`: ${r.satisfaction}% of ${r.respondents} respondents satisfied or very satisfied.`)]));
-  else body.push(P(T("N/A")));
+  body.push(P([T("N/A "),todo("Change only if the WIPO Academy ran a training with DAP this quarter. WeTrack does not record Academy trainings.")]));
 
   body.push(sub("High-level meetings / Conferences / Committees",1));
   body.push(P([T(div+" ",{bold:true}),T(`(${x.events.length} event${x.events.length===1?"":"s"} recorded in WeTrack):`,{bold:true})]));
   x.events.forEach(r=>{const who=benefText(r,"TOTAL",{qual:true,people:true}),c=(r.countries||[]).length;
+    const where=c?`${c} ${c===1?"country":"countries"}`:(r.otherCountries||"");
+    const e=r.end||r.expEnd||r.start, dated=!!e&&r.title.includes(MONTHS[+e.slice(5,7)-1]+" "+e.slice(0,4));   // title already gives the date
+    const line=who&&where?`: ${who} from ${where}.`:who?`: ${who}.`:where?`: participants from ${where}.`:".";
     const ach=(r.milestones||[]).find(m=>m.st==="ACHIEVED"&&m.desc);
-    bullet([T(`${r.title} (${period(r)})`,{bold:true,underline:{}}),T(`: ${who?who+" from ":"participants from "}${c} ${c===1?"country":"countries"}.`),...(ach?[T(" Key outcomes: ",{italics:true}),T(ach.desc)]:[])]);});
+    bullet([T(dated?r.title:`${r.title} (${period(r)})`,{bold:true,underline:{}}),T(line),...(who?[]:[T(" "),todo("Add the number of participants.")]),...(ach?[T(" Key outcomes: ",{italics:true}),T(ach.desc)]:[])]);});
   body.push(P(todo("Add any meetings, conferences or committees not recorded in WeTrack.")));
 
   body.push(sub("High-level mission by DG, DDG, Senior Director",1));
