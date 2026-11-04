@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>WeCheck · Division for Asia and the Pacific</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%231f3a68%22/%3E%3Cpath d=%22M6 9l4.5 14L16 12l5.5 11L26 9%22 fill=%22none%22 stroke=%22white%22 stroke-width=%223%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+<style>
+:root{
+  color-scheme:light;
+  --plane:#f4f4f1; --surface:#fcfcfb; --surface-2:#f0efec;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,0.10);
+  --brand:#1f3864; --on-brand:#ffffff;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --track:#e7e6e1; --chip:#eef2f8; --focus:#2a78d6; --shadow:rgba(0,0,0,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --plane:#0d0d0d; --surface:#1a1a19; --surface-2:#232322;
+    --ink:#ffffff; --ink-2:#c3c2b7; --ink-muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+    --brand:#9db8e8; --on-brand:#0d0d0d;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --track:#26261f; --chip:#22262e; --focus:#3987e5; --shadow:rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --plane:#0d0d0d; --surface:#1a1a19; --surface-2:#232322;
+  --ink:#ffffff; --ink-2:#c3c2b7; --ink-muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+  --brand:#9db8e8; --on-brand:#0d0d0d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --track:#26261f; --chip:#22262e; --focus:#3987e5; --shadow:rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--plane);color:var(--ink);min-height:100vh;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.hidden{display:none !important}
+.muted{color:var(--ink-muted);font-size:13px}
+a{color:var(--s1)}
+
+/* ---------- login ---------- */
+.login{min-height:100vh;display:grid;place-items:center;padding:24px 16px}
+.lcard{width:min(440px,100%);background:var(--surface);border:1px solid var(--ring);border-radius:16px;
+  padding:30px 30px 24px;box-shadow:0 10px 40px var(--shadow)}
+.lbrand{font-size:26px;font-weight:700;letter-spacing:-0.02em;margin:0}
+.lsub{color:var(--ink-muted);font-size:14px;margin:2px 0 24px}
+.lcard label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}
+.lcard select,.lcard input{width:100%;padding:11px 12px;border:1px solid var(--axis);border-radius:9px;background:var(--surface);margin-bottom:16px;font-size:15px}
+:root[data-theme="dark"] .lcard select,:root[data-theme="dark"] .lcard input{background:var(--surface-2)}
+#lcode{text-transform:uppercase;letter-spacing:.12em;font-family:ui-monospace,Menlo,monospace}
+.lcard .remember{display:flex;align-items:center;gap:9px;font-weight:500;margin:-4px 0 16px;cursor:pointer}
+.lcard .remember input{width:17px;height:17px;margin:0;padding:0;flex:none;accent-color:var(--brand)}
+.lbtn{width:100%;padding:12px;border:none;border-radius:10px;background:var(--brand);color:var(--on-brand);font-weight:650;font-size:15px;cursor:pointer}
+.lbtn:disabled{opacity:.5;cursor:not-allowed}
+.lerr{color:var(--crit);font-size:13.5px;min-height:20px;margin:10px 0 0}
+.lfoot{font-size:12.5px;color:var(--ink-muted);margin-top:14px;border-top:1px solid var(--grid);padding-top:12px}
+.demo-note{background:var(--chip);border:1px dashed var(--brand);border-radius:9px;padding:9px 12px;font-size:13px;color:var(--ink-2);margin:0 0 16px}
+.demo-note b{font-family:ui-monospace,Menlo,monospace;color:var(--ink);letter-spacing:.06em}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--grid)}
+.topin{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap}
+.brand{font-weight:700;letter-spacing:-0.02em;font-size:18px;white-space:nowrap}
+.brand small{display:block;font-size:11px;font-weight:500;color:var(--ink-muted);letter-spacing:0;margin-top:-3px}
+.demo-badge{font-size:11px;font-weight:700;color:var(--serious);border:1px solid var(--serious);border-radius:999px;padding:1px 8px;white-space:nowrap}
+nav{display:flex;gap:3px;margin-left:18px;flex-wrap:wrap}
+nav button{background:none;border:none;padding:8px 14px;border-radius:9px;cursor:pointer;color:var(--ink-2);font-size:14.5px;font-weight:560}
+nav button:hover{background:var(--surface-2);color:var(--ink)}
+nav button[aria-current="true"]{background:var(--brand);color:var(--on-brand)}
+.topright{margin-left:auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.who{font-size:13px;line-height:1.25;text-align:right;max-width:230px}
+.who b{display:block;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who span{color:var(--ink-muted);font-size:11.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{background:var(--surface);border:1px solid var(--ring);border-radius:999px;padding:6px 13px;font-size:12.5px;cursor:pointer;color:var(--ink-2);white-space:nowrap}
+.iconbtn:hover{color:var(--ink)}
+@media (max-width:640px){.top{position:static}.topin{padding:10px 16px;gap:8px}nav{margin-left:0;width:100%}nav button{padding:8px 11px}.topright{margin-left:0;width:100%;flex-wrap:nowrap}.topright #reportbtn{display:none}.who{text-align:left;flex:1;min-width:0;max-width:none}}
+.btn{background:var(--brand);color:var(--on-brand);border:none;border-radius:9px;padding:10px 20px;font-size:14px;font-weight:620;cursor:pointer;white-space:nowrap}
+.btn:hover{opacity:.9}
+.btn.ghost{background:var(--surface);color:var(--ink-2);border:1px solid var(--axis)}
+.btn.sm{padding:7px 14px;font-size:13px;border-radius:8px}
+.btn.danger{background:var(--crit);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.wrap{max-width:1320px;margin:0 auto;padding:26px 20px 100px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-0.02em;font-weight:680}
+.sub{color:var(--ink-2);margin:0 0 20px;max-width:80ch;font-size:14.5px}
+h2{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;margin:0 0 12px}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.pagehead .sub{margin:0}
+
+/* ---------- form ---------- */
+.cols{display:grid;grid-template-columns:1fr 310px;gap:20px;align-items:start}
+@media (max-width:1050px){.cols{grid-template-columns:1fr}}
+.fieldset{border:none;padding:0;margin:0 0 26px}
+.legend{display:flex;align-items:center;gap:9px;margin:0 0 4px;flex-wrap:wrap}
+.legend .n{width:22px;height:22px;border-radius:7px;background:var(--brand);color:var(--on-brand);font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+.legend h3{margin:0;font-size:16px;font-weight:640}
+.legend .when{font-size:11.5px;color:var(--serious);border:1px solid var(--ring);border-radius:999px;padding:1px 8px;font-weight:600}
+.legend-help{font-size:13px;color:var(--ink-muted);margin:0 0 12px 31px;max-width:82ch}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.f{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.f label{font-size:13px;font-weight:600;color:var(--ink-2);display:flex;gap:7px;align-items:baseline;flex-wrap:wrap}
+.req{color:var(--crit);font-size:11px;font-weight:700}
+.opt{color:var(--ink-muted);font-size:11px;font-weight:500}
+.f .hint,div.hint{font-size:12px;color:var(--ink-muted);line-height:1.4}
+input[type=text],input[type=number],input[type=date],input[type=url],select,textarea{
+  background:var(--surface);border:1px solid var(--axis);border-radius:8px;padding:8px 11px;width:100%}
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea{background:var(--surface-2)}
+textarea{resize:vertical;min-height:74px;line-height:1.5}
+select{cursor:pointer}
+.wordcount{font-size:11.5px;color:var(--ink-muted);text-align:right}
+.wordcount.bad{color:var(--crit);font-weight:600}
+.wordcount.ok{color:var(--good);font-weight:600}
+
+.picker{border:1px solid var(--axis);border-radius:8px;background:var(--surface);padding:7px}
+:root[data-theme="dark"] .picker{background:var(--surface-2)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border:1px solid var(--ring);border-radius:999px;padding:2px 6px 2px 9px;font-size:12.5px;font-weight:560}
+.chip b{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--brand);font-weight:700}
+.chip button{background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:15px;line-height:1;padding:0 2px}
+.chip button:hover{color:var(--crit)}
+.picker input{border:none;padding:5px 4px;background:none}
+.picker input:focus{outline:none}
+.opts{max-height:190px;overflow:auto;border-top:1px solid var(--grid);margin-top:6px;padding-top:5px}
+.opt-row{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13.5px}
+.opt-row:hover{background:var(--surface-2)}
+.opt-row .iso{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--ink-muted)}
+
+.segrow{display:grid;grid-template-columns:1.25fr .8fr 1fr .9fr 1.1fr 30px;gap:8px;align-items:center;margin-bottom:9px}
+.rmline{border:none;background:none;color:var(--crit);font-size:20px;line-height:1;cursor:pointer;padding:4px;border-radius:6px}.rmline:hover{background:var(--surface-2)}
+.benefquick{font-size:13px;color:var(--ink-muted);margin:2px 0 8px}.benefquick:empty{display:none}
+@media (max-width:860px){.segrow{grid-template-columns:1fr 1fr;padding-bottom:9px;border-bottom:1px solid var(--grid)}.segrow .rmline{justify-self:start}}
+.seghead{margin-bottom:4px;font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+@media (max-width:860px){.seghead{display:none}}
+.satgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.satgrid.four{grid-template-columns:repeat(4,1fr)}@media (max-width:860px){.satgrid,.satgrid.four{grid-template-columns:1fr 1fr}}
+.segrow .sl{font-size:13px;font-weight:560;color:var(--ink-2)}
+.rep{border:1px solid var(--ring);border-radius:10px;padding:14px;margin-bottom:10px;background:var(--surface-2)}
+.rep .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rep .rh span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+.linkbtn{background:none;border:none;color:var(--s1);cursor:pointer;font-size:13px;font-weight:600;padding:0}
+.linkbtn.danger{color:var(--crit)}
+.addbtn{background:var(--surface);border:1px dashed var(--axis);border-radius:9px;padding:9px 14px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--ink-2);width:100%}
+.addbtn:hover{border-color:var(--s1);color:var(--s1)}
+.togs{display:flex;gap:7px;flex-wrap:wrap}
+.tog{border:1px solid var(--axis);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;background:var(--surface);font-weight:550;white-space:nowrap}
+:root[data-theme="dark"] .tog{background:var(--surface-2)}
+.tog[aria-pressed="true"],:root[data-theme="dark"] .tog[aria-pressed="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.tog.partial,:root[data-theme="dark"] .tog.partial{background:var(--chip);color:var(--brand);border-color:var(--brand);border-style:dashed}
+.dagrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:5px}
+.dagrid .tog{padding:4px 0;text-align:center;font-size:12.5px}
+
+.rail{position:sticky;top:80px}
+.rail .card{padding:16px 18px}
+.checklist{list-style:none;margin:0;padding:0}
+.checklist li{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:4px 0}
+.checklist .bx{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--axis);flex:none;margin-top:3px;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff}
+.checklist li.done .bx{background:var(--good);border-color:var(--good)}
+.checklist li.done span{color:var(--ink-2)}
+.checklist li.need .bx{border-color:var(--crit)}
+.checklist li.need span{color:var(--crit);font-weight:560}
+.progress{height:6px;background:var(--track);border-radius:999px;margin:4px 0 12px;overflow:hidden}
+.progress i{display:block;height:6px;background:var(--good);border-radius:999px;transition:width .2s}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;border:1px solid var(--ring);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--grid);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;white-space:nowrap;background:var(--surface-2);position:sticky;top:0;z-index:1}
+tr:last-child td{border-bottom:none}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover,th.sorted{color:var(--ink)}
+th .sa{display:inline-block;margin-left:5px;font-size:9px;min-width:8px}
+table.dbt{table-layout:fixed}
+table.dbt th{overflow:hidden;text-overflow:ellipsis}
+table.dbt td{overflow:hidden;overflow-wrap:anywhere}
+.colgrip{position:absolute;top:0;right:0;width:9px;height:100%;cursor:col-resize;touch-action:none;z-index:2}
+.colgrip:hover,.colgrip.on{background:color-mix(in srgb,var(--s1) 40%,transparent)}
+tr.childrow td{background:color-mix(in srgb,var(--surface-2) 60%,transparent)}
+.kidmark{color:var(--ink-muted);margin-right:6px;font-weight:700}
+.kidrow{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--grid);padding:8px 2px;cursor:pointer;font-size:13.5px;color:inherit}
+.kidrow:hover{background:var(--surface-2)}
+.kidrow .muted{display:block;margin-top:2px}
+tbody tr.clickable{cursor:pointer}
+tbody tr.clickable:hover td{background:var(--surface-2)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:640;padding:1px 9px;border-radius:999px;border:1px solid var(--ring);white-space:nowrap}
+.pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.imp{color:var(--s1)} .pill.comp{color:var(--good)} .pill.hold{color:var(--serious)} .pill.plan{color:var(--ink-muted)} .pill.crit{color:var(--crit)}
+.upd{border-left:3px solid var(--grid);padding:4px 0 8px 12px;margin:0 0 10px}
+.upd.ON_TRACK{border-color:var(--good)} .upd.DELAYS{border-color:var(--serious)} .upd.OFF_TRACK{border-color:var(--crit)}
+.upd .meta{font-size:12px;color:var(--ink-muted);margin:4px 0 2px}
+.upd .meta .updspent{font-weight:650;color:var(--ink-2)}
+.upd p{margin:2px 0;font-size:13.5px;white-space:pre-wrap;color:var(--ink-2)}
+.updform{background:var(--surface-2);border:1px solid var(--ring);border-radius:12px;padding:14px;margin:8px 0 14px}
+.updform textarea{min-height:70px}
+.updform .togs{margin:4px 0 10px}
+.miss{display:inline-block;font-size:11.5px;font-weight:650;padding:1px 9px;border-radius:999px;border:1px solid var(--warn);color:var(--ink-2);background:color-mix(in srgb,var(--warn) 16%,transparent);white-space:nowrap}
+.missbox{background:color-mix(in srgb,var(--warn) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--warn) 60%,transparent);border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:13.5px}
+.missbox .nt{white-space:pre-wrap;color:var(--ink-2);margin-top:8px;font-size:13px}
+.notescard{border-color:color-mix(in srgb,var(--warn) 60%,transparent);background:color-mix(in srgb,var(--warn) 10%,var(--surface))}
+.notescard textarea{min-height:130px}
+.optlinks{display:flex;gap:18px;flex-wrap:wrap;margin:-4px 0 18px 4px}
+.skilltbl{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:13px}
+.skilltbl th{position:static;background:none;font-size:10.5px;padding:4px 6px;white-space:normal;vertical-align:bottom}
+.skilltbl td{padding:3px 4px;border-bottom:1px solid var(--grid)}
+.skilltbl td.grp{font-weight:650;color:var(--ink-2);padding-top:10px}
+.skilltbl input{width:100%;min-width:0;padding:5px 7px;font-size:13px}
+.skilltbl td.q{width:52%}
+.skilltbl .pc{font-size:11.5px;color:var(--ink-muted);white-space:nowrap}
+@media (max-width:760px){.skilltbl td.q{width:auto}.skilltbl thead{display:none}.skilltbl tr{display:grid;grid-template-columns:1fr 1fr 1fr 1fr}.skilltbl td.q{grid-column:1/-1}.skilltbl td.grp{grid-column:1/-1}}
+.holdnote{font-size:12.5px;color:var(--ink-2);margin-top:4px;white-space:pre-wrap}
+.tagpill{display:inline-block;font-size:11px;font-weight:640;padding:1px 8px;border-radius:999px;border:1px solid var(--ring);background:var(--chip);color:var(--brand);margin:0 3px 3px 0;white-space:nowrap}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.idcell{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--brand);font-weight:600;white-space:nowrap}
+.lock{font-size:11.5px;color:var(--ink-muted);white-space:nowrap}
+
+.filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:13px 16px;margin-bottom:12px}
+.filterbar .fb{display:flex;flex-direction:column;gap:4px}
+.filterbar label{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);font-weight:700}
+.filterbar select,.filterbar input{padding:6px 9px;border-radius:7px;font-size:13px;min-width:120px}
+.filterbar .grow{flex:1;min-width:190px}
+.colpick{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.colpick .cc{display:flex;gap:7px;flex-wrap:wrap}
+
+/* ---------- dashboard ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px;margin-bottom:18px}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:16px 18px}
+.tile .k{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-muted);font-weight:700}
+.tile .v{font-size:30px;font-weight:660;letter-spacing:-0.03em;line-height:1.1;margin:7px 0 2px}
+.tile .t{font-size:12.5px;color:var(--ink-2)}
+.meter{height:6px;background:var(--track);border-radius:999px;margin-top:10px;overflow:hidden}
+.meter i{display:block;height:6px;border-radius:999px;background:var(--s1)}
+.meter i.ok{background:var(--good)} .meter i.warn{background:var(--serious)}
+.bars{display:grid;grid-template-columns:minmax(84px,auto) 1fr auto;gap:5px 12px;align-items:center}
+.bl{font-size:12.5px;color:var(--ink-2);text-align:right}
+.btrack{background:var(--track);border-radius:4px;height:16px}
+.bfill{height:16px;border-radius:0 4px 4px 0;background:var(--s1);min-width:2px}
+.bval{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums;min-width:26px}
+.qgrid{display:grid;grid-template-columns:minmax(40px,auto) 1fr auto;gap:10px 12px;align-items:center}
+.qpair{display:flex;flex-direction:column;gap:2px}
+.qbar{height:13px;border-radius:0 4px 4px 0;min-width:2px}
+.qbar.plan{background:var(--s1)} .qbar.act{background:var(--s2)}
+.legrow{display:flex;gap:16px;font-size:12.5px;color:var(--ink-2);margin-bottom:13px;flex-wrap:wrap}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.sw.plan{background:var(--s1)} .sw.act{background:var(--s2)}
+.banner{background:var(--chip);border:1px solid var(--ring);border-left:3px solid var(--s3);border-radius:0 10px 10px 0;padding:11px 16px;margin-bottom:16px;font-size:13.5px;color:var(--ink-2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:900px){.two{grid-template-columns:1fr}}
+
+/* ---------- overlays ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;display:none}
+.scrim.open{display:block}
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(760px,96vw);background:var(--plane);z-index:160;overflow-y:auto;
+  transform:translateX(100%);transition:transform .22s ease;box-shadow:-8px 0 30px var(--shadow)}
+.panel.open{transform:none}
+.panel .ph{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--grid);padding:15px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;z-index:2}
+.panel .pb{padding:20px 22px 60px}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:7px 16px;font-size:13.5px}
+@media (max-width:600px){.kv{grid-template-columns:1fr}.panel .ph{flex-wrap:wrap;padding:12px 16px}.panel .ph>div:last-child{width:100%;justify-content:flex-end}}
+.kv dt{color:var(--ink-muted);font-weight:600}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.sec{margin-top:22px}
+.sec h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);font-weight:700;margin:0 0 9px;padding-bottom:6px;border-bottom:1px solid var(--grid)}
+.ms{border-left:2px solid var(--grid);padding:0 0 0 13px;margin-bottom:12px}
+.ms b{font-size:13.5px}
+.ms p{margin:4px 0 0;font-size:13px;color:var(--ink-2)}
+.dl{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--grid)}
+.dl:last-child{border-bottom:none}
+.dl .ic{width:26px;height:26px;border-radius:6px;background:var(--chip);display:grid;place-items:center;font-size:10px;font-weight:800;color:var(--brand);flex:none}
+.dl a{text-decoration:none;overflow-wrap:anywhere}
+.dl a:hover{text-decoration:underline}
+.modal{position:fixed;z-index:170;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,94vw);
+  background:var(--surface);border:1px solid var(--ring);border-radius:14px;padding:22px 24px;box-shadow:0 20px 60px var(--shadow)}
+.modal h3{margin:0 0 4px;font-size:18px}
+.modal .row{display:flex;gap:10px;align-items:center;margin:16px 0}
+.replist{display:grid;gap:8px;margin:4px 0 6px}.replist .btn{width:100%;text-align:left}
+.modal select{max-width:260px}
+.stat{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px;background:var(--surface-2);border-radius:10px;padding:12px 14px;margin:6px 0 16px}
+.stat b{font-variant-numeric:tabular-nums;text-align:right}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:var(--brand);color:var(--on-brand);
+  padding:11px 22px;border-radius:999px;font-size:14px;font-weight:600;z-index:200;max-width:min(680px,92vw);text-align:center;
+  box-shadow:0 8px 26px var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+.toast.err{background:var(--crit);color:#fff}
+.loading{padding:60px 0;text-align:center;color:var(--ink-muted)}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--axis);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media print{.top,.scrim,.panel,.toast{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ===================================================== LOGIN -->
+<div class="login" id="login">
+  <div class="lcard">
+    <p class="lbrand">WeCheck</p>
+    <p class="lsub">Division for Asia and the Pacific · project monitoring</p>
+    <div id="ldemo" class="demo-note hidden"></div>
+    <label for="luser">Who are you?</label>
+    <select id="luser"><option value="">Loading names…</option></select>
+    <label for="lcode">Your login code</label>
+    <input type="text" id="lcode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX" maxlength="12">
+    <label class="remember" for="lremember"><input type="checkbox" id="lremember" checked> Keep me signed in on this computer</label>
+    <button class="lbtn" id="lgo" disabled>Sign in</button>
+    <p class="lerr" id="lerr" role="alert"></p>
+    <p class="lfoot">Each person has their own code. Lost it? Ask a WeCheck administrator for a new one. On a shared computer, untick "Keep me signed in".</p>
+  </div>
+</div>
+
+<!-- ===================================================== APP -->
+<div id="app" class="hidden">
+  <div class="top"><div class="topin">
+    <div class="brand">WeCheck<small>Division for Asia and the Pacific</small></div>
+    <span class="demo-badge hidden" id="demobadge" title="Nothing you enter is saved">DEMO</span>
+    <nav id="nav">
+      <button data-v="dash">Dashboard</button>
+      <button data-v="db">Database</button>
+      <button data-v="form">New record</button>
+    </nav>
+    <div class="topright">
+      <button class="btn sm" id="reportbtn">Reports</button>
+      <div class="who" id="who"></div>
+      <button class="iconbtn" id="signout">Sign out</button>
+      <button class="iconbtn" id="theme" aria-label="Switch colour theme">Dark</button>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <section id="v-form"></section>
+    <section id="v-dash" class="hidden"></section>
+    <section id="v-db" class="hidden"></section>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="panel" id="panel" role="dialog" aria-modal="true"></div>
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script>/* demo data loads only when no backend is configured */ if(!String((window.METRACK_CONFIG||{}).apiUrl||"").trim()) document.write('<script src="demo-data.js"><\/script>');</script>
+<script src="lib/docx.min.js"></script>
+<script>
+"use strict";
+/* ======================================================================
+   WeCheck front end. No data lives in this file.
+   Data comes from the Apps Script backend (config.js apiUrl), or from
+   demo-data.js when no backend is configured.
+   ====================================================================== */
+
+const CFG = window.METRACK_CONFIG || {};
+const API_URL = String(CFG.apiUrl || "").trim();
+const DEMO = !API_URL;
+const DIVISION = "Division for Asia and the Pacific";
+
+/* ------------------------------------------------------------ reference */
+const COUNTRIES=[["AFG","Afghanistan",1],["BGD","Bangladesh",1],["BTN","Bhutan",1],["BRN","Brunei Darussalam",0],["KHM","Cambodia",1],["CHN","China",0],["COK","Cook Islands",0],["PRK","Democratic People's Republic of Korea",0],["FJI","Fiji",0],["IND","India",0],["IDN","Indonesia",0],["IRN","Iran (Islamic Republic of)",0],["KIR","Kiribati",1],["LAO","Lao People's Democratic Republic",1],["MYS","Malaysia",0],["MDV","Maldives",0],["MHL","Marshall Islands",0],["FSM","Micronesia (Federated States of)",0],["MNG","Mongolia",0],["MMR","Myanmar",1],["NRU","Nauru",0],["NPL","Nepal",1],["NIU","Niue",0],["PAK","Pakistan",0],["PLW","Palau",0],["PNG","Papua New Guinea",0],["PHL","Philippines",0],["KOR","Republic of Korea",0],["WSM","Samoa",0],["SGP","Singapore",0],["SLB","Solomon Islands",1],["LKA","Sri Lanka",0],["THA","Thailand",0],["TLS","Timor-Leste",1],["TON","Tonga",0],["TUV","Tuvalu",1],["VUT","Vanuatu",0],["VNM","Viet Nam",0]]
+  .map(([iso,name,ldc])=>({iso,name,ldc:!!ldc}));
+const CNAME=Object.fromEntries(COUNTRIES.map(c=>[c.iso,c.name]));
+const ALL_ISO=COUNTRIES.map(c=>c.iso);
+const GROUPINGS=[
+  {code:"ASEAN",label:"ASEAN",members:["BRN","KHM","IDN","LAO","MYS","MMR","PHL","SGP","THA","TLS","VNM"]},   // Timor-Leste joined on 26 October 2025
+  {code:"SAARC",label:"SAARC",members:["AFG","BGD","BTN","IND","MDV","NPL","PAK","LKA"]},
+  {code:"PIC",label:"Pacific Island Countries",members:["COK","FJI","KIR","MHL","FSM","NRU","NIU","PLW","PNG","WSM","SLB","TON","TUV","VUT"]},
+  {code:"BIMSTEC",label:"BIMSTEC",members:["BGD","BTN","IND","MMR","NPL","LKA","THA"]},
+  {code:"ASPAC",label:"Asia and the Pacific (all 38)",members:ALL_ISO}];
+const GRP=Object.fromEntries(GROUPINGS.map(g=>[g.code,g]));
+const BUCKETS=[["MAINSTREAM","Mainstreamed Project"],["FLAGSHIP","Flagship Project"],["REGIONAL","Regional"],["CROSSREG","Cross Regional"]];
+const ER=[["3.1","3.1  Wider and more effective use of WIPO's global IP systems"],
+  ["4.1","4.1  More effective use of a balanced IP system to support growth and development"],
+  ["4.2","4.2  Development of balanced and effective IP, innovation and creative ecosystems"],
+  ["4.3","4.3  Increased IP knowledge and skills in all Member States"],
+  ["4.4","4.4  More innovators, creators, SMEs and universities leverage IP successfully"],
+  ["4.5","4.5  Enhanced IP infrastructure for IP Offices"]];
+const TYPES=[["PROJECT","Project"],["ACTIVITY","Standalone activity"],["COMPONENT","Component of a larger project"],["SUPPORT","Workplan support line"]];
+const STATUS=[["NOT_STARTED","Not started"],["IN_PROGRESS","In progress"],["COMPLETED","Completed"],["ON_HOLD","On hold"]];
+const SCLASS={NOT_STARTED:"plan",IN_PROGRESS:"imp",COMPLETED:"comp",ON_HOLD:"hold"};
+const RATING=[["ON_TRACK","On track"],["DELAYS","Some delays"],["OFF_TRACK","Off track"]];
+const RCLASS={ON_TRACK:"comp",DELAYS:"hold",OFF_TRACK:"crit"};
+const STALE_DAYS=30;
+const DOCSTAGE=[["NONE","No document yet"],["CONCEPT","Concept note"],["DRAFT","Draft prepared"],["INT_REVIEW","Under internal review"],["NAT_REVIEW","Under national stakeholder review"],["APPROVED","Approved"]];
+const FUNDING=[["RB","DAP regular budget"],["ICDAP","ICDAP"],["FIT_ROK","FIT / Republic of Korea"],["FIT_JP","FIT / Japan"],["FIT_AU","FIT / Australia"],["OTHER","Other source (specify)"]];
+const THEMES=[["WOMEN","Women"],["YOUTH","Youth"],["SME","SMEs"],["STARTUP","Start-ups"],["LOCAL_COMM","Local and indigenous communities"],["PWD","Persons with disabilities"],["UNIVERSITY","Universities and research"],["CREATIVE","Creative industries"],["AI","Artificial intelligence"],["GREEN","Green technology"],["GI","GIs and branding"],["TK","Traditional knowledge"],["IPO_MODERN","IP office modernisation"],["TECH_TRANSFER","Technology transfer"],["ENTERPRISE","Established enterprises and industry"],["GLOBAL_SYS","Madrid, PCT, Hague and Lisbon systems"],["POLICY","IP policy, strategy and law"],["COPYRIGHT","Copyright and collective management"],["ENFORCE","IP enforcement"]];
+const SEGMENTS=[["TOTAL","Total"],["WOMEN","Women"],["YOUTH","Youth"],["SME","SMEs"],["PWD","Persons with disabilities"],["LOCAL_COMM","Local communities"]];
+const ENTITY_TYPE=[["INDIVIDUAL","individuals"],["ENTERPRISE","enterprises"],["INSTITUTION","institutions"],["HOUSEHOLD","households"]];
+const QUALIFIER=[["EXACT","exact"],["MINIMUM","at least"],["ESTIMATE","estimate"]];
+const RSTATUS=[["REPORTED","Reported"],["ZERO","Genuinely zero"],["NOT_APPLICABLE","Not applicable"],["NOT_COLLECTED","Not collected"],["NOT_YET","Not yet available"]];
+const TOOLS=[["T01","WIPO NIPS methodology"],["T02","WIPO Guides for businesses and start-ups"],["T03","WIPO IP Diagnostics Tool"],["T04","IP toolkit for universities"],["T05","IP and Tourism toolkit"],["T06","Gender analysis guidelines"],["T07","Toolkit: innovation ecosystems ready for AI"],["T08","WIPO Guide on Generative AI"],["T09","Creative Economy Data Model"],["T10","New Product Development toolkit"],["T11","Collective Management toolkit"],["T12","Global Innovation Index use"],["T13","Cultural Heritage access toolkits"]];
+const IPTYPE=[["TRADEMARK","Trademark"],["PATENT","Patent"],["DESIGN","Industrial design"],["GI","Geographical indication"],["COLLECTIVE","Collective mark"],["COPYRIGHT","Copyright"],["UTILITY","Utility model"]];
+const IPSTAGE=[["FILED","Application filed"],["REGISTERED","Registered"]];
+const MSTATUS=[["PLANNED","Planned"],["IN_PROGRESS","In progress"],["ACHIEVED","Achieved"],["DELAYED","Delayed"],["CANCELLED","Cancelled"]];
+const DOCTYPES=[["PROJECT_DOC","Project document"],["CONCEPT","Concept note"],["COMPLETION","Completion report"],["EVALUATION","Evaluation report"],["WORKPLAN","Workplan extract"],["PHOTO","Photographs"],["STORY","Published impact story"],["OTHER","Other"]];
+const L=Object.fromEntries([["type",TYPES],["er",ER],["status",STATUS],["doc",DOCSTAGE],["fund",FUNDING],["theme",THEMES],["seg",SEGMENTS],["ent",ENTITY_TYPE],["q",QUALIFIER],["rs",RSTATUS],["rag",RATING],["tool",TOOLS],["ip",IPTYPE],["ipst",IPSTAGE],["ms",MSTATUS],["dt",DOCTYPES],["bucket",BUCKETS]].map(([k,v])=>[k,Object.fromEntries(v)]));
+const WORKPLAN_YEARS=(()=>{const y=new Date().getFullYear();return [y-2,y-1,y,y+1,y+2].map(String);})();
+const DESC_TEMPLATE="Context: the problem or opportunity in the beneficiary country, in one or two sentences.\n\nWhat the project does: the main activities, in the order they happen.\n\nWho benefits: the specific group, with numbers where known.\n\nExpected result: what will be different when the project closes, stated so it can be checked.";
+/* Only projects have project documents. Standalone activities, components, support lines
+   and all ER 4.2 work (conferences, meetings, tools) do not. */
+const hasProjectDocs=r=>!!r&&r.type==="PROJECT"&&r.er!=="4.2";
+function requiredDocs(r){
+  if(!hasProjectDocs(r)) return [];
+  return {NOT_STARTED:["CONCEPT"],IN_PROGRESS:["PROJECT_DOC"],COMPLETED:["PROJECT_DOC","COMPLETION"],ON_HOLD:["PROJECT_DOC"]}[r.status]||[];
+}
+
+/* ------------------------------------------------------------ utilities */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const pad=n=>String(n).padStart(2,"0");
+const fmt=n=>Number(n||0).toLocaleString("en-US");
+const words=s=>String(s||"").trim().split(/\s+/).filter(Boolean).length;
+const clone=o=>JSON.parse(JSON.stringify(o));
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function todayISO(){const d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+function nowStamp(){const d=new Date();return todayISO()+"T"+pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds())+"."+String(d.getMilliseconds()).padStart(3,"0");}
+const quarterOf=d=>d?d.slice(0,4)+"-Q"+Math.ceil(+d.slice(5,7)/3):null;
+function qRange(q){const y=+q.slice(0,4),n=+q.slice(-1),sm=(n-1)*3+1,em=n*3;return[`${y}-${pad(sm)}-01`,`${y}-${pad(em)}-${pad(new Date(Date.UTC(y,em,0)).getUTCDate())}`];}
+function qLabel(q){const y=q.slice(0,4),n=+q.slice(-1);return `Quarter ${n}, ${MONTHS[(n-1)*3]} to ${MONTHS[n*3-1]} ${y}`;}
+const qShort=q=>"Q"+q.slice(-1)+" "+q.slice(0,4);
+function qShift(q,k){let y=+q.slice(0,4),n=+q.slice(-1)-1+k;y+=Math.floor(n/4);n=((n%4)+4)%4;return y+"-Q"+(n+1);}
+function niceDate(d){if(!d)return "";const [y,m,dd]=d.split("-");return `${+dd} ${MONTHS[+m-1]} ${y}`;}
+function niceRange(a,b){if(!b||a===b)return niceDate(a);const [y1,m1,d1]=a.split("-"),[y2,m2,d2]=b.split("-");
+  if(y1===y2&&m1===m2)return `${+d1} to ${+d2} ${MONTHS[+m1-1]} ${y1}`;
+  if(y1===y2)return `${+d1} ${MONTHS[+m1-1]} to ${+d2} ${MONTHS[+m2-1]} ${y1}`;
+  return `${niceDate(a)} to ${niceDate(b)}`;}
+const CUR_Q=quarterOf(todayISO());
+function spendAt(r,q){const h=(r.spend||[]).slice().sort((a,b)=>a.p.localeCompare(b.p));let v=0;h.forEach(x=>{if(!q||x.p<=q)v=Number(x.a||0);});return v;}
+const latestSpend=r=>spendAt(r,null);
+function total(r,seg){return (r.benef||[]).filter(b=>b.seg===seg&&b.rs==="REPORTED").reduce((a,b)=>a+Number(b.n||0),0);}
+/* reported numbers for one group, added up per type: [{ent,n,q}] in ENTITY_TYPE order */
+function benefBy(rs,seg){const m={};(Array.isArray(rs)?rs:[rs]).forEach(r=>(r.benef||[]).forEach(b=>{if(b.seg!==seg||b.rs!=="REPORTED"||b.n===""||b.n==null)return;
+  const k=b.ent||"INDIVIDUAL";m[k]=m[k]||{ent:k,n:0,q:"EXACT"};m[k].n+=Number(b.n||0);if(b.q!=="EXACT")m[k].q=b.q;}));
+  return ENTITY_TYPE.map(([k])=>m[k]).filter(Boolean);}
+const SKILL_GROUPS=[["Awareness and baseline knowledge",["Which of the following best defines X?","What is the primary objective of X?","Which statement correctly describes the scope of X?"]],
+  ["Conceptual understanding",["Which component plays a central role in the functioning of X?","Which condition is necessary for X to be applied?","What would invalidate the correct application of X?"]],
+  ["Applied or practical understanding",["Which scenario best illustrates the correct use of X?","In which situation would X be most appropriately applied?","Which outcome indicates correct implementation of X?"]]];
+const SKILL_QS=SKILL_GROUPS.flatMap(([,q])=>q), SKILL_NUM=["entryCorrect","entryResp","exitCorrect","exitResp"];
+const skillRows=r=>(r.skills||[]).filter(q=>SKILL_NUM.some(k=>q[k]!==""&&q[k]!=null));
+/* totals from the per-question rows: {entryCorrect,...} or null when no question has numbers */
+function skillTotals(r){const rows=skillRows(r); if(!rows.length)return null; const t={};
+  SKILL_NUM.forEach(k=>{const v=rows.filter(q=>q[k]!==""&&q[k]!=null); t[k]=v.length?v.reduce((a,q)=>a+Number(q[k]||0),0):"";}); return t;}
+const SURVEY_KEYS=["participants","questionnaires","satVS","satS","satN","satD","satVD","satDK","entryCorrect","entryResp","exitCorrect","exitResp"];
+function satFromCounts(r){const n=k=>Number(r[k]||0),pos=n("satVS")+n("satS"),tot=pos+n("satN")+n("satD")+n("satVD");return tot>0?Math.round(pos/tot*100):null;}
+function pctOf(a,b){a=Number(a||0);b=Number(b||0);return b>0?Math.round(a/b*1000)/10:null;}
+function lastUpd(r){return (r.updates||[]).slice().sort((a,b)=>String(b.id).localeCompare(String(a.id)))[0]||null;}
+function daysSince(d){return d?Math.floor((Date.parse(todayISO())-Date.parse(d))/864e5):null;}
+const clipText=(t,n)=>{t=String(t||"");return t.length>n?t.slice(0,n).replace(/\s+\S*$/,"")+"…":t;};
+function stPill(st){return st?`<span class="pill ${SCLASS[st]||""}"><span class="d"></span>${esc(L.status[st]||st)}</span>`:'<span class="muted">not set</span>';}
+function ragPill(rag){return rag?`<span class="pill ${RCLASS[rag]||""}"><span class="d"></span>${esc(L.rag[rag]||rag)}</span>`:'<span class="pill plan"><span class="d"></span>No update yet</span>';}
+function andList(a){return a.length<2?a.join(""):a.slice(0,-1).join(", ")+" and "+a[a.length-1];}
+/* "5 individuals and 3 enterprises"; qualifiers optional; people=true says participants instead of individuals */
+function benefText(rs,seg,o={}){return andList(benefBy(rs,seg).map(x=>(o.qual?(x.q==="MINIMUM"?"at least ":x.q==="ESTIMATE"?"an estimated ":""):"")+fmt(x.n)+" "+(o.people&&x.ent==="INDIVIDUAL"?"participants":L.ent[x.ent])));}
+function toast(msg,err){const t=$("#toast");t.textContent=msg;t.classList.toggle("err",!!err);t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),err?6000:3600);}
+const normCode=c=>String(c||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+const uname=id=>id==="IMPORT"?"Imported from 2026 reports":((USERS.find(u=>u.id===id)||{}).name||id||"");
+const hasSurvey=r=>SURVEY_KEYS.some(k=>r[k]!==""&&r[k]!=null)||(r.satisfaction!==""&&r.satisfaction!=null);
+function datesText(r){const e=r.end||r.expEnd;
+  if(!r.start)return e?(r.end?"Ended ":"Expected to end ")+niceDate(e)+", start date not set":"Not set yet";
+  return niceRange(r.start,e)+(e?(r.end?"":" (end expected)"):", end not set");}
+const BI_YEAR=(y=>y-(y%2))(new Date().getFullYear());   // WIPO biennium: 2026-27, 2028-29, ...
+const BI_LABEL=BI_YEAR+"-"+String(BI_YEAR+1).slice(2);
+const store={get(k){try{return JSON.parse(sessionStorage.getItem(k));}catch(e){return null;}},
+  set(k,v){try{sessionStorage.setItem(k,JSON.stringify(v));}catch(e){}},del(k){try{sessionStorage.removeItem(k);}catch(e){}}};
+const lstore={get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}},del(k){try{localStorage.removeItem(k);}catch(e){}}};
+/* sign-in: kept on this computer (localStorage) when "Keep me signed in" is ticked, otherwise only for this tab */
+const SESSION_KEY="metrack.session";
+let KEEP=false;
+const session={get:()=>lstore.get(SESSION_KEY)||store.get(SESSION_KEY),
+  save(){const v={token:TOKEN,user:ME,keep:KEEP};(KEEP?lstore:store).set(SESSION_KEY,v);(KEEP?store:lstore).del(SESSION_KEY);},
+  clear(){store.del(SESSION_KEY);lstore.del(SESSION_KEY);}};
+
+/* ------------------------------------------------------ validation rules
+   Same rules as the backend (Code.gs validate_). */
+function requirements(r,all){
+  const d=/^\d{4}-\d{2}-\d{2}$/;
+  // work finished before the current biennium is kept for reference: budget and funding not required
+  const past=r.status==="COMPLETED"&&d.test(r.end||"")&&r.end<BI_YEAR+"-01-01";
+  const items=[
+    ["Record type"+(r.type==="COMPONENT"?" and parent project":""), !!r.type&&(r.type!=="COMPONENT"||all.some(p=>p.id===r.parentId&&p.id!==r.id))],
+    ["Expected Result", !!r.er],
+    ["Working title", !!String(r.title||"").trim()],
+  ];
+  if(r.inWorkplan) items.push(["Workplan title and year", !!String(r.workplanTitle||"").trim()&&!!r.workplanYear]);
+  items.push(
+    ["Status", !!r.status],
+    ...(r.status==="ON_HOLD"?[["Reason for the hold", !!String(r.holdReason||"").trim()]]:[]),
+    ...(past&&!r.funding?[]:[["Funding source"+(r.funding==="OTHER"?" (which one)":""), !!r.funding&&(r.funding!=="OTHER"||!!String(r.fundingOther||"").trim())]]),
+    ["Project manager", !!r.managerId],
+    ["A country or a regional grouping", (r.countries||[]).length>0||(r.groupings||[]).length>0||!!String(r.otherCountries||"").trim()],
+    ["At least one area or topic", (r.themes||[]).length>0],
+    ["Start date", d.test(r.start||"")],
+    [r.status==="COMPLETED"?"End date":"Expected completion date", d.test((r.status==="COMPLETED"?r.end:r.expEnd)||"")],
+    ...(past&&(r.budget===""||r.budget==null)?[]:[["Allocated budget", r.budget!==""&&r.budget!=null&&!isNaN(Number(r.budget))&&Number(r.budget)>=0]]),
+    ["Description", !!String(r.desc||"").trim()]);
+  return items.map(([label,ok])=>({label,ok}));
+}
+const missing=(r,all)=>requirements(r,all).filter(x=>!x.ok).map(x=>x.label.toLowerCase());
+
+/* ================================================================== API */
+function ApiError(msg,code){const e=new Error(msg);e.code=code;return e;}
+
+const RemoteApi={
+  async call(body){
+    let res;
+    try{ res=await fetch(API_URL,{method:"POST",body:JSON.stringify(body),redirect:"follow"}); }
+    catch(e){ throw ApiError("Could not reach the WeCheck server. Check your connection and try again.","NETWORK"); }
+    let j; try{ j=await res.json(); }catch(e){ throw ApiError("The WeCheck server sent an unexpected reply. Check the apiUrl in config.js.","NETWORK"); }
+    if(!j.ok) throw ApiError(j.error||"Request failed.",j.code);
+    return j;
+  },
+  async users(){ return (await this.call({action:"users"})).users; },
+  async login(userId,code,remember){ return this.call({action:"login",userId,code,remember:!!remember}); },
+  async list(token){ const j=await this.call({action:"list",token});
+    if(Array.isArray(j.users)&&j.users.length) USERS=j.users;
+    if(j.me&&ME&&j.me.id===ME.id) ME=Object.assign({},ME,j.me);   // picks up a change of rights without signing out
+    if(j.token) TOKEN=j.token;                                     // renewed "keep me signed in" token
+    if(ME&&TOKEN) session.save();
+    return j.records; },
+  async save(token,record,baseUpdatedAt){ return (await this.call({action:"save",token,record,baseUpdatedAt})).record; },
+  async progress(token,id,update,remove){ return (await this.call({action:"progress",token,id,update,remove})).record; },
+  async del(token,id){ return this.call({action:"delete",token,id}); },
+  codeHint(){ return ""; },
+};
+
+/* Demo backend: the same rules as Code.gs, held in memory. */
+const DemoApi=(()=>{
+  const D=window.METRACK_DEMO||{users:[],records:[]};
+  let recs=clone(D.records||[]);
+  const who=t=>{const id=String(t||"").replace(/^demo\./,"");const u=(D.users||[]).find(x=>x.id===id);if(!u)throw ApiError("Please sign in again.","AUTH");return u;};
+  const may=(u,r)=>u.admin||r.managerId===u.id||(r.team||[]).includes(u.id)||r.createdBy===u.id;
+  const wait=v=>new Promise(res=>setTimeout(()=>res(v),120));
+  return {
+    users:()=>wait((D.users||[]).map(u=>({id:u.id,name:u.name,role:u.role}))),  // demo keeps roles; the real server sends them only after sign-in
+    codeHint:id=>((D.users||[]).find(u=>u.id===id)||{}).code||"",
+    async login(id,code){
+      const u=(D.users||[]).find(x=>x.id===id);
+      if(!u||normCode(code)!==normCode(u.code)) throw ApiError("That code is not right for this person.","AUTH");
+      return wait({ok:true,token:"demo."+u.id,user:{id:u.id,name:u.name,role:u.role,admin:!!u.admin}});
+    },
+    async list(t){ who(t); return wait(clone(recs)); },
+    async save(t,rec,base){
+      const u=who(t); rec=clone(rec);
+      const ex=rec.id?recs.find(r=>r.id===rec.id):null;
+      if(rec.id&&!ex) throw ApiError("That record no longer exists.","INVALID");
+      if(ex&&!may(u,ex)) throw ApiError("Only the project manager, named teammates and administrators can edit this record.","FORBIDDEN");
+      if(ex&&base&&ex.updatedAt&&base!==ex.updatedAt) throw ApiError("Someone saved this record while you were editing. Reload and try again.","CONFLICT");
+      const miss=missing(rec,recs); if(miss.length) throw ApiError("Still needed: "+miss.join(", ")+".","INVALID");
+      if(rec.status!=="COMPLETED") rec.end="";
+      if(rec.type!=="COMPONENT") rec.parentId="";
+      rec.team=(rec.team||[]).filter(x=>x!==rec.managerId);
+      rec.spend=ex?(ex.spend||[]):[];
+      if(rec.spendNow!==""&&rec.spendNow!=null&&!isNaN(Number(rec.spendNow))) rec.spend=rec.spend.filter(s=>s.p!==CUR_Q).concat([{p:CUR_Q,a:Number(rec.spendNow)}]);
+      delete rec.spendNow;
+      rec.milestones=(rec.milestones||[]).filter(m=>String(m.name||"").trim());
+      rec.benef=(rec.benef||[]).filter(b=>b.seg&&!emptyBenef(b));
+      rec.docs=(rec.docs||[]).filter(d=>d.name||d.url);
+      rec.tools=(rec.tools||[]).filter(x=>x.iso&&x.tool);
+      { const before=ex?(ex.updates||[]):[], st=nowStamp();   // stored updates are always kept
+        const fresh=(rec.updates||[]).filter(x=>!x.id&&String(x.note||"").trim()).map((x,i)=>({id:st+"-"+u.id+"-"+i,date:todayISO(),rag:x.rag||"ON_TRACK",note:String(x.note).trim(),next:String(x.next||"").trim(),by:u.id}));
+        rec.updates=before.concat(fresh).sort((a,b)=>String(b.id).localeCompare(String(a.id))); }
+      if(ex){ rec.createdBy=ex.createdBy; }
+      else {
+        const tag=(rec.countries.length===1?rec.countries[0]:(rec.groupings[0]||rec.countries[0]||"REG"));
+        const y=(rec.start||todayISO()).slice(0,4); let n=1;
+        while(recs.some(r=>r.id===`DAP-${y}-${tag}-${pad(n)}`)) n++;
+        rec.id=`DAP-${y}-${tag}-${pad(n)}`; rec.createdBy=u.id;
+      }
+      rec.updatedBy=u.id; rec.updatedAt=nowStamp();
+      if(ex) recs[recs.indexOf(ex)]=rec; else recs.push(rec);
+      return wait(clone(rec));
+    },
+    async progress(t,id,upd,remove){
+      const u=who(t), r=recs.find(x=>x.id===id); if(!r) throw ApiError("That record no longer exists.","INVALID");
+      let ups=r.updates||[], sp=(r.spend||[]).slice();
+      if(remove){ if(!u.admin) throw ApiError("Only administrators can remove a progress update.","FORBIDDEN");
+        const gone=ups.find(x=>x.id===remove); if(!gone) throw ApiError("That update was already removed. Reload the database.","INVALID");
+        ups=ups.filter(x=>x.id!==remove);
+        const amt=Number(gone.spent||0); if(amt>0){const q0=quarterOf(gone.date||todayISO()); sp=sp.map(x=>x.p>=q0?{p:x.p,a:Math.max(0,Number(x.a||0)-amt)}:x);} }
+      else{ if(!may(u,r)) throw ApiError("Only the project manager, named teammates and administrators can add a progress update.","FORBIDDEN");
+        const note=String((upd||{}).note||"").trim(); if(!note) throw ApiError("Write a line about the progress first.","INVALID");
+        const amt=upd.spent===""||upd.spent==null||isNaN(Number(upd.spent))?"":Number(upd.spent);
+        if(amt!==""&&amt<0) throw ApiError("The amount spent cannot be negative.","INVALID");
+        ups=[{id:nowStamp()+"-"+u.id+"-0",date:todayISO(),rag:(upd.rag in RCLASS)?upd.rag:"ON_TRACK",note,next:String(upd.next||"").trim(),by:u.id,spent:amt===0?"":amt}].concat(ups);
+        if(amt>0){ const tot=spendAt({spend:sp},null)+amt; sp=sp.filter(x=>x.p!==CUR_Q).concat([{p:CUR_Q,a:tot}]); } }
+      r.updates=ups.sort((a,b)=>String(b.id).localeCompare(String(a.id))); r.spend=sp;
+      return wait(clone(r));
+    },
+    async del(t,id){
+      const u=who(t); if(!u.admin) throw ApiError("Only administrators can delete records.","FORBIDDEN");
+      recs=recs.filter(r=>r.id!==id); return wait({ok:true});
+    },
+  };
+})();
+const Api=DEMO?DemoApi:RemoteApi;
+
+/* ================================================================ STATE */
+let USERS=[], ME=null, TOKEN=null, DB=[], LOADED_AT=null;
+let VIEW="form", editing=null, draft=null, viewing=null;
+const canEdit=r=>!!ME&&(ME.admin||r.managerId===ME.id||(r.team||[]).includes(ME.id)||r.createdBy===ME.id);
+const rec=id=>DB.find(r=>r.id===id);
+
+function handleErr(e){
+  if(e.code==="AUTH"){ signOut(e.message); return; }
+  toast(e.message||"Something went wrong.",true);
+  if(e.code==="CONFLICT") refresh();
+}
+
+/* ================================================================ LOGIN */
+async function boot(){
+  applyTheme();
+  if(DEMO){
+    $("#demobadge").classList.remove("hidden");
+    if(!window.METRACK_DEMO){ $("#lerr").textContent="Not connected yet. Paste the Apps Script web app URL into config.js (README, step 10)."; return; }
+  }
+  try{ USERS=await Api.users(); }
+  catch(e){ $("#luser").innerHTML='<option value="">Unavailable</option>'; $("#lerr").textContent=e.message; return; }
+  const sel=$("#luser");
+  sel.innerHTML='<option value="">Choose your name</option>'+USERS.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(u=>`<option value="${esc(u.id)}">${esc(u.name)}</option>`).join("");
+  const s=session.get();
+  if(s&&s.token&&s.user&&(DEMO?String(s.token).startsWith("demo."):!String(s.token).startsWith("demo."))){
+    TOKEN=s.token; ME=s.user; KEEP=!!s.keep;
+    try{ await enterApp(); return; }catch(e){ TOKEN=null; ME=null; session.clear(); }
+  }
+  showLogin();
+}
+function showLogin(msg){
+  $("#app").classList.add("hidden"); $("#login").classList.remove("hidden");
+  $("#lerr").textContent=msg||""; $("#lcode").value=""; updateLoginBtn(); updateDemoNote();
+}
+function updateLoginBtn(){ $("#lgo").disabled=!($("#luser").value&&normCode($("#lcode").value).length>=6); }
+function updateDemoNote(){
+  const n=$("#ldemo"); if(!DEMO){n.classList.add("hidden");return;}
+  const id=$("#luser").value; n.classList.remove("hidden");
+  n.innerHTML=id?`Demo mode, nothing is saved. Code for ${esc(uname(id))}: <b>${esc(Api.codeHint(id))}</b>`
+    :"Demo mode, nothing is saved. Choose a name to see its demo code.";
+}
+$("#luser").onchange=()=>{updateLoginBtn();updateDemoNote();$("#lerr").textContent="";};
+$("#lcode").oninput=updateLoginBtn;
+$("#lcode").onkeydown=e=>{if(e.key==="Enter"&&!$("#lgo").disabled)$("#lgo").click();};
+$("#lgo").onclick=async()=>{
+  const b=$("#lgo"); b.disabled=true; b.textContent="Signing in…"; $("#lerr").textContent="";
+  try{
+    KEEP=$("#lremember").checked;
+    const r=await Api.login($("#luser").value,$("#lcode").value,KEEP);
+    TOKEN=r.token; ME=r.user; session.save();
+    await enterApp();
+  }catch(e){ $("#lerr").textContent=e.message; }
+  finally{ b.textContent="Sign in"; updateLoginBtn(); }
+};
+async function enterApp(){
+  DB=await Api.list(TOKEN); LOADED_AT=new Date();
+  $("#login").classList.add("hidden"); $("#app").classList.remove("hidden");
+  $("#who").innerHTML=`<b>${esc(ME.name)}</b>`;
+  draft=null; editing=null; go(lstore.get("metrack.view")==="dash"?"dash":"db");   // opens on the tab used last, Database by default
+}
+function signOut(msg){
+  TOKEN=null; ME=null; DB=[]; draft=null; editing=null; session.clear(); closePanel(); closeModal();
+  showLogin(msg);
+}
+$("#signout").onclick=()=>signOut();
+async function refresh(){
+  try{ DB=await Api.list(TOKEN); LOADED_AT=new Date(); if(VIEW!=="form") go(VIEW); }catch(e){ handleErr(e); }
+}
+
+/* ================================================================= FORM */
+function blank(){return {id:"",type:"PROJECT",parentId:"",er:"",buckets:[],copyright:false,title:"",inWorkplan:false,workplanTitle:"",workplanYear:"",
+  desc:"",managerId:ME?ME.id:"",team:[],counterpart:"",countries:[],groupings:[],status:"",docStage:"NONE",funding:"",fundingOther:"",
+  start:"",end:"",expEnd:"",budget:"",spendNow:"",themes:[],docs:[],benef:[{seg:"TOTAL",n:"",ent:"INDIVIDUAL",q:"EXACT",rs:"REPORTED"}],
+  milestones:[],tools:[],satisfaction:"",respondents:"",filings:[],da:[],sustainability:"",updates:[],otherCountries:"",reviewNotes:"",holdReason:"",skills:[],participants:"",questionnaires:"",platform:"",surveyDoc:"",satVS:"",satS:"",satN:"",satD:"",satVD:"",satDK:"",entryCorrect:"",entryResp:"",exitCorrect:"",exitResp:""};}
+function sel(key,list,val,ph){return `<select data-k="${key}"><option value="">${ph||"Select…"}</option>`+list.map(([v,l])=>`<option value="${esc(v)}" ${String(v)===String(val)?"selected":""}>${esc(l)}</option>`).join("")+"</select>";}
+function groupState(d,code){const g=GRP[code];const n=g.members.filter(m=>d.countries.includes(m)).length;return n===0?"off":n===g.members.length?"full":"partial";}
+
+function renderForm(){
+  if(!draft){
+    if(editing){ const r=rec(editing); draft=Object.assign(blank(),clone(r)); draft.spendNow=latestSpend(r)?String(latestSpend(r)):""; draft._spendBase=draft.spendNow; draft._base=r.updatedAt||"";
+      draft.benef=(draft.benef||[]).filter(b=>!emptyBenef(b)); }   // empty lines saved by older versions are not shown again
+    else draft=blank();
+  }
+  const d=draft, isNew=!editing;
+  const parents=DB.filter(r=>r.type!=="COMPONENT"&&r.id!==d.id);
+  const stored=editing?rec(editing):null, showNotes=!!(stored&&String(stored.reviewNotes||"").trim());
+  const showSurvey=d.er==="4.3"||hasSurvey(d)||!!d._openSurvey, showTools=d.er==="4.2"||(d.tools||[]).length>0||!!d._openTools;
+  const showSkills=skillRows(d).length>0||!!d._openSkills;
+  if(showSkills){ d.skills=SKILL_QS.map((q,i)=>Object.assign({question:q,entryCorrect:"",entryResp:"",exitCorrect:"",exitResp:""},(d.skills||[])[i]||{})); }
+  $("#v-form").innerHTML=`
+  <div class="pagehead"><div>
+    <h1>${isNew?"New record":"Edit record <span class='idcell' style='font-size:19px'>"+esc(d.id)+"</span>"}</h1>
+    <p class="sub">${isNew?"Choose the Expected Result first; the form then shows only what that result needs.":"Changes are saved for everyone as soon as you press Save."}</p>
+  </div></div>
+  <div class="cols"><div>
+  ${showNotes?`<div class="card notescard"><h2>Notes to check</h2>
+    <p class="muted" style="margin:0 0 8px">Left by the import of past reports. Correct the record, then delete each point you have checked.</p>
+    <textarea data-k="reviewNotes">${esc(d.reviewNotes)}</textarea></div>`:""}
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">1</div><h3>What is this record?</h3></div>
+    <div class="grid2">
+      <div class="f"><label>Record type <span class="req">required</span></label>${sel("type",TYPES,d.type)}
+        <span class="hint">${d.type==="SUPPORT"?"An ongoing workplan budget line. It is not counted as a project.":"Only records typed Project count in project totals."}</span></div>
+      <div class="f ${d.type==="COMPONENT"?"":"hidden"}"><label>Parent project <span class="req">required</span></label>
+        ${sel("parentId",parents.map(p=>[p.id,p.id+" · "+(p.title.length>50?p.title.slice(0,50)+"…":p.title)]),d.parentId)}
+        <span class="hint">Links the two records. Components are never counted twice.</span></div>
+    </div>
+    <div class="f"><label>Expected Result <span class="req">required</span></label>${sel("er",ER,d.er)}</div>
+    <div class="grid2">
+      <div class="f"><label>Portfolio bucket <span class="opt">optional, pick any</span></label>
+        <div class="togs">${BUCKETS.map(([v,l])=>`<button type="button" class="tog" data-tog="buckets" data-v="${v}" aria-pressed="${d.buckets.includes(v)}">${esc(l)}</button>`).join("")}</div>
+        <span class="hint">Same buckets as Teams Planner.</span></div>
+      <div class="f"><label>Copyright project? <span class="req">required</span></label>
+        <div class="togs"><button type="button" class="tog" data-bool="copyright" data-v="1" aria-pressed="${d.copyright===true}">Yes</button>
+        <button type="button" class="tog" data-bool="copyright" data-v="0" aria-pressed="${d.copyright!==true}">No</button></div>
+        <span class="hint">The WPR tracker asks for this on every line.</span></div>
+    </div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">2</div><h3>Titles and description</h3></div>
+    <div class="f"><label>Working title <span class="req">required</span></label>
+      <input type="text" data-k="title" value="${esc(d.title)}" placeholder="Short and precise: what the division calls it"></div>
+    <div class="f"><label>Is it in the annual workplan? <span class="req">required</span></label>
+      <div class="togs"><button type="button" class="tog" data-bool="inWorkplan" data-v="1" aria-pressed="${d.inWorkplan===true}">Yes</button>
+      <button type="button" class="tog" data-bool="inWorkplan" data-v="0" aria-pressed="${d.inWorkplan!==true}">No</button></div></div>
+    <div class="grid2 ${d.inWorkplan?"":"hidden"}">
+      <div class="f"><label>Title in the workplan <span class="req">required</span></label>
+        <textarea data-k="workplanTitle" placeholder="Paste it exactly as it appears in the workplan">${esc(d.workplanTitle)}</textarea>
+        <span class="hint">Used word for word in reports that must match the workplan.</span></div>
+      <div class="f"><label>Workplan year <span class="req">required</span></label>${sel("workplanYear",WORKPLAN_YEARS.map(y=>[y,y]),d.workplanYear)}</div>
+    </div>
+    <div class="f"><label>Brief description <span class="req">required</span>
+      <button type="button" class="linkbtn" id="tpl" style="margin-left:auto">Insert the standard template</button></label>
+      <textarea data-k="desc" style="min-height:150px" placeholder="Four parts: context, what the project does, who benefits, expected result.">${esc(d.desc)}</textarea></div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">3</div><h3>People</h3></div>
+    <p class="legend-help">The manager and the teammates you name can edit this record. Everyone else can read it.</p>
+    <div class="f"><label>Project manager <span class="req">required</span></label>
+      ${sel("managerId",USERS.map(u=>[u.id,u.name]),d.managerId)}</div>
+    <div class="f"><label>Teammates <span class="opt">optional</span></label>
+      <div class="togs">${USERS.filter(u=>u.id!==d.managerId).map(u=>`<button type="button" class="tog" data-tog="team" data-v="${esc(u.id)}" aria-pressed="${d.team.includes(u.id)}">${esc(u.name)}</button>`).join("")}</div></div>
+    <div class="f"><label>National counterpart <span class="opt">optional</span></label>
+      <input type="text" data-k="counterpart" value="${esc(d.counterpart)}" placeholder="e.g. IPOPHL"></div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">4</div><h3>Where</h3></div>
+    <p class="legend-help">A grouping fills in all its countries. Remove any that do not apply.</p>
+    <div class="f"><label>Regional grouping <span class="opt">optional</span></label><div class="togs" id="grptogs"></div></div>
+    <div class="f"><label>Beneficiary countries <span class="req" id="creq">required</span></label><div id="cpick"></div></div>
+    <div class="f"><label>Countries outside Asia and the Pacific <span class="opt">optional</span></label>
+      <input type="text" data-k="otherCountries" value="${esc(d.otherCountries)}" placeholder="e.g. Albania, Ecuador">
+      <span class="hint">For cross-regional work. Type the names.</span></div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">5</div><h3>Status, dates and budget</h3></div>
+    <div class="grid2">
+      <div class="f"><label>Status <span class="req">required</span></label>${sel("status",STATUS,d.status)}</div>
+      ${hasProjectDocs(d)||(d.docStage&&d.docStage!=="NONE")?`<div class="f"><label>Project document stage <span class="opt">optional</span></label>${sel("docStage",DOCSTAGE,d.docStage)}</div>`:"<div></div>"}
+    </div>
+    ${d.status==="ON_HOLD"?`<div class="f"><label>Why is it on hold? <span class="req">required</span></label>
+      <textarea data-k="holdReason" style="min-height:70px" placeholder="What is holding it up, and when it may resume. Keep the description for what the project does.">${esc(d.holdReason)}</textarea></div>`:""}
+    <div class="grid2">
+      <div class="f"><label>Funding source <span class="req">required</span></label>${sel("funding",FUNDING,d.funding)}</div>
+      <div class="f ${d.funding==="OTHER"?"":"hidden"}"><label>Which source <span class="req">required</span></label>
+        <input type="text" data-k="fundingOther" value="${esc(d.fundingOther)}" placeholder="Name the budget this comes from"></div>
+    </div>
+    <div class="grid3">
+      <div class="f"><label>Start date <span class="req">required</span></label><input type="date" data-k="start" value="${esc(d.start)}"></div>
+      <div class="f"><label>${d.status==="COMPLETED"?"End date":"Expected completion"} <span class="req">required</span></label>
+        <input type="date" data-k="${d.status==="COMPLETED"?"end":"expEnd"}" value="${esc(d.status==="COMPLETED"?d.end:d.expEnd)}"></div>
+      <div class="f"><label>Allocated budget (CHF) <span class="req">required</span></label>
+        <input type="number" data-k="budget" value="${esc(d.budget)}" placeholder="0" min="0" step="100">${d.type==="COMPONENT"?'<span class="hint">Enter 0 if the parent project\'s budget covers it.</span>':""}</div>
+    </div>
+    <div class="grid2">
+      <div class="f"><label>Budget spent to date (CHF) <span class="opt">optional</span></label>
+        <input type="number" data-k="spendNow" value="${esc(d.spendNow)}" placeholder="0" min="0" step="100">
+        <span class="hint">Total so far. Each progress update adds the amount spent. Type here only to correct the total for ${qShort(CUR_Q)}.</span></div>
+      <div class="f"><label>Areas and topics <span class="req">required</span></label>
+        <div class="togs">${THEMES.map(([v,l])=>`<button type="button" class="tog" data-tog="themes" data-v="${v}" aria-pressed="${d.themes.includes(v)}">${esc(l)}</button>`).join("")}</div></div>
+    </div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">6</div><h3>Milestones</h3>${d.er==="4.1"?'<span class="when">counts for the ER 4.1 KPI</span>':""}</div>
+    <p class="legend-help">Every achieved milestone goes into the quarterly report. Write its description once, here.</p>
+    <div id="msrows"></div><button type="button" class="addbtn" data-add="milestones">+ Add a milestone</button>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">7</div><h3>Beneficiaries</h3></div>
+    <p class="legend-help">One line per group. Example: Total, 5 individuals, and Total, 3 enterprises. A women, youth or SME line says how many of the total are in that group. Add it only when you have the number.</p>
+    <div id="benefrows"></div><div class="benefquick" id="benefquick"></div><button type="button" class="addbtn" data-addb="1">+ Add a beneficiary line</button>
+  </fieldset>
+
+  ${showSurvey&&showTools?"":`<div class="optlinks">${showSurvey?"":`<button type="button" class="linkbtn" data-open="_openSurvey">+ Add satisfaction or skills survey results</button>`}${showTools?"":`<button type="button" class="linkbtn" data-open="_openTools">+ Record WIPO tools used</button>`}</div>`}
+
+  <fieldset class="fieldset ${showTools?"":"hidden"}">
+    <div class="legend"><div class="n">8</div><h3>Tools and methodologies used</h3><span class="when">${d.er==="4.2"?"ER 4.2":"optional, counts for ER 4.2"}</span></div>
+    <div id="toolrows"></div><button type="button" class="addbtn" data-add="tools">+ Record a tool used in a country</button>
+  </fieldset>
+
+  <fieldset class="fieldset ${showSurvey?"":"hidden"}">
+    <div class="legend"><div class="n">8</div><h3>Satisfaction and skills survey</h3><span class="when">${d.er==="4.3"?"ER 4.3":"optional, goes into the ER 4.3 survey file"}</span></div>
+    <p class="legend-help">Same fields as the ER 4.3 tracking files. Copy the TOTALS line of the event's survey tab.</p>
+    <div class="grid3">
+      <div class="f"><label>Participants</label><input type="number" min="0" data-k="participants" data-sv="1" value="${esc(d.participants)}"></div>
+      <div class="f"><label>Received the questionnaire</label><input type="number" min="0" data-k="questionnaires" data-sv="1" value="${esc(d.questionnaires)}"></div>
+      <div class="f"><label>Respondents</label><input type="number" data-k="respondents" data-sv="1" value="${esc(d.respondents)}" min="0" placeholder="0"></div>
+    </div>
+    <div class="grid2">
+      <div class="f"><label>Platform used to collect feedback</label><input type="text" list="platforms" data-k="platform" value="${esc(d.platform)}" placeholder="Physical distribution, Alchemer, SurveyMonkey…"><datalist id="platforms"><option>Physical distribution</option><option>Alchemer</option><option>SurveyMonkey</option><option>Microsoft Forms</option></datalist></div>
+      <div class="f"><label>Supporting document name</label><input type="text" data-k="surveyDoc" value="${esc(d.surveyDoc)}" placeholder="Tab number and event name"></div>
+    </div>
+    <label style="font-weight:600;font-size:13px;display:block;margin:6px 0 6px">Satisfaction answers (totals)</label>
+    <div class="satgrid">${[["satVS","Very satisfied"],["satS","Satisfied"],["satN","Neither"],["satD","Dissatisfied"],["satVD","Very dissatisfied"],["satDK","Don’t know / N/A"]].map(([k,l])=>`<div class="f"><label>${l}</label><input type="number" min="0" data-k="${k}" data-sv="1" value="${esc(d[k])}"></div>`).join("")}</div>
+    <div class="grid2">
+      <div class="f"><label>Satisfaction score (%)</label><input type="number" data-k="satisfaction" value="${esc(d.satisfaction)}" min="0" max="100" placeholder="%"><div class="hint" id="satcalc"></div></div>
+    </div>
+    <label style="font-weight:600;font-size:13px;display:block;margin:6px 0 6px">Skills test: entry and exit survey <span class="muted" style="font-weight:400">from Q3 2026, if run</span></label>
+    ${showSkills?`<p class="legend-help" style="margin:0 0 4px">One line per question, as in the ER 4.3 template. Replace X with the topic. The totals below add up by themselves.</p>
+    <table class="skilltbl"><thead><tr><th>Question</th><th>Entry: correct</th><th>Entry: respondents</th><th>Exit: correct</th><th>Exit: respondents</th></tr></thead><tbody>
+    ${SKILL_GROUPS.map(([g],gi)=>`<tr><td class="grp" colspan="5">${esc(g)}</td></tr>`+[0,1,2].map(j=>{const i=gi*3+j,q=d.skills[i];
+      return `<tr><td class="q"><input type="text" data-sq="${i}" data-sqk="question" value="${esc(q.question)}" aria-label="Question ${i+1}"></td>${SKILL_NUM.map(k=>`<td><input type="number" min="0" data-sq="${i}" data-sqk="${k}" value="${esc(q[k])}" aria-label="Question ${i+1}, ${k}"></td>`).join("")}</tr>`;}).join("")).join("")}
+    </tbody></table>`:`<div class="optlinks" style="margin:0 0 8px"><button type="button" class="linkbtn" data-open="_openSkills">+ Enter results per question (9 questions, as in the ER 4.3 template)</button></div>`}
+    <div class="satgrid four">${[["entryCorrect","Entry: correct answers"],["entryResp","Entry: respondents"],["exitCorrect","Exit: correct answers"],["exitResp","Exit: respondents"]].map(([k,l])=>`<div class="f"><label>${l}${showSkills?" (total)":""}</label><input type="number" min="0" data-k="${k}" data-sv="1" value="${esc(d[k])}"></div>`).join("")}</div>
+    <div class="hint" id="skillcalc"></div>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">9</div><h3>Documents</h3></div>
+    <p class="legend-help">Links to the SharePoint copies and to published impact stories.</p>
+    <div id="docrows"></div><button type="button" class="addbtn" data-add="docs">+ Add a document link</button>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">10</div><h3>IP filings resulting from this work</h3><span class="when">optional</span></div>
+    <div id="filrows"></div><button type="button" class="addbtn" data-add="filings">+ Add a filing or registration</button>
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <div class="legend"><div class="n">11</div><h3>Development Agenda and sustainability</h3><span class="when">optional</span></div>
+    <div class="f"><label>DA recommendations addressed <span class="opt">for the CDIP report</span></label>
+      <div class="dagrid">${Array.from({length:45},(_,i)=>String(i+1)).map(n=>`<button type="button" class="tog" data-tog="da" data-v="${n}" aria-pressed="${d.da.includes(n)}">${n}</button>`).join("")}</div></div>
+    <div class="f"><label>Has this become a national programme?</label>
+      <textarea data-k="sustainability" placeholder="Leave blank unless the member state has taken it over.">${esc(d.sustainability)}</textarea></div>
+  </fieldset>
+
+  <div class="actions"><button class="btn" data-save>${isNew?"Save record":"Save changes"}</button>
+    <button class="btn ghost" id="cancel">${isNew?"Clear form":"Cancel"}</button></div>
+  </div>
+
+  <aside class="rail">
+    <div class="card"><h2>Before you save</h2><div id="reqbox"></div>
+      <button class="btn" style="width:100%;margin-top:12px" data-save>${isNew?"Save record":"Save changes"}</button></div>
+    <div class="card"><h2>Required documents</h2><ul class="checklist" id="docchk"></ul>
+      <p class="muted" style="margin:8px 0 0">Projects only, except ER 4.2. What is needed follows the status.</p></div>
+  </aside></div>`;
+  buildGroups(); buildPicker(); buildBenef(); buildRepeat(); refreshRail(); wireForm();
+  document.querySelectorAll("#v-form fieldset.fieldset:not(.hidden) .legend .n").forEach((n,i)=>n.textContent=i+1);
+}
+
+function buildGroups(){
+  const d=draft; $("#grptogs").innerHTML=GROUPINGS.map(g=>{const st=groupState(d,g.code);const n=g.members.filter(m=>d.countries.includes(m)).length;
+    return `<button type="button" class="tog ${st==="partial"?"partial":""}" data-grp="${g.code}" aria-pressed="${st==="full"}">${esc(st==="partial"?`${g.label} (${n} of ${g.members.length})`:g.label)}</button>`;}).join("");
+}
+function buildPicker(){
+  const d=draft, host=$("#cpick");
+  $("#creq").textContent=d.groupings.length?"optional when a grouping is picked":String(d.otherCountries||"").trim()?"optional when other countries are named":"required";
+  host.innerHTML=`<div class="picker"><div class="chips">${d.countries.map(c=>`<span class="chip"><b>${c}</b>${esc(CNAME[c]||c)}<button type="button" data-rmc="${c}" aria-label="Remove ${esc(CNAME[c]||c)}">×</button></span>`).join("")||'<span class="muted" style="padding:3px 4px">No country selected</span>'}</div>
+    <input type="text" id="csearch" placeholder="Type a country name or ISO code…" aria-label="Add a country"><div class="opts hidden" id="copts"></div></div>`;
+  const inp=$("#csearch"),opts=$("#copts");
+  const draw=q=>{const list=COUNTRIES.filter(c=>!d.countries.includes(c.iso)&&(!q||c.name.toLowerCase().includes(q)||c.iso.toLowerCase().includes(q)));
+    opts.innerHTML=list.length?list.map(c=>`<div class="opt-row" data-addc="${c.iso}"><span>${esc(c.name)}</span><span class="iso">${c.iso}</span></div>`).join(""):'<div class="opt-row muted">No match in the Asia-Pacific list</div>';};
+  inp.onfocus=()=>{opts.classList.remove("hidden");draw("");};
+  inp.oninput=()=>draw(inp.value.trim().toLowerCase());
+  inp.onblur=()=>setTimeout(()=>opts.classList.add("hidden"),180);
+  inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const f=opts.querySelector("[data-addc]");if(f){d.countries.push(f.dataset.addc);buildPicker();buildGroups();refreshRail();$("#csearch").focus();}}};
+  host.onmousedown=e=>{
+    const a=e.target.closest("[data-addc]"); if(a){e.preventDefault();d.countries.push(a.dataset.addc);buildPicker();buildGroups();refreshRail();$("#csearch").focus();return;}
+    const r=e.target.closest("[data-rmc]"); if(r){e.preventDefault();d.countries=d.countries.filter(x=>x!==r.dataset.rmc);
+      d.groupings=d.groupings.filter(g=>groupState(d,g)!=="off");buildPicker();buildGroups();refreshRail();}
+  };
+}
+const THEME_SEGS=["WOMEN","YOUTH","SME","PWD","LOCAL_COMM"];
+const newBenef=seg=>({seg,n:"",ent:"INDIVIDUAL",q:"EXACT",rs:"REPORTED"});
+const emptyBenef=b=>(b.rs||"REPORTED")==="REPORTED"&&String(b.n??"").trim()==="";   // a line with no number says nothing
+function buildBenef(){
+  const d=draft;
+  d.benef=(d.benef||[]).map(({_auto,...b})=>b);
+  if(!d.benef.some(b=>b.seg==="TOTAL")) d.benef.unshift(newBenef("TOTAL"));   // there is always one Total line to fill in
+  const totals=d.benef.filter(b=>b.seg==="TOTAL").length;
+  const opt=(list,val)=>list.map(([v,l])=>`<option value="${v}" ${v===val?"selected":""}>${esc(l)}</option>`).join("");
+  $("#benefrows").innerHTML=`<div class="segrow seghead"><div>Group</div><div>Number</div><div>Counted as</div><div>Precision</div><div>Status</div><div></div></div>`+d.benef.map((b,i)=>`<div class="segrow">
+    <select data-b="${i}" data-bk="seg" aria-label="Group">${opt(SEGMENTS,b.seg)}</select>
+    <input type="number" min="0" data-b="${i}" data-bk="n" value="${esc(b.n)}" placeholder="Number" aria-label="Number">
+    <select data-b="${i}" data-bk="ent" aria-label="Counted as">${opt(ENTITY_TYPE,b.ent)}</select>
+    <select data-b="${i}" data-bk="q" aria-label="Precision">${opt(QUALIFIER,b.q)}</select>
+    <select data-b="${i}" data-bk="rs" aria-label="Reporting status">${opt(RSTATUS,b.rs)}</select>
+    ${b.seg==="TOTAL"&&totals===1?"<span></span>":`<button type="button" class="rmline" data-delb="${i}" aria-label="Remove this line" title="Remove this line">×</button>`}</div>`).join("");
+  // topics picked without a line: offer one, never add it by itself
+  const want=THEME_SEGS.filter(s=>(d.themes||[]).includes(s)&&!d.benef.some(b=>b.seg===s));
+  $("#benefquick").innerHTML=want.length?`Have a number for a group? Add a line for: ${want.map(s=>`<button type="button" class="linkbtn" data-addseg="${s}">${esc(L.seg[s])}</button>`).join(" · ")}`:"";
+}
+function isoOpts(d,val){return `<option value="">Select…</option>`+(d.countries.length?d.countries:ALL_ISO).map(c=>`<option value="${c}" ${c===val?"selected":""}>${esc(CNAME[c]||c)}</option>`).join("");}
+function buildRepeat(){
+  const d=draft;
+  $("#msrows").innerHTML=d.milestones.map((m,i)=>{const w=words(m.desc),need=m.st==="ACHIEVED",cls=!need?"":(w>=50&&w<=100?"ok":(w?"bad":""));
+    return `<div class="rep"><div class="rh"><span>Milestone ${i+1}</span><button type="button" class="linkbtn danger" data-del="milestones" data-i="${i}">Remove</button></div>
+    <div class="grid3"><div class="f" style="grid-column:span 2"><label>Milestone</label><input type="text" data-r="milestones" data-i="${i}" data-rk="name" value="${esc(m.name)}"></div>
+    <div class="f"><label>Date</label><input type="date" data-r="milestones" data-i="${i}" data-rk="date" value="${esc(m.date)}"></div></div>
+    <div class="f"><label>Status</label><select data-r="milestones" data-i="${i}" data-rk="st">${MSTATUS.map(([v,l])=>`<option value="${v}" ${v===m.st?"selected":""}>${l}</option>`).join("")}</select></div>
+    <div class="f ${need?"":"hidden"}"><label>What was achieved <span class="req">50 to 100 words</span></label>
+      <textarea data-r="milestones" data-i="${i}" data-rk="desc" placeholder="Goes word for word into the quarterly report annex.">${esc(m.desc)}</textarea>
+      <div class="wordcount ${cls}" id="wc${i}">${w} words${need?(w<50?", "+(50-w)+" more needed":w>100?", "+(w-100)+" over the limit":", within the limit"):""}</div></div></div>`;}).join("");
+  $("#toolrows").innerHTML=d.tools.map((t,i)=>`<div class="rep"><div class="rh"><span>Tool use ${i+1}</span><button type="button" class="linkbtn danger" data-del="tools" data-i="${i}">Remove</button></div>
+    <div class="grid2"><div class="f"><label>Country</label><select data-r="tools" data-i="${i}" data-rk="iso">${isoOpts(d,t.iso)}</select></div>
+    <div class="f"><label>Tool or methodology</label><select data-r="tools" data-i="${i}" data-rk="tool"><option value="">Select…</option>${TOOLS.map(([v,l])=>`<option value="${v}" ${v===t.tool?"selected":""}>${esc(l)}</option>`).join("")}</select></div></div></div>`).join("");
+  $("#filrows").innerHTML=d.filings.map((f,i)=>`<div class="rep"><div class="rh"><span>Filing ${i+1}</span><button type="button" class="linkbtn danger" data-del="filings" data-i="${i}">Remove</button></div>
+    <div class="grid2"><div class="f"><label>IP type</label><select data-r="filings" data-i="${i}" data-rk="type">${IPTYPE.map(([v,l])=>`<option value="${v}" ${v===f.type?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="f"><label>Stage</label><select data-r="filings" data-i="${i}" data-rk="stage">${IPSTAGE.map(([v,l])=>`<option value="${v}" ${v===f.stage?"selected":""}>${esc(l)}</option>`).join("")}</select></div></div>
+    <div class="grid2"><div class="f"><label>How many</label><input type="number" min="0" data-r="filings" data-i="${i}" data-rk="n" value="${esc(f.n)}"></div>
+    <div class="f"><label>Country</label><select data-r="filings" data-i="${i}" data-rk="iso">${isoOpts(d,f.iso)}</select></div></div></div>`).join("");
+  $("#docrows").innerHTML=d.docs.map((x,i)=>`<div class="rep"><div class="rh"><span>Document ${i+1}</span><button type="button" class="linkbtn danger" data-del="docs" data-i="${i}">Remove</button></div>
+    <div class="grid2"><div class="f"><label>Document type</label><select data-r="docs" data-i="${i}" data-rk="type">${DOCTYPES.map(([v,l])=>`<option value="${v}" ${v===x.type?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="f"><label>File name</label><input type="text" data-r="docs" data-i="${i}" data-rk="name" value="${esc(x.name)}" placeholder="As saved in SharePoint"></div></div>
+    <div class="f"><label>SharePoint link</label><input type="url" data-r="docs" data-i="${i}" data-rk="url" value="${esc(x.url)}" placeholder="https://wipo.sharepoint.com/…"></div></div>`).join("");
+}
+function surveyCalc(){
+  const d=draft,a=$("#satcalc"),b=$("#skillcalc"); if(!a||!b)return;
+  const c=satFromCounts(d); const inp=document.querySelector('input[data-k="satisfaction"]');
+  if(c!==null){d.satisfaction=String(c); if(inp){inp.value=c;inp.readOnly=true;} a.textContent="Calculated from the answers: very satisfied plus satisfied, out of all answers except don’t know.";}
+  else { if(inp)inp.readOnly=false; a.textContent="Type it here, or fill in the answers above and it is calculated."; }
+  const t=skillTotals(d);
+  SKILL_NUM.forEach(k=>{const el=document.querySelector(`input[data-k="${k}"]`); if(t){d[k]=t[k]===""?"":String(t[k]); if(el){el.value=d[k];el.readOnly=true;}} else if(el) el.readOnly=false;});
+  const e=pctOf(d.entryCorrect,d.entryResp),x=pctOf(d.exitCorrect,d.exitResp);
+  b.textContent=e!==null&&x!==null?`Entry ${e}%, exit ${x}%: change of ${Math.round((x-e)*10)/10} points.`:"";
+}
+function refreshRail(){ surveyCalc();
+  const items=requirements(draft,DB), done=items.filter(x=>x.ok).length;
+  $("#reqbox").innerHTML=`<div class="muted">${done} of ${items.length} done</div><div class="progress"><i style="width:${done/items.length*100}%"></i></div>
+    <ul class="checklist">${items.map(x=>`<li class="${x.ok?"done":"need"}"><span class="bx">${x.ok?"✓":""}</span><span>${esc(x.label)}</span></li>`).join("")}</ul>`;
+  const need=requiredDocs(draft), have=new Set(draft.docs.map(x=>x.type));
+  $("#docchk").innerHTML=need.length?need.map(t=>`<li class="${have.has(t)?"done":"need"}"><span class="bx">${have.has(t)?"✓":""}</span><span>${esc(L.dt[t])}${have.has(t)?"":", missing"}</span></li>`).join("")
+    :`<li class="muted">${draft.type!=="PROJECT"?"None for this kind of record.":draft.er==="4.2"?"None. ER 4.2 work has no project document.":"Choose a status first."}</li>`;
+}
+function wireForm(){
+  const root=$("#v-form"), d=draft, RERENDER=["er","status","type","funding","managerId"];
+  root.oninput=e=>{const t=e.target;
+    if(t.dataset.k&&!RERENDER.includes(t.dataset.k)){d[t.dataset.k]=t.value;refreshRail();if(t.dataset.k==="otherCountries")buildPicker();}
+    if(t.dataset.b!==undefined){d.benef[+t.dataset.b][t.dataset.bk]=t.value;}
+    if(t.dataset.sq!==undefined){d.skills[+t.dataset.sq][t.dataset.sqk]=t.value;surveyCalc();}
+    if(t.dataset.r){d[t.dataset.r][+t.dataset.i][t.dataset.rk]=t.value;
+      if(t.dataset.rk==="desc"){const m=d.milestones[+t.dataset.i],w=words(m.desc),el=$("#wc"+t.dataset.i);
+        if(el){el.className="wordcount "+(w>=50&&w<=100?"ok":w?"bad":"");el.textContent=w+" words"+(w<50?", "+(50-w)+" more needed":w>100?", "+(w-100)+" over the limit":", within the limit");}}
+      if(t.dataset.rk==="type")refreshRail();}
+  };
+  root.onchange=e=>{const t=e.target;
+    if(t.dataset.k&&RERENDER.includes(t.dataset.k)){d[t.dataset.k]=t.value;if(t.dataset.k==="managerId")d.team=d.team.filter(x=>x!==t.value);renderForm();}
+    if(t.dataset.r==="milestones"&&t.dataset.rk==="st"){d.milestones[+t.dataset.i].st=t.value;buildRepeat();}
+    if(t.dataset.r==="docs")refreshRail();
+    if(t.dataset.b!==undefined&&t.dataset.bk==="seg"){d.benef[+t.dataset.b].seg=t.value;buildBenef();}
+  };
+  root.onclick=e=>{
+    const b=e.target.closest("[data-bool]"); if(b){d[b.dataset.bool]=b.dataset.v==="1";renderForm();return;}
+    const op=e.target.closest("[data-open]"); if(op){d[op.dataset.open]=true;renderForm();return;}
+    const g=e.target.closest("[data-grp]"); if(g){const code=g.dataset.grp,gr=GRP[code],st=groupState(d,code);
+      if(st==="full"){d.countries=d.countries.filter(c=>!gr.members.includes(c));d.groupings=d.groupings.filter(x=>x!==code);}
+      else{gr.members.forEach(m=>{if(!d.countries.includes(m))d.countries.push(m);});if(!d.groupings.includes(code))d.groupings.push(code);}
+      d.groupings=d.groupings.filter(x=>groupState(d,x)!=="off");buildGroups();buildPicker();refreshRail();return;}
+    const tg=e.target.closest("[data-tog]"); if(tg){const k=tg.dataset.tog,v=tg.dataset.v;
+      d[k]=d[k].includes(v)?d[k].filter(x=>x!==v):d[k].concat(v);tg.setAttribute("aria-pressed",d[k].includes(v));
+      if(k==="themes")buildBenef();refreshRail();return;}
+    const ad=e.target.closest("[data-add]"); if(ad){const k=ad.dataset.add;
+      d[k].push(k==="milestones"?{name:"",date:"",st:"PLANNED",desc:""}:k==="tools"?{iso:"",tool:""}:k==="docs"?{type:"PROJECT_DOC",name:"",url:""}:{type:"TRADEMARK",stage:"FILED",n:"",iso:""});
+      buildRepeat();refreshRail();return;}
+    if(e.target.closest("[data-addb]")){d.benef.push(newBenef("TOTAL"));buildBenef();const sl=document.querySelectorAll('#benefrows [data-bk="seg"]');if(sl.length)sl[sl.length-1].focus();return;}
+    const qa=e.target.closest("[data-addseg]"); if(qa){d.benef.push(newBenef(qa.dataset.addseg));buildBenef();const ns=document.querySelectorAll('#benefrows [data-bk="n"]');if(ns.length)ns[ns.length-1].focus();return;}
+    const db=e.target.closest("[data-delb]"); if(db){d.benef.splice(+db.dataset.delb,1);buildBenef();return;}
+    const dl=e.target.closest("[data-del]"); if(dl){d[dl.dataset.del].splice(+dl.dataset.i,1);buildRepeat();refreshRail();return;}
+    if(e.target.id==="tpl"){if(!d.desc.trim()||confirmReplace())d.desc=DESC_TEMPLATE;renderForm();return;}
+    if(e.target.closest("[data-save]"))return save();
+    if(e.target.id==="cancel"){const wasEdit=editing;draft=null;editing=null;if(wasEdit)go("db");else{renderForm();toast("Form cleared");}}
+  };
+}
+let _tplArm=0;
+function confirmReplace(){ if(Date.now()-_tplArm<4000)return true; _tplArm=Date.now(); toast("Press again to replace your description with the template."); return false; }
+
+async function save(){
+  const miss=missing(draft,DB);
+  if(miss.length){toast("Still needed: "+miss.join(", "),true);return;}
+  const btns=document.querySelectorAll("[data-save]"); btns.forEach(b=>{b.disabled=true;b.textContent="Saving…";});
+  const payload=clone(draft); const base=payload._base, spendBase=payload._spendBase; ["_base","_spendBase","_openSurvey","_openTools","_openSkills"].forEach(k=>delete payload[k]);
+  // figure not touched: send nothing, so a total raised by progress updates in the meantime is kept
+  if(spendBase!==undefined&&String(payload.spendNow??"").trim()===String(spendBase).trim()) payload.spendNow="";
+  const num=v=>v===""||v==null||isNaN(Number(v))?"":Number(v);
+  payload.budget=num(payload.budget); payload.satisfaction=num(payload.satisfaction); payload.respondents=num(payload.respondents);
+  payload.skills=skillRows(payload).map(q=>({question:String(q.question||"").trim(),entryCorrect:num(q.entryCorrect),entryResp:num(q.entryResp),exitCorrect:num(q.exitCorrect),exitResp:num(q.exitResp)}));
+  { const t=skillTotals(payload); if(t) Object.assign(payload,t); }
+  SURVEY_KEYS.forEach(k=>{payload[k]=num(payload[k]);}); { const c=satFromCounts(payload); if(c!==null) payload.satisfaction=c; }
+  if(payload.status!=="ON_HOLD") payload.holdReason="";
+  payload.benef=payload.benef.filter(b=>!emptyBenef(b)).map(({_auto,...b})=>({...b,n:num(b.n)})); payload.filings.forEach(f=>{f.n=num(f.n);});
+  try{
+    const r=await Api.save(TOKEN,payload,base);
+    const i=DB.findIndex(x=>x.id===r.id); if(i>=0)DB[i]=r; else DB.push(r);
+    toast((editing?"Saved changes to ":"Saved as ")+r.id);
+    draft=null; editing=null; go("db"); openPanel(r.id);
+  }catch(e){ handleErr(e); btns.forEach(b=>{b.disabled=false;b.textContent=editing?"Save changes":"Save record";}); }
+}
+
+/* ============================================================= DATABASE */
+const ALLCOLS=[
+  {k:"id",l:"ID",on:true,w:150},{k:"title",l:"Project",on:true,w:300},{k:"workplan",l:"Workplan",on:false,w:100},{k:"wptitle",l:"Workplan title",on:false,w:300},
+  {k:"type",l:"Type",on:false,w:140},{k:"buckets",l:"Bucket",on:true,w:120},{k:"er",l:"ER",on:true,w:66},{k:"status",l:"Status",on:true,w:140},
+  {k:"missing",l:"To fill in",on:true,w:120},{k:"progress",l:"Progress",on:true,w:150},{k:"countries",l:"Countries",on:true,w:130},
+  {k:"manager",l:"Manager",on:true,w:150},{k:"team",l:"Team",on:false,w:190},{k:"benef",l:"Beneficiaries",on:false,w:170},{k:"milestones",l:"Milestones",on:true,w:104},
+  {k:"budget",l:"Budget",on:true,w:100},{k:"spent",l:"Spent",on:true,w:100},{k:"pct",l:"% used",on:false,w:84},{k:"funding",l:"Funding",on:false,w:160},
+  {k:"start",l:"Start",on:false,w:110},{k:"end",l:"End / expected",on:false,w:126},{k:"docs",l:"Docs",on:false,w:100},{k:"updated",l:"Last update",on:false,w:140}];
+const EDITCOL_W=84, MIN_COL_W=50;
+let COLS=ALLCOLS.filter(c=>c.on).map(c=>c.k), SHOWCOLS=false, WIDTHS={}, GROUP=true;
+let SORT={k:"er",dir:1};   // default: workplan order, ER 3.1 to 4.5
+const PREFS_KEY="metrack.dbprefs";
+(()=>{const p=lstore.get(PREFS_KEY); if(!p||typeof p!=="object")return;
+  if(p.sort&&ALLCOLS.some(c=>c.k===p.sort.k)) SORT={k:p.sort.k,dir:p.sort.dir===-1?-1:1};
+  if(Array.isArray(p.cols)&&p.cols.length){const known=new Set(p.known||[]);   // columns added later appear with their default
+    COLS=ALLCOLS.filter(c=>p.cols.includes(c.k)||(!known.has(c.k)&&c.on)).map(c=>c.k);}
+  if(p.widths&&typeof p.widths==="object") Object.keys(p.widths).forEach(k=>{const w=Number(p.widths[k]);if(ALLCOLS.some(c=>c.k===k)&&w>=MIN_COL_W&&w<=1600)WIDTHS[k]=w;});
+  if(p.group===false) GROUP=false;})();
+function savePrefs(){lstore.set(PREFS_KEY,{sort:SORT,cols:COLS,known:ALLCOLS.map(c=>c.k),widths:WIDTHS,group:GROUP});}
+const colW=c=>WIDTHS[c.k]||c.w;
+const ORDER_OF=(list,v)=>{const i=list.findIndex(([k])=>k===v);return i<0?null:i;};
+const SORTKEY={
+  id:r=>r.id, title:r=>r.title, workplan:r=>r.inWorkplan?(Number(r.workplanYear)||0):null, wptitle:r=>r.inWorkplan&&r.workplanTitle?r.workplanTitle:null,
+  type:r=>ORDER_OF(TYPES,r.type), buckets:r=>(r.buckets||[]).length?L.bucket[r.buckets[0]]:null, er:r=>r.er?Number(r.er):null, status:r=>ORDER_OF(STATUS,r.status),
+  missing:r=>missing(r,DB).length, progress:r=>{const u=lastUpd(r);return u?({OFF_TRACK:0,DELAYS:1,ON_TRACK:2}[u.rag]??2):null;},
+  countries:r=>(r.countries||[]).length?(CNAME[r.countries[0]]||r.countries[0]):(r.otherCountries||null),
+  manager:r=>r.managerId?uname(r.managerId):null, team:r=>(r.team||[]).length?uname(r.team[0]):null,
+  benef:r=>benefBy(r,"TOTAL").length?total(r,"TOTAL"):null,
+  milestones:r=>(r.milestones||[]).length?(r.milestones||[]).filter(m=>m.st==="ACHIEVED").length:null,
+  budget:r=>r.budget===""||r.budget==null?null:Number(r.budget), spent:r=>latestSpend(r)||null,
+  pct:r=>r.budget?latestSpend(r)/r.budget:null, funding:r=>r.funding?(r.funding==="OTHER"?(r.fundingOther||"Other"):L.fund[r.funding]):null,
+  start:r=>r.start||null, end:r=>r.end||r.expEnd||null, docs:r=>(r.docs||[]).length, updated:r=>r.updatedAt||null};
+/* blanks always go last; equal values keep ID order */
+function sortRows(rows){const key=SORTKEY[SORT.k]||SORTKEY.er, d=SORT.dir, kv=new Map(rows.map(r=>[r,key(r)]));
+  return rows.slice().sort((a,b)=>{const x=kv.get(a),y=kv.get(b),bx=x==null||x==="",by=y==null||y==="";
+    if(bx!==by) return bx?1:-1;
+    if(!bx){const c=typeof x==="number"&&typeof y==="number"?x-y:String(x).localeCompare(String(y),undefined,{numeric:true,sensitivity:"base"}); if(c) return c*d;}
+    return String(a.id).localeCompare(String(b.id));});}
+/* components follow their project when both are in view, earliest first */
+function groupRows(rows){const inView=new Set(rows.map(r=>r.id)), kids={};
+  const nested=r=>r.type==="COMPONENT"&&r.parentId&&inView.has(r.parentId);
+  rows.forEach(r=>{if(nested(r))(kids[r.parentId]=kids[r.parentId]||[]).push(r);});
+  const out=[]; rows.forEach(r=>{if(nested(r))return; out.push({r,child:false});
+    (kids[r.id]||[]).sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999")||String(a.id).localeCompare(String(b.id))).forEach(k=>out.push({r:k,child:true}));});
+  return out;}
+const NOFILT={q:"",er:"",status:"",type:"",funding:"",bucket:"",country:"",wp:"",person:"",mine:false,incomplete:false};
+let FILT={...NOFILT};
+const WPFILT=[["WP","Workplan only"],["WPI","Workplan or ICDAP"],["NOWP","Not in the workplan"]];
+const wpPass=(r,v)=>!v||(v==="WP"?r.inWorkplan===true:v==="WPI"?(r.inWorkplan===true||r.funding==="ICDAP"):r.inWorkplan!==true);
+function passes(r){const f=FILT;
+  if(f.q){const q=f.q.toLowerCase();if(![r.title,r.id,r.workplanTitle,r.counterpart,r.otherCountries,uname(r.managerId),...(r.team||[]).map(uname)].some(x=>String(x||"").toLowerCase().includes(q)))return false;}
+  if(!wpPass(r,f.wp))return false; if(f.person&&!(r.managerId===f.person||(r.team||[]).includes(f.person)))return false;
+  if(f.type&&r.type!==f.type)return false; if(f.incomplete&&!missing(r,DB).length)return false;
+  if(f.er&&r.er!==f.er)return false; if(f.status&&r.status!==f.status)return false; if(f.funding&&r.funding!==f.funding)return false;
+  if(f.bucket&&!(r.buckets||[]).includes(f.bucket))return false; if(f.country&&!(r.countries||[]).includes(f.country))return false;
+  if(f.mine&&!(r.managerId===ME.id||(r.team||[]).includes(ME.id)))return false; return true;}
+function cell(r,k,child){switch(k){
+  case"id":return `<span class="idcell">${esc(r.id)}</span>`;
+  case"title":{const n=DB.filter(x=>x.parentId===r.id).length;
+    return `${child?'<span class="kidmark" aria-hidden="true">&#8627;</span>':""}${esc(r.title)}${r.type==="COMPONENT"&&r.parentId&&!child?`<div class="muted">part of <button class="linkbtn" data-goto="${esc(r.parentId)}">${esc(r.parentId)}</button></div>`:""}${n?`<div class="muted">${n} component${n===1?"":"s"}</div>`:""}`;}
+  case"workplan":return r.inWorkplan?"Yes, "+esc(r.workplanYear):'<span class="muted">No</span>';
+  case"wptitle":return r.inWorkplan&&r.workplanTitle?esc(r.workplanTitle):'<span class="muted">none</span>';
+  case"type":return esc(L.type[r.type]||r.type);
+  case"buckets":return (r.buckets||[]).map(b=>`<span class="tagpill">${esc(L.bucket[b])}</span>`).join("")||'<span class="muted">none</span>';
+  case"er":return esc(r.er);
+  case"status":return stPill(r.status)+(r.status==="ON_HOLD"&&r.holdReason?`<div class="holdnote">${esc(clipText(r.holdReason,90))}</div>`:"");
+  case"countries":return `<span class="mono">${(r.countries||[]).slice(0,4).join(" ")}${(r.countries||[]).length>4?" +"+(r.countries.length-4):""}</span>${r.otherCountries?`<div class="muted" title="${esc(r.otherCountries)}">+ other</div>`:""}`;
+  case"missing":{const m=missing(r,DB);return m.length?`<span class="miss" title="${esc(m.join(", "))}">${m.length} to fill in</span>`:'<span class="muted">complete</span>';}
+  case"progress":{const u=lastUpd(r);return u?`${ragPill(u.rag)}<div class="muted" style="margin-top:3px">${esc(niceDate(u.date))}</div>`:r.status==="COMPLETED"?'<span class="muted">none</span>':ragPill("");}
+  case"manager":return esc(uname(r.managerId));
+  case"team":return (r.team||[]).map(t=>esc(uname(t))).join(", ")||'<span class="muted">none</span>';
+  case"benef":return benefBy(r,"TOTAL").length?esc(benefBy(r,"TOTAL").map(x=>fmt(x.n)+" "+L.ent[x.ent]).join(", ")):'<span class="muted">none</span>';
+  case"milestones":return `${(r.milestones||[]).filter(m=>m.st==="ACHIEVED").length} / ${(r.milestones||[]).length}`;
+  case"budget":return r.budget===""||r.budget==null?'<span class="muted">not set</span>':fmt(r.budget);
+  case"spent":return latestSpend(r)?fmt(latestSpend(r)):'<span class="muted">none</span>';
+  case"pct":return r.budget?Math.round(latestSpend(r)/r.budget*100)+"%":'<span class="muted">n/a</span>';
+  case"funding":return r.funding?esc(r.funding==="OTHER"?r.fundingOther||"Other":L.fund[r.funding]):'<span class="muted">not set</span>';
+  case"start":return esc(r.start);
+  case"end":return esc(r.end||r.expEnd);
+  case"docs":{const need=requiredDocs(r),have=new Set((r.docs||[]).map(x=>x.type)),miss=need.filter(t=>!have.has(t)).length;
+    return `${(r.docs||[]).length}${miss?` <span style="color:var(--crit);font-weight:700">· ${miss} missing</span>`:""}`;}
+  case"updated":return `${esc(String(r.updatedAt||"").slice(0,10))}<div class="muted">${esc(uname(r.updatedBy))}</div>`;}
+  return "";}
+const NUMCOLS=new Set(["er","benef","milestones","budget","spent","pct","start","end","updated"]);
+
+/* column widths: drag the right edge of a heading; double-click it to go back to the default */
+let RESIZED_AT=0;
+function startResize(e,k){
+  const c=ALLCOLS.find(x=>x.k===k), col=document.querySelector(`#v-db col[data-c="${k}"]`), tbl=document.querySelector("#v-db table.dbt"), grip=e.target.closest("[data-grip]");
+  if(!c||!col||!tbl||!grip)return;
+  e.preventDefault(); e.stopPropagation();
+  const x0=e.clientX, w0=colW(c), tw0=tbl.getBoundingClientRect().width; grip.classList.add("on");
+  try{grip.setPointerCapture(e.pointerId);}catch(_){}
+  const move=ev=>{const w=Math.max(MIN_COL_W,Math.round(w0+ev.clientX-x0));WIDTHS[k]=w;col.style.width=w+"px";tbl.style.width=(tw0+w-w0)+"px";};
+  const up=()=>{grip.classList.remove("on");grip.removeEventListener("pointermove",move);grip.removeEventListener("pointerup",up);grip.removeEventListener("pointercancel",up);RESIZED_AT=Date.now();savePrefs();};
+  grip.addEventListener("pointermove",move); grip.addEventListener("pointerup",up); grip.addEventListener("pointercancel",up);
+}
+
+function renderDB(){
+  const rows=sortRows(DB.filter(passes)), cols=ALLCOLS.filter(c=>COLS.includes(c.k)), sortCol=ALLCOLS.find(c=>c.k===SORT.k);
+  const view=GROUP?groupRows(rows):rows.map(r=>({r,child:false})), tw=cols.reduce((a,c)=>a+colW(c),0)+EDITCOL_W;
+  $("#v-db").innerHTML=`
+  <div class="pagehead"><div><h1>Database</h1>
+    <p class="sub">Click a row to read it. Click a column heading to sort, or drag its edge to resize. The project manager, named teammates and administrators can edit.</p></div>
+    <div class="actions" style="margin:0">
+      <span class="muted">${LOADED_AT?"Loaded "+LOADED_AT.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}):""}</span>
+      <button class="btn ghost sm" id="dbrefresh">Refresh</button>
+      <button class="btn ghost sm" id="dbcols">${SHOWCOLS?"Hide columns":"Columns"}</button>
+      <button class="btn ghost sm" id="dbcsv">Download for Excel</button></div></div>
+  <div class="filterbar">
+    <div class="fb grow"><label for="fq">Search</label><input type="text" id="fq" value="${esc(FILT.q)}" placeholder="Title, ID, workplan title, counterpart, manager or teammate"></div>
+    <div class="fb"><label for="fwp">Workplan</label><select id="fwp"><option value="">All records</option>${WPFILT.map(([v,l])=>`<option value="${v}" ${FILT.wp===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fpe">Person</label><select id="fpe"><option value="">Anyone</option>${USERS.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(u=>`<option value="${esc(u.id)}" ${FILT.person===u.id?"selected":""}>${esc(u.name)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fer">ER</label><select id="fer"><option value="">All</option>${ER.map(([v])=>`<option value="${v}" ${FILT.er===v?"selected":""}>ER ${v}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fty">Type</label><select id="fty"><option value="">All</option>${TYPES.map(([v,l])=>`<option value="${v}" ${FILT.type===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fst">Status</label><select id="fst"><option value="">All</option>${STATUS.map(([v,l])=>`<option value="${v}" ${FILT.status===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="ffu">Funding</label><select id="ffu"><option value="">All</option>${FUNDING.map(([v,l])=>`<option value="${v}" ${FILT.funding===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fbu">Bucket</label><select id="fbu"><option value="">All</option>${BUCKETS.map(([v,l])=>`<option value="${v}" ${FILT.bucket===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="fco">Country</label><select id="fco"><option value="">All</option>${COUNTRIES.map(c=>`<option value="${c.iso}" ${FILT.country===c.iso?"selected":""}>${esc(c.name)}</option>`).join("")}</select></div>
+    <div class="fb"><label>&nbsp;</label><button class="tog" id="fmine" aria-pressed="${FILT.mine}">Only mine</button></div>
+    <div class="fb"><label>&nbsp;</label><button class="tog" id="finc" aria-pressed="${FILT.incomplete}">Incomplete only</button></div>
+    <div class="fb"><label>&nbsp;</label><button class="btn ghost sm" id="fclear">Clear</button></div>
+  </div>
+  <div class="colpick ${SHOWCOLS?"":"hidden"}"><div class="cc">${ALLCOLS.map(c=>`<button class="tog" data-col="${c.k}" aria-pressed="${COLS.includes(c.k)}">${esc(c.l)}</button>`).join("")}</div>
+    <div class="cc" style="margin-top:10px"><button class="tog" id="dbgroup" aria-pressed="${GROUP}">Show components under their project</button>
+      <button class="btn ghost sm" id="dbwidths">Reset column widths</button></div>
+    <p class="muted" style="margin:8px 0 0">Your columns, widths and order are kept on this computer.</p></div>
+  <p class="muted" style="margin:0 0 8px">${rows.length} of ${DB.length} records, sorted by ${esc(sortCol?sortCol.l:"ER")}${SORT.dir===-1?", reversed":SORT.k==="er"?", as in the workplan":""}.${SORT.k!=="er"||SORT.dir!==1?' <button class="linkbtn" id="dbsortreset">Back to workplan order</button>':""}</p>
+  <div class="tw"><table class="dbt" style="width:${tw}px"><colgroup>${cols.map(c=>`<col data-c="${c.k}" style="width:${colW(c)}px">`).join("")}<col style="width:${EDITCOL_W}px"></colgroup>
+  <thead><tr>${cols.map(c=>{const on=SORT.k===c.k;return `<th class="sortable${on?" sorted":""}" data-sort="${c.k}" tabindex="0" aria-sort="${on?(SORT.dir===1?"ascending":"descending"):"none"}" title="Sort by ${esc(c.l)}">${esc(c.l)}<span class="sa">${on?(SORT.dir===1?"▲":"▼"):""}</span><span class="colgrip" data-grip="${c.k}" title="Drag to resize. Double-click to reset."></span></th>`;}).join("")}<th></th></tr></thead>
+  <tbody>${view.map(({r,child})=>`<tr class="clickable${child?" childrow":""}" data-view="${esc(r.id)}">${cols.map(c=>`<td class="${NUMCOLS.has(c.k)?"num":""}">${cell(r,c.k,child)}</td>`).join("")}
+    <td>${canEdit(r)?`<button class="linkbtn" data-edit="${esc(r.id)}">Edit</button>`:'<span class="lock">view only</span>'}</td></tr>`).join("")
+    ||`<tr><td colspan="${cols.length+1}" class="muted">${DB.length?"No record matches these filters.":"No records yet. Start with New record."}</td></tr>`}</tbody></table></div>`;
+  const on=(id,ev,fn)=>{const e=$(id);if(e)e[ev]=fn;};
+  on("#fq","oninput",e=>{FILT.q=e.target.value;renderDB();const i=$("#fq");i.focus();i.setSelectionRange(i.value.length,i.value.length);});
+  on("#fwp","onchange",e=>{FILT.wp=e.target.value;renderDB();}); on("#fpe","onchange",e=>{FILT.person=e.target.value;renderDB();});
+  on("#fer","onchange",e=>{FILT.er=e.target.value;renderDB();}); on("#fst","onchange",e=>{FILT.status=e.target.value;renderDB();});
+  on("#ffu","onchange",e=>{FILT.funding=e.target.value;renderDB();}); on("#fbu","onchange",e=>{FILT.bucket=e.target.value;renderDB();});
+  on("#fco","onchange",e=>{FILT.country=e.target.value;renderDB();});
+  on("#fmine","onclick",()=>{FILT.mine=!FILT.mine;renderDB();}); on("#finc","onclick",()=>{FILT.incomplete=!FILT.incomplete;renderDB();});
+  on("#fty","onchange",e=>{FILT.type=e.target.value;renderDB();});
+  on("#fclear","onclick",()=>{FILT={...NOFILT};renderDB();});
+  on("#dbsortreset","onclick",()=>{SORT={k:"er",dir:1};savePrefs();renderDB();});
+  on("#dbgroup","onclick",()=>{GROUP=!GROUP;savePrefs();renderDB();}); on("#dbwidths","onclick",()=>{WIDTHS={};savePrefs();renderDB();});
+  on("#dbrefresh","onclick",refresh); on("#dbcols","onclick",()=>{SHOWCOLS=!SHOWCOLS;renderDB();}); on("#dbcsv","onclick",()=>downloadCSV(view.map(x=>x.r)));
+  $("#v-db").onkeydown=e=>{const so=e.target.closest("[data-sort]");if(so&&(e.key==="Enter"||e.key===" ")){e.preventDefault();so.click();}};
+  $("#v-db").onpointerdown=e=>{const g=e.target.closest("[data-grip]");if(g)startResize(e,g.dataset.grip);};
+  $("#v-db").ondblclick=e=>{const g=e.target.closest("[data-grip]");if(g){delete WIDTHS[g.dataset.grip];savePrefs();renderDB();}};
+  $("#v-db").onclick=e=>{
+    if(e.target.closest("[data-grip]")||Date.now()-RESIZED_AT<350)return;   // a resize is not a click on the heading
+    const ed=e.target.closest("[data-edit]"); if(ed){e.stopPropagation();startEdit(ed.dataset.edit);return;}
+    const gt=e.target.closest("[data-goto]"); if(gt){e.stopPropagation();openPanel(gt.dataset.goto);return;}
+    const so=e.target.closest("[data-sort]"); if(so){const k=so.dataset.sort;SORT=SORT.k===k?{k,dir:-SORT.dir}:{k,dir:1};savePrefs();renderDB();const h=document.querySelector(`#v-db th[data-sort="${k}"]`);if(h)h.focus();return;}
+    const cb=e.target.closest("[data-col]"); if(cb){const k=cb.dataset.col;COLS=COLS.includes(k)?COLS.filter(x=>x!==k):ALLCOLS.filter(c=>COLS.includes(c.k)||c.k===k).map(c=>c.k);savePrefs();renderDB();return;}
+    const vw=e.target.closest("[data-view]"); if(vw)openPanel(vw.dataset.view);
+  };
+}
+function startEdit(id){closePanel();editing=id;draft=null;go("form");}
+/* new component: the project's ER, funding, places and topics are copied; the person changes what differs */
+function startComponent(pid){const p=rec(pid); if(!p)return; closePanel(); editing=null;
+  draft=Object.assign(blank(),{type:"COMPONENT",parentId:pid,er:p.er,funding:p.funding,fundingOther:p.fundingOther,copyright:p.copyright,counterpart:p.counterpart,
+    countries:[...(p.countries||[])],groupings:[...(p.groupings||[])],otherCountries:p.otherCountries||"",themes:[...(p.themes||[])],buckets:[...(p.buckets||[])]});
+  go("form"); toast("New component of "+pid+". ER, funding, countries and topics are copied from it. Change what differs.");}
+
+function downloadCSV(rows){
+  const head=["ID","Working title","Workplan title","Workplan year","Record type","Parent","Portfolio bucket","Copyright","ER","Status","Document stage","Funding","Project manager","Teammates","National counterpart","Countries (ISO3)","Regional groupings","Other countries","Areas and topics","Start","End","Expected completion","Budget CHF","Spent to date CHF","Latest progress rating","Latest progress date","Latest progress","Next steps","Beneficiaries (reported)","Beneficiaries by type","Women","Youth","SMEs","Milestones achieved","Milestones total","IP filings","Satisfaction %","Respondents","DA recommendations","Description","Last updated","Updated by","Still to fill in","Notes to check","Reason for the hold"];
+  const out=rows.map(r=>[r.id,r.title,r.workplanTitle,r.workplanYear,L.type[r.type],r.parentId,(r.buckets||[]).map(b=>L.bucket[b]).join("; "),r.copyright?"Yes":"No",r.er,L.status[r.status],L.doc[r.docStage]||"",
+    r.funding==="OTHER"?r.fundingOther:L.fund[r.funding],uname(r.managerId),(r.team||[]).map(uname).join("; "),r.counterpart,(r.countries||[]).join("; "),(r.groupings||[]).join("; "),r.otherCountries||"",
+    (r.themes||[]).map(t=>L.theme[t]).join("; "),r.start,r.end,r.expEnd,r.budget,latestSpend(r),...(u=>[u?L.rag[u.rag]:"",u?u.date:"",u?u.note:"",u?u.next:""])(lastUpd(r)),total(r,"TOTAL")||"",benefText(r,"TOTAL"),total(r,"WOMEN")||"",total(r,"YOUTH")||"",total(r,"SME")||"",
+    (r.milestones||[]).filter(m=>m.st==="ACHIEVED").length,(r.milestones||[]).length,(r.filings||[]).reduce((a,f)=>a+Number(f.n||0),0),r.satisfaction,r.respondents,(r.da||[]).join("; "),r.desc,String(r.updatedAt||"").slice(0,10),uname(r.updatedBy),missing(r,DB).join(", "),r.reviewNotes||"",r.status==="ON_HOLD"?r.holdReason||"":""]);
+  const q=v=>{const s=String(v==null?"":v);return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+  const csv="﻿"+[head].concat(out).map(r=>r.map(q).join(",")).join("\r\n");
+  saveBlob(new Blob([csv],{type:"text/csv;charset=utf-8"}),`WeCheck DAP ${todayISO()}.csv`);
+}
+function saveBlob(blob,name){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+
+/* -------------------------------------------------------- detail panel */
+function openPanel(id){
+  const r=rec(id); if(!r)return; viewing=id;
+  const need=requiredDocs(r),have=new Set((r.docs||[]).map(x=>x.type)),kids=DB.filter(x=>x.parentId===r.id),gaps=missing(r,DB);
+  const kv=(k,v)=>`<dt>${esc(k)}</dt><dd>${v}</dd>`;
+  $("#panel").innerHTML=`<div class="ph"><div><div class="idcell">${esc(r.id)}</div><div style="font-weight:660;font-size:16px;line-height:1.3;margin-top:2px">${esc(r.title)}</div></div>
+    <div style="display:flex;gap:8px;align-items:center;flex:none">
+      ${canEdit(r)?`<button class="btn sm" id="pedit">Edit</button>`:`<span class="lock">View only</span>`}
+      ${ME.admin?`<button class="btn ghost sm" id="pdel">Delete</button>`:""}
+      <button class="iconbtn" id="pclose">Close</button></div></div>
+  <div class="pb">
+  ${gaps.length||r.reviewNotes?`<div class="missbox" id="pmiss">${gaps.length?`<b>Still to fill in:</b> ${esc(gaps.join(", "))}.`:"<b>Nothing missing.</b>"}${canEdit(r)?` <button class="linkbtn" id="pfill">${gaps.length?"Fill in now":"Open the record"}</button>`:""}
+    ${r.reviewNotes?`<div class="nt"><b>Notes to check</b>\n${esc(r.reviewNotes)}</div>`:""}</div>`:""}
+  <div class="sec" style="margin-top:0"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h4 style="margin:0">Progress</h4>
+    ${canEdit(r)?`<button class="btn sm" id="pupd">Add progress update</button>`:""}</div>
+    <div id="updform"></div>
+    ${(r.updates||[]).length?(r.updates||[]).slice().sort((a,b)=>String(b.id).localeCompare(String(a.id))).map(u=>`<div class="upd ${esc(u.rag)}">${ragPill(u.rag)}
+      <div class="meta">${esc(niceDate(u.date))} · ${esc(uname(u.by))}${Number(u.spent)>0?` · <span class="updspent">CHF ${esc(fmt(u.spent))} spent</span>`:""}${ME.admin?` · <button class="linkbtn danger" data-rmupd="${esc(u.id)}">Remove</button>`:""}</div><p>${esc(u.note)}</p>${u.next?`<p><b>Next:</b> ${esc(u.next)}</p>`:""}</div>`).join("")
+      :'<p class="muted" style="margin:8px 0 0">No progress update yet.</p>'}
+  </div>
+  ${r.type!=="COMPONENT"?`<div class="sec"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h4 style="margin:0;border:none;padding:0">Components${kids.length?" ("+kids.length+")":""}</h4>
+      <button class="btn ghost sm" id="paddkid">Add a component</button></div>
+    <div style="border-top:1px solid var(--grid);margin-top:8px">${kids.length?kids.slice().sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999")).map(k=>`<button class="kidrow" data-goto="${esc(k.id)}"><span class="idcell">${esc(k.id)}</span> ${esc(k.title)} ${stPill(k.status)}
+      <span class="muted">${esc(datesText(k))}${k.managerId?" · "+esc(uname(k.managerId)):""}${(u=>u?" · "+esc(L.rag[u.rag])+", "+esc(niceDate(u.date)):"")(lastUpd(k))}</span></button>`).join("")
+      :'<p class="muted" style="margin:8px 0 0">None. Use a component for a separate activity under this line, for example the part another officer runs in their countries.</p>'}</div></div>`:""}
+  <dl class="kv">
+    ${kv("Status",stPill(r.status)+(r.status==="ON_HOLD"?`<div class="holdnote">${r.holdReason?esc(r.holdReason):'<span class="muted">No reason given yet.</span>'}</div>`:""))}
+    ${kv("Record type",esc(L.type[r.type]))}
+    ${r.parentId?kv("Part of",`<button class="linkbtn" data-goto="${esc(r.parentId)}">${esc(r.parentId)}</button> ${esc((rec(r.parentId)||{}).title||"")}`):""}
+    ${kv("Expected Result",r.er?"ER "+esc(r.er):'<span class="muted">not set</span>')}
+    ${kv("Portfolio bucket",(r.buckets||[]).map(b=>`<span class="tagpill">${esc(L.bucket[b])}</span>`).join("")||'<span class="muted">none</span>')}
+    ${kv("Copyright project",r.copyright?"Yes":"No")}
+    ${kv("In the workplan",r.inWorkplan?"Yes, "+esc(r.workplanYear):'<span class="muted">No</span>')}
+    ${r.inWorkplan?kv("Workplan title",esc(r.workplanTitle)):""}
+    ${kv("Project manager",r.managerId?esc(uname(r.managerId)):'<span class="muted">not set</span>')}
+    ${kv("Teammates",(r.team||[]).map(t=>esc(uname(t))).join(", ")||'<span class="muted">none</span>')}
+    ${kv("National counterpart",esc(r.counterpart)||'<span class="muted">none</span>')}
+    ${kv("Countries",(r.countries||[]).map(c=>`${esc(CNAME[c]||c)} <span class="mono">(${c})</span>`).join(", ")||(r.otherCountries?"":'<span class="muted">none</span>'))}
+    ${r.otherCountries?kv("Outside Asia and the Pacific",esc(r.otherCountries)):""}
+    ${kv("Regional grouping",(r.groupings||[]).map(g=>esc(GRP[g]?GRP[g].label:g)).join(", ")||'<span class="muted">none</span>')}
+    ${kv("Areas and topics",(r.themes||[]).map(t=>`<span class="tagpill">${esc(L.theme[t]||t)}</span>`).join("")||'<span class="muted">none</span>')}
+    ${kv("Dates",esc(datesText(r)))}
+    ${kv("Funding",r.funding?esc(r.funding==="OTHER"?r.fundingOther:L.fund[r.funding]):'<span class="muted">not set</span>')}
+    ${kv("Budget",r.budget===""||r.budget==null?`<span class="muted">not set</span>${latestSpend(r)?` · CHF ${fmt(latestSpend(r))} spent`:""}`:`CHF ${fmt(r.budget)} allocated · CHF ${fmt(latestSpend(r))} spent${r.budget?` · ${Math.round(latestSpend(r)/r.budget*100)}% used`:""}`)}
+    ${hasProjectDocs(r)||(r.docStage&&r.docStage!=="NONE")?kv("Project document stage",esc(L.doc[r.docStage]||"none")):""}
+    ${kv("Last update",`${esc(String(r.updatedAt||"").replace("T"," ").slice(0,16))} by ${esc(uname(r.updatedBy))}`)}
+  </dl>
+  <div class="sec"><h4>Description</h4><div style="font-size:13.5px;white-space:pre-wrap;color:var(--ink-2)">${esc(r.desc)}</div></div>
+  ${(r.milestones||[]).length?`<div class="sec"><h4>Milestones</h4>${r.milestones.map(m=>`<div class="ms"><b>${esc(m.name)}</b><span class="muted"> · ${esc(niceDate(m.date))} · ${esc(L.ms[m.st]||m.st)}</span>${m.desc?`<p>${esc(m.desc)}</p>`:""}</div>`).join("")}</div>`:""}
+  <div class="sec"><h4>Beneficiaries</h4>${(bl=>bl.length?`<div class="tw"><table><tbody>${bl.map(b=>`<tr><td>${esc(L.seg[b.seg])}</td><td class="num">${b.rs==="REPORTED"?fmt(b.n):"none"}</td><td class="muted">${esc(L.ent[b.ent]||"")}, ${esc(L.q[b.q]||"")}</td><td class="muted">${esc(L.rs[b.rs]||"")}</td></tr>`).join("")}</tbody></table></div>`
+    :'<p class="muted" style="margin:0">None recorded yet.</p>')((r.benef||[]).filter(b=>!emptyBenef(b)))}</div>
+  ${(r.filings||[]).length?`<div class="sec"><h4>IP filings</h4>${r.filings.map(f=>`<div style="font-size:13.5px;padding:2px 0">${esc(f.n)} ${esc((L.ip[f.type]||f.type).toLowerCase())}, ${esc((L.ipst[f.stage]||"").toLowerCase())}, ${esc(CNAME[f.iso]||f.iso)}</div>`).join("")}</div>`:""}
+  ${(r.tools||[]).length?`<div class="sec"><h4>Tools and methodologies</h4>${r.tools.map(t=>`<div style="font-size:13.5px;padding:2px 0">${esc(CNAME[t.iso]||t.iso)}: ${esc(L.tool[t.tool])}</div>`).join("")}</div>`:""}
+  ${hasSurvey(r)?`<div class="sec"><h4>Survey</h4><div style="font-size:13.5px">${r.satisfaction!==""&&r.satisfaction!=null?`${esc(r.satisfaction)}% satisfied or very satisfied`:"Satisfaction not recorded"}${r.respondents!==""&&r.respondents!=null?`, ${esc(r.respondents)} respondents`:""}${r.participants!==""&&r.participants!=null?` of ${esc(r.participants)} participants`:""}${r.platform?`, via ${esc(r.platform)}`:""}.${satFromCounts(r)!==null?`<div class="muted">Answers: ${["satVS","satS","satN","satD","satVD","satDK"].map(k=>esc(r[k]||0)).join(" / ")} (very satisfied to don’t know)</div>`:""}${pctOf(r.exitCorrect,r.exitResp)!==null?`<div class="muted">Skills test: entry ${pctOf(r.entryCorrect,r.entryResp)}%, exit ${pctOf(r.exitCorrect,r.exitResp)}%${skillRows(r).length?`, ${skillRows(r).length} questions recorded`:", totals only"}</div>`:""}</div></div>`:""}
+  ${(r.da||[]).length?`<div class="sec"><h4>DA recommendations</h4><div>${r.da.map(x=>`<span class="tagpill">Rec ${esc(x)}</span>`).join("")}</div></div>`:""}
+  ${r.sustainability?`<div class="sec"><h4>Sustainability</h4><div style="font-size:13.5px;color:var(--ink-2)">${esc(r.sustainability)}</div></div>`:""}
+  <div class="sec"><h4>Documents</h4>
+    ${(r.docs||[]).map(x=>`<div class="dl"><span class="ic">${x.type==="STORY"?"ST":esc((L.dt[x.type]||"?").slice(0,2).toUpperCase())}</span><span>${/^https?:\/\//i.test(x.url)?`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name||x.url)}</a>`:esc(x.name)}<div class="muted">${esc(L.dt[x.type]||"")}</div></span></div>`).join("")||'<div class="muted">No documents linked.</div>'}
+    <ul class="checklist" style="margin-top:10px">${need.map(t=>`<li class="${have.has(t)?"done":"need"}"><span class="bx">${have.has(t)?"✓":""}</span><span>${esc(L.dt[t])} ${have.has(t)?"linked":"required at this status, missing"}</span></li>`).join("")}</ul></div>
+  </div>`;
+  $("#panel").classList.add("open"); $("#scrim").classList.add("open");
+  $("#pclose").onclick=closePanel;
+  const pe=$("#pedit"); if(pe)pe.onclick=()=>startEdit(id);
+  const pu=$("#pupd"); if(pu)pu.onclick=()=>openUpdForm(r);
+  const pf=$("#pfill"); if(pf)pf.onclick=()=>startEdit(id);
+  const pk=$("#paddkid"); if(pk)pk.onclick=()=>startComponent(id);
+  document.querySelectorAll("#panel [data-goto]").forEach(b=>b.onclick=()=>openPanel(b.dataset.goto));
+  document.querySelectorAll("#panel [data-rmupd]").forEach(b=>{let armed=0;b.onclick=async()=>{
+    if(Date.now()-armed>4000){armed=Date.now();b.textContent="Click again to remove";return;}
+    const gone=(r.updates||[]).find(x=>x.id===b.dataset.rmupd), amt=Number((gone||{}).spent)||0;
+    b.disabled=true;try{const saved=await Api.progress(TOKEN,id,null,b.dataset.rmupd);DB=DB.map(x=>x.id===saved.id?saved:x);toast(amt>0?`Update removed. CHF ${fmt(amt)} taken off the total spent.`:"Update removed");openPanel(id);if(VIEW!=="form")VIEWS[VIEW]();}
+    catch(e){b.disabled=false;handleErr(e);}};});
+  const pd=$("#pdel"); if(pd){let armed=0;pd.onclick=async()=>{
+    if(Date.now()-armed>4000){armed=Date.now();pd.textContent="Click again to delete";pd.className="btn danger sm";return;}
+    pd.disabled=true;try{await Api.del(TOKEN,id);DB=DB.filter(x=>x.id!==id);closePanel();toast("Deleted "+id);go("db");}catch(e){handleErr(e);pd.disabled=false;}};}
+}
+function openUpdForm(r){
+  let rag="ON_TRACK";
+  const box=$("#updform"); $("#pupd").classList.add("hidden");
+  box.innerHTML=`<div class="updform">
+    <label style="font-weight:600;font-size:13px">How is it going?</label>
+    <div class="togs" id="uragp">${RATING.map(([v,l])=>`<button type="button" class="tog" data-urag="${v}" aria-pressed="${v===rag}">${esc(l)}</button>`).join("")}</div>
+    <div class="f"><label>Progress since the last update <span class="req">required</span></label><textarea id="unote" placeholder="Two or three sentences: what happened, and anything the Director should know."></textarea></div>
+    <div class="f"><label>Next steps <span class="muted" style="font-weight:400">optional</span></label><textarea id="unext" style="min-height:50px" placeholder="What happens next, and by when."></textarea></div>
+    <div class="f"><label for="uspent">Budget spent since the last update (CHF) <span class="muted" style="font-weight:400">optional</span></label><input type="number" id="uspent" min="0" step="100" placeholder="0" style="max-width:220px">
+      <span class="hint">Added to the total spent${latestSpend(r)?`, now CHF ${fmt(latestSpend(r))}`:""}.</span></div>
+    <div class="actions" style="justify-content:flex-end;margin-top:8px"><button type="button" class="btn ghost sm" id="ucancel">Cancel</button><button type="button" class="btn sm" id="usave">Save update</button></div></div>`;
+  $("#uragp").onclick=e=>{const b=e.target.closest("[data-urag]");if(!b)return;rag=b.dataset.urag;box.querySelectorAll("[data-urag]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.urag===rag));};
+  $("#ucancel").onclick=()=>{box.innerHTML="";$("#pupd").classList.remove("hidden");};
+  $("#unote").focus();
+  $("#usave").onclick=async()=>{
+    const note=$("#unote").value.trim(), next=$("#unext").value.trim(), sraw=$("#uspent").value.trim(), spent=sraw===""?"":Number(sraw);
+    if(!note){toast("Write a line about the progress first.",true);$("#unote").focus();return;}
+    if(spent!==""&&(isNaN(spent)||spent<0)||$("#uspent").validity.badInput){toast("The budget spent must be a number, 0 or more.",true);$("#uspent").focus();return;}
+    const btn=$("#usave"); btn.disabled=true; btn.textContent="Saving…";
+    try{
+      let saved;
+      try{ saved=await Api.progress(TOKEN,r.id,{rag,note,next,spent}); }
+      catch(e){   // server script not updated yet: fall back to saving the whole record
+        if(!/unknown action/i.test(e.message||"")) throw e;
+        const cur=rec(r.id), payload=clone(cur); payload.spendNow=spent>0?String(latestSpend(cur)+spent):""; payload.updates=[{rag,note,next}].concat(cur.updates||[]);
+        saved=await Api.save(TOKEN,payload,cur.updatedAt);
+      }
+      DB=DB.map(x=>x.id===saved.id?saved:x); toast(spent>0?`Progress update saved. Total spent is now CHF ${fmt(latestSpend(saved))}.`:"Progress update saved"); openPanel(saved.id);
+      if(VIEW!=="form") VIEWS[VIEW]();
+    }catch(e){btn.disabled=false;btn.textContent="Save update";handleErr(e);}
+  };
+}
+function closePanel(){$("#panel").classList.remove("open");if($("#modal").classList.contains("hidden"))$("#scrim").classList.remove("open");viewing=null;}
+$("#scrim").onclick=()=>{closePanel();closeModal();};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closePanel();closeModal();}});
+
+/* ============================================================ DASHBOARD */
+let DASH={fund:"",asOf:"",period:"BI",scope:"",support:false,allProg:false};
+(()=>{const p=lstore.get("metrack.dashprefs"); if(!p||typeof p!=="object")return;
+  if(FUNDING.some(([v])=>v===p.fund))DASH.fund=p.fund; if(p.period==="ALL")DASH.period="ALL";
+  if(WPFILT.some(([v])=>v===p.scope)&&p.scope!=="NOWP")DASH.scope=p.scope; DASH.support=p.support===true;})();
+const saveDash=()=>lstore.set("metrack.dashprefs",{fund:DASH.fund,period:DASH.period,scope:DASH.scope,support:DASH.support});
+const PROG_ROWS=15;
+function renderDash(){
+  const live=!DASH.asOf, D=live?todayISO():qRange(DASH.asOf)[1], Q=live?null:DASH.asOf, BS=BI_YEAR+"-01-01";
+  // biennium view: leave out work that was already finished before the biennium started
+  const set=DB.filter(r=>(!DASH.fund||r.funding===DASH.fund)&&wpPass(r,DASH.scope)&&(DASH.period==="ALL"||!(r.end&&r.end<BS)));
+  // ER 4.1 KPI: projects with a milestone achieved, or completed, within the biennium (each counted once)
+  // a project's components count towards it: a milestone achieved in a component is a result of the project
+  const achieved=set.filter(r=>r.er==="4.1"&&r.type!=="COMPONENT"&&r.type!=="SUPPORT"&&([r].concat(DB.filter(k=>k.parentId===r.id)).some(x=>(x.milestones||[]).some(m=>m.st==="ACHIEVED"&&m.date&&m.date>=BS&&m.date<=D))||(r.status==="COMPLETED"&&r.end&&r.end>=BS&&r.end<=D)));
+  const toolC=new Set(set.flatMap(r=>(r.tools||[]).map(t=>t.iso)).filter(Boolean));
+  const sat=set.filter(r=>r.satisfaction!==""&&r.satisfaction!=null&&Number(r.respondents)>0&&r.start<=D);
+  const satDen=sat.reduce((a,r)=>a+Number(r.respondents),0), satAvg=satDen?Math.round(sat.reduce((a,r)=>a+Number(r.satisfaction)*Number(r.respondents),0)/satDen):0;
+  const filings=set.flatMap(r=>r.filings||[]).reduce((a,f)=>a+Number(f.n||0),0);
+  const ben=set.reduce((a,r)=>a+total(r,"TOTAL"),0), women=set.reduce((a,r)=>a+total(r,"WOMEN"),0);
+  const alloc=set.reduce((a,r)=>a+Number(r.budget||0),0), spent=set.reduce((a,r)=>a+spendAt(r,Q),0), pct=alloc?Math.round(spent/alloc*100):0;
+  const countries=new Set(set.flatMap(r=>r.countries||[])), gaps=set.flatMap(r=>r.benef||[]).filter(b=>b.rs!=="REPORTED").length;
+  const started=set.filter(r=>r.start&&r.start<=D&&r.status!=="NOT_STARTED").length;
+  const Y=todayISO().slice(0,4), QS=[1,2,3,4].map(n=>`${Y}-Q${n}`);
+  const planned=QS.map(q=>set.filter(r=>quarterOf(r.start)===q).length);
+  const actual=QS.map(q=>set.filter(r=>quarterOf(r.start)===q&&r.start<=D&&r.status!=="NOT_STARTED").length);
+  const qmax=Math.max(1,...planned,...actual);
+  const cr=set.filter(r=>(r.buckets||[]).includes("CROSSREG"));
+  const ic=DB.filter(r=>r.funding==="ICDAP"), icB=ic.reduce((a,r)=>a+Number(r.budget||0),0), icS=ic.reduce((a,r)=>a+spendAt(r,Q),0);
+  const byER={};set.forEach(r=>byER[r.er]=(byER[r.er]||0)+1); const mx=Math.max(1,...Object.values(byER));
+  const byB={};BUCKETS.forEach(([v])=>byB[v]=set.filter(r=>(r.buckets||[]).includes(v)).length); const mxb=Math.max(1,...Object.values(byB));
+  const tile=(k,v,t,p,cls)=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="t">${t}</div>${p!==undefined?`<div class="meter"><i class="${cls||""}" style="width:${Math.max(0,Math.min(100,p))}%"></i></div>`:""}</div>`;
+  const asOfOpts=[];for(let q=qShift(CUR_Q,-1),i=0;i<6;i++,q=qShift(q,-1))asOfOpts.push(q);
+  // progress overview: active records, most urgent first
+  const act=set.filter(r=>r.status!=="COMPLETED"&&r.type!=="COMPONENT"&&(DASH.support||r.type!=="SUPPORT")).map(r=>{const u=lastUpd(r),age=u?daysSince(u.date):null;return {r,u,age,stale:!u||age>STALE_DAYS};});
+  const rank=x=>x.u&&x.u.rag==="OFF_TRACK"?0:x.u&&x.u.rag==="DELAYS"?1:x.stale?2:3;
+  act.sort((a,b)=>rank(a)-rank(b)||(b.age??1e9)-(a.age??1e9));
+  const nRag=k=>act.filter(x=>x.u&&x.u.rag===k&&!x.stale).length, nStale=act.filter(x=>x.stale).length;
+  const clip=(t,n)=>t.length>n?t.slice(0,n).replace(/\s+\S*$/,"")+"…":t;
+  $("#v-dash").innerHTML=`
+  <div class="pagehead"><div><h1>Dashboard</h1><p class="sub">Computed from the database. Filter by budget source, or look back at the end of any past quarter.</p></div>
+    <button class="btn sm" id="dashreport">Reports</button></div>
+  <div class="filterbar">
+    <div class="fb"><label for="dfund">Budget source</label><select id="dfund"><option value="">All sources</option>${FUNDING.map(([v,l])=>`<option value="${v}" ${DASH.fund===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="dscope">Records</label><select id="dscope"><option value="">All records</option>${WPFILT.filter(([v])=>v!=="NOWP").map(([v,l])=>`<option value="${v}" ${DASH.scope===v?"selected":""}>${esc(l)}</option>`).join("")}</select></div>
+    <div class="fb"><label for="dper">Period</label><select id="dper"><option value="BI" ${DASH.period==="BI"?"selected":""}>${BI_LABEL} biennium</option><option value="ALL" ${DASH.period==="ALL"?"selected":""}>All years</option></select></div>
+    <div class="fb"><label for="dasof">Position as at</label><select id="dasof"><option value="">Today</option>${asOfOpts.map(q=>`<option value="${q}" ${DASH.asOf===q?"selected":""}>End of ${qShort(q)}</option>`).join("")}</select></div>
+    <div class="fb grow"><label>&nbsp;</label><div class="muted" style="padding-bottom:6px">${live?"Today's position.":"As at "+niceDate(D)+": only milestones, starts and spend dated on or before then."}${DASH.period==="BI"?" Work finished before "+BI_YEAR+" is left out.":""}${DASH.fund||DASH.scope||DASH.period==="BI"?" "+set.length+" of "+DB.length+" records in scope.":""}</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>Project progress</h2>
+    <button class="tog" id="dsup" aria-pressed="${DASH.support}">Include workplan support lines</button></div>
+  <div class="tiles">
+    ${tile("On track",nRag("ON_TRACK"),"active records, updated in the last "+STALE_DAYS+" days")}
+    ${tile("Some delays",nRag("DELAYS"),"active records, updated in the last "+STALE_DAYS+" days")}
+    ${tile("Off track",nRag("OFF_TRACK"),"active records, updated in the last "+STALE_DAYS+" days")}
+    ${tile("No recent update",nStale,"no progress update in the last "+STALE_DAYS+" days")}
+  </div>
+  ${act.length?`<div class="tw" style="margin-bottom:${act.length>PROG_ROWS?8:22}px"><table id="progtable"><thead><tr><th>Project</th><th>Manager</th><th>Progress</th><th>Latest update</th></tr></thead><tbody>
+    ${(DASH.allProg?act:act.slice(0,PROG_ROWS)).map(x=>`<tr class="clickable" data-view="${esc(x.r.id)}"><td style="min-width:220px"><span class="idcell">${esc(x.r.id)}</span><div>${esc(x.r.title)}</div></td>
+      <td>${esc(uname(x.r.managerId))}</td>
+      <td>${x.u&&!x.stale?ragPill(x.u.rag):x.u?ragPill(x.u.rag)+'<div style="color:var(--crit);font-size:12px;font-weight:650;margin-top:3px">'+x.age+' days ago</div>':ragPill("")}${x.u&&!x.stale?`<div class="muted" style="margin-top:3px">${esc(niceDate(x.u.date))}</div>`:""}</td>
+      <td style="max-width:460px;font-size:13px">${x.u?esc(clip(x.u.note,220))+(x.u.next?`<div class="muted" style="margin-top:3px"><b>Next:</b> ${esc(clip(x.u.next,120))}</div>`:""):(x.r.status==="ON_HOLD"&&x.r.holdReason?`<span class="muted">On hold: ${esc(clipText(x.r.holdReason,200))}</span>`:'<span class="muted">Open the record and press Add progress update.</span>')}</td></tr>`).join("")}
+  </tbody></table></div>${act.length>PROG_ROWS?`<p style="margin:0 0 22px"><button class="linkbtn" id="dallprog">${DASH.allProg?"Show the "+PROG_ROWS+" most urgent only":"Show all "+act.length+" active records"}</button></p>`:""}`:""}
+  <h2>Corporate indicators</h2>
+  <div class="tiles">
+    ${tile("ER 4.1",achieved.length,"ER 4.1 projects with a milestone achieved or completed in "+BI_LABEL+". Biennium target 80.",achieved.length/80*100,"")}
+    ${tile("ER 4.2",toolC.size,"Member States using WIPO tools and methodologies",toolC.size/38*100,"")}
+    ${tile("ER 4.3",satAvg?satAvg+"%":"none yet",satDen?`participant satisfaction, ${fmt(satDen)} respondents. Target 90%.`:"no satisfaction scores recorded yet",satAvg,satAvg>=90?"ok":"")}
+    ${tile("IP filings",fmt(filings),"filings and registrations from these projects")}
+  </div>
+  <h2>Budget</h2>
+  <div class="tiles">
+    ${tile("Allocated","CHF "+fmt(alloc),set.length+" records")}
+    ${tile("Spent","CHF "+fmt(spent),live?"latest figures entered":"as at "+niceDate(D),pct,pct>90?"warn":"ok")}
+    ${tile("Remaining","CHF "+fmt(Math.max(0,alloc-spent)),pct+"% of the allocation used")}
+    ${tile("No spend entered",set.filter(r=>!latestSpend(r)&&r.status!=="NOT_STARTED").length,"started records with no spend figure yet")}
+  </div>
+  <h2>Delivery</h2>
+  <div class="tiles">
+    ${tile("Beneficiaries",fmt(ben),(benefBy(set,"TOTAL").length>1?benefText(set,"TOTAL"):"reported")+(women?", of whom "+fmt(women)+" women":""))}
+    ${tile("Countries reached",countries.size,"of 38 Asia-Pacific member states",countries.size/38*100,"")}
+    ${tile("Started",started,"records under way or completed")}
+    ${tile("Gaps flagged",gaps,"beneficiary figures not collected yet. Never counted as zero.")}
+  </div>
+  <div class="two">
+    <div class="card"><h2>On track? Starts by quarter, ${Y}</h2>
+      <div class="legrow"><span><span class="sw plan"></span>Planned to start</span><span><span class="sw act"></span>Actually started</span></div>
+      <div class="qgrid">${QS.map((q,i)=>`<div class="bl">Q${i+1}</div><div class="qpair"><div class="qbar plan" style="width:${planned[i]/qmax*100}%" title="${planned[i]} planned"></div><div class="qbar act" style="width:${actual[i]/qmax*100}%" title="${actual[i]} started"></div></div><div class="bval">${actual[i]} of ${planned[i]}</div>`).join("")}</div>
+      <p class="muted" style="margin:12px 0 0">Planned comes from each record's start date. Started means the start date has passed and the status has moved off Not started.</p></div>
+    <div class="card"><h2>Portfolio buckets</h2>
+      <div class="bars">${BUCKETS.map(([v,l])=>`<div class="bl">${esc(l)}</div><div class="btrack"><div class="bfill" style="width:${byB[v]/mxb*100}%"></div></div><div class="bval">${byB[v]}</div>`).join("")}</div>
+      <h2 style="margin-top:20px">Records by Expected Result</h2>
+      <div class="bars">${ER.filter(([v])=>byER[v]).map(([v])=>`<div class="bl">ER ${v}</div><div class="btrack"><div class="bfill" style="width:${byER[v]/mx*100}%"></div></div><div class="bval">${byER[v]}</div>`).join("")||'<div class="muted">No records.</div>'}</div></div>
+  </div>
+  <h2 style="margin-top:24px">Cross-regional work</h2>
+  <div class="tiles">
+    ${tile("Cross-regional records",cr.length,"tagged Cross Regional")}
+    ${tile("Budget","CHF "+fmt(cr.reduce((a,r)=>a+Number(r.budget||0),0)),"CHF "+fmt(cr.reduce((a,r)=>a+spendAt(r,Q),0))+" spent")}
+    ${tile("Beneficiaries",fmt(cr.reduce((a,r)=>a+total(r,"TOTAL"),0)),benefBy(cr,"TOTAL").length>1?benefText(cr,"TOTAL"):"reported")}
+    ${tile("Countries",new Set(cr.flatMap(r=>r.countries||[])).size,"Asia-Pacific countries involved")}
+  </div>
+  ${cr.length?`<div class="tw" style="margin-bottom:18px"><table><thead><tr><th>ID</th><th>Project</th><th>Status</th><th>Manager</th><th>Budget</th><th>Spent</th></tr></thead><tbody>${cr.map(r=>`<tr class="clickable" data-view="${esc(r.id)}"><td class="idcell">${esc(r.id)}</td><td>${esc(r.title)}</td><td>${stPill(r.status)}</td><td>${esc(uname(r.managerId))}</td><td class="num">${r.budget===""||r.budget==null?'<span class="muted">not set</span>':fmt(r.budget)}</td><td class="num">${fmt(spendAt(r,Q))}</td></tr>`).join("")}</tbody></table></div>`:""}
+  <h2 style="margin-top:24px">ICDAP portfolio</h2>
+  <div class="tiles">
+    ${tile("ICDAP projects",ic.length,ic.filter(r=>r.status==="IN_PROGRESS").length+" in progress")}
+    ${tile("Budget received","CHF "+fmt(icB),"allocated to ICDAP work")}
+    ${tile("Budget used","CHF "+fmt(icS),icB?Math.round(icS/icB*100)+"% of the ICDAP allocation":"",icB?icS/icB*100:0,"")}
+    ${tile("No project document",ic.filter(r=>hasProjectDocs(r)&&!(r.docs||[]).some(x=>x.type==="PROJECT_DOC")).length,"ICDAP projects without a linked project document")}
+  </div>
+  <p class="muted">The ICDAP panel always covers all ICDAP records, whatever the budget filter.</p>`;
+  $("#dfund").onchange=e=>{DASH.fund=e.target.value;saveDash();renderDash();};
+  $("#dscope").onchange=e=>{DASH.scope=e.target.value;saveDash();renderDash();};
+  $("#dasof").onchange=e=>{DASH.asOf=e.target.value;renderDash();};
+  $("#dper").onchange=e=>{DASH.period=e.target.value;saveDash();renderDash();};
+  $("#dsup").onclick=()=>{DASH.support=!DASH.support;saveDash();renderDash();};
+  const ap=$("#dallprog"); if(ap)ap.onclick=()=>{DASH.allProg=!DASH.allProg;renderDash();};
+  $("#dashreport").onclick=openReport;
+  $("#v-dash").onclick=e=>{const vw=e.target.closest("[data-view]");if(vw)openPanel(vw.dataset.view);};
+}
+
+/* ============================================================ WORD REPORT */
+function reportData(q){
+  const [qs,qe]=qRange(q), inQ=d=>d&&d>=qs&&d<=qe;
+  const rows=[];
+  DB.forEach(r=>{
+    const ms=(r.milestones||[]).filter(m=>m.st==="ACHIEVED"&&inQ(m.date)).sort((a,b)=>a.date.localeCompare(b.date));
+    const completed=r.status==="COMPLETED"&&inQ(r.end);
+    // a component or activity that only closed (no milestone) is not a project result: activities are listed as events
+    if(ms.length||(completed&&(r.type==="PROJECT"||r.type==="SUPPORT"))) rows.push({r,ms,completed});
+  });
+  rows.sort((a,b)=>(b.completed-a.completed)||a.r.title.localeCompare(b.r.title));
+  // events that took place: planned or postponed ones are left out
+  const events=DB.filter(r=>r.type==="ACTIVITY"&&(r.status==="COMPLETED"||r.status==="IN_PROGRESS")&&(inQ(r.start)||inQ(r.end))).sort((a,b)=>(a.start||a.end||"").localeCompare(b.start||b.end||""));
+  const surveys=DB.filter(r=>hasSurvey(r)&&inQ(r.start));
+  const photos=rows.flatMap(x=>(x.r.docs||[]).filter(d=>d.type==="PHOTO"&&/^https?:/i.test(d.url)).map(d=>({d,r:x.r})));
+  const stories=rows.filter(x=>x.completed&&x.r.sustainability);
+  const nMs=rows.reduce((a,x)=>a+x.ms.length,0);
+  return {q,qs,qe,rows,events,surveys,photos,stories,
+    nCompleted:rows.filter(x=>x.completed).length, nMs, nProjects:rows.filter(x=>x.ms.length).length,
+    msCompleted:rows.filter(x=>x.completed).reduce((a,x)=>a+x.ms.length,0), msOngoing:rows.filter(x=>!x.completed).reduce((a,x)=>a+x.ms.length,0)};
+}
+
+function openReport(){
+  const opts=[];for(let q=CUR_Q,i=0;i<6;i++,q=qShift(q,-1))opts.push(q);
+  const m=$("#modal");
+  m.innerHTML=`<h3>Reports</h3>
+    <p class="muted" style="margin:0">Built from the database for the quarter you choose. In the Word report, sections WeCheck does not hold are marked in yellow.</p>
+    <div class="row"><label for="rq" style="font-size:13px;font-weight:600">Quarter</label><select id="rq" style="flex:1;min-width:0;width:100%">${opts.map(q=>`<option value="${q}">${esc(qLabel(q))}</option>`).join("")}</select></div>
+    <div id="rprev"></div>
+    <div class="replist">
+      <button class="btn" id="rgo">Quarterly report (Word)</button>
+      <button class="btn ghost" data-xl="er41">ER 4.1 WPR tracker (Excel)</button>
+      <button class="btn ghost" data-xl="er42">ER 4.2 tools tracker (Excel)</button>
+      <button class="btn ghost" data-xl="er43">ER 4.3 satisfaction and skills (Excel)</button>
+    </div>
+    <div class="actions" style="justify-content:flex-end"><button class="btn ghost" id="rcancel">Close</button></div>`;
+  const prev=()=>{const x=reportData($("#rq").value);
+    $("#rprev").innerHTML=`<div class="stat"><span>Milestones achieved</span><b>${x.nMs}</b><span>Projects with milestones</span><b>${x.nProjects}</b><span>Projects completed</span><b>${x.nCompleted}</b><span>Events held</span><b>${x.events.length}</b><span>Surveys recorded</span><b>${x.surveys.length}</b></div>`
+      +(x.nMs||x.nCompleted?"":'<p class="muted" style="margin:-6px 0 12px">Nothing recorded for this quarter yet. The report will still download, with every section marked to complete.</p>');};
+  $("#rq").onchange=prev; prev();
+  $("#rcancel").onclick=closeModal;
+  $("#rgo").onclick=async()=>{const b=$("#rgo");b.disabled=true;b.textContent="Building…";
+    try{const blob=await buildReport(reportData($("#rq").value));saveBlob(blob,`DAP Quarterly Report ${qShort($("#rq").value)}.docx`);toast("Report downloaded");closeModal();}
+    catch(e){console.error(e);toast("Could not build the Word file: "+e.message,true);b.disabled=false;b.textContent="Quarterly report (Word)";}};
+  m.querySelectorAll("[data-xl]").forEach(b=>b.onclick=async()=>{const t=b.textContent;b.disabled=true;b.textContent="Building…";
+    try{const q=$("#rq").value,[blob,name]=await XL[b.dataset.xl](q);saveBlob(blob,name);toast(name+" downloaded");}
+    catch(e){console.error(e);toast("Could not build the Excel file: "+e.message,true);}
+    b.disabled=false;b.textContent=t;});
+  m.classList.remove("hidden"); $("#scrim").classList.add("open");
+}
+function closeModal(){$("#modal").classList.add("hidden");if(!$("#panel").classList.contains("open"))$("#scrim").classList.remove("open");}
+$("#reportbtn").onclick=openReport;
+
+const ER42_COUNTRIES=[["Afghanistan","AFG","ASPAC","LDCs - ASPAC"],["Albania","ALB","Transition",""],["Algeria","DZA","Arab",""],["Andorra","AND","Developed",""],["Angola","AGO","Africa","LDC - AFRICA"],["Antigua and Barbuda","ATG","LAC",""],["Argentina","ARG","LAC",""],["Armenia","ARM","Transition",""],["Australia","AUS","Developed",""],["Austria","AUT","Developed",""],["Azerbaijan","AZE","Transition",""],["Bahamas","BHS","LAC",""],["Bahrain","BHR","Arab",""],["Bangladesh","BGD","ASPAC","LDCs - ASPAC"],["Barbados","BRB","LAC",""],["Belarus","BLR","Transition",""],["Belgium","BEL","Developed",""],["Belize","BLZ","LAC",""],["Benin","BEN","Africa","LDC - AFRICA"],["Bhutan","BTN","ASPAC","LDCs - ASPAC"],["Bolivia (Plurinational State of)","BOL","LAC",""],["Bosnia and Herzegovina","BIH","Transition",""],["Botswana","BWA","Africa",""],["Brazil","BRA","LAC",""],["Brunei Darussalam","BRN","ASPAC",""],["Bulgaria","BGR","Transition",""],["Burkina Faso","BFA","Africa","LDC - AFRICA"],["Burundi","BDI","Africa","LDC - AFRICA"],["Cabo Verde","CPV","Africa",""],["Cambodia","KHM","ASPAC","LDCs - ASPAC"],["Cameroon","CMR","Africa",""],["Canada","CAN","Developed",""],["Central African Republic","CAF","Africa","LDC - AFRICA"],["Chad","TCD","Africa","LDC - AFRICA"],["Chile","CHL","LAC",""],["China","CHN","ASPAC",""],["Colombia","COL","LAC",""],["Comoros","COM","Africa",""],["Congo","COG","Africa","LDC - AFRICA"],["Cook Islands","COK","ASPAC",""],["Costa Rica","CRI","LAC",""],["Côte d'Ivoire","CIV","Africa",""],["Croatia","HRV","Transition",""],["Cuba","CUB","LAC",""],["Cyprus","CYP","Developed",""],["Czech Republic","CZE","Transition",""],["Democratic People's Republic of Korea","PRK","ASPAC",""],["Democratic Republic of the Congo","COD","Africa","LDC - AFRICA"],["Denmark","DNK","Developed",""],["Djibouti","DJI","Arab","LDC - AFRICA"],["Dominica","DMA","LAC",""],["Dominican Republic","DOM","LAC",""],["Ecuador","ECU","LAC",""],["Egypt","EGY","Arab",""],["El Salvador","SLV","LAC",""],["Equatorial Guinea","GNQ","Africa",""],["Eritrea","ERI","Africa","LDC - AFRICA"],["Estonia","EST","Transition",""],["Eswatini","SWZ","Africa",""],["Ethiopia","ETH","Africa","LDC - AFRICA"],["Fiji","FJI","ASPAC",""],["Finland","FIN","Developed",""],["France","FRA","Developed",""],["Gabon","GAB","Africa",""],["Gambia","GMB","Africa","LDC - AFRICA"],["Georgia","GEO","Transition",""],["Germany","DEU","Developed",""],["Ghana","GHA","Africa",""],["Greece","GRC","Developed",""],["Grenada","GRD","LAC",""],["Guatemala","GTM","LAC",""],["Guinea","GIN","Africa","LDC - AFRICA"],["Guinea-Bissau","GNB","Africa","LDC - AFRICA"],["Guyana","GUY","LAC",""],["Haiti","HTI","LAC","LDCs - LAC"],["Holy See","VAT","Developed",""],["Honduras","HND","LAC",""],["Hungary","HUN","Transition",""],["Iceland","ISL","Developed",""],["India","IND","ASPAC",""],["Indonesia","IDN","ASPAC",""],["Iran (Islamic Republic of)","IRN","ASPAC",""],["Iraq","IRQ","Arab",""],["Ireland","IRL","Developed",""],["Israel","ISR","Developed",""],["Italy","ITA","Developed",""],["Jamaica","JAM","LAC",""],["Japan","JPN","Developed",""],["Jordan","JOR","Arab",""],["Kazakhstan","KAZ","Transition",""],["Kenya","KEN","Africa",""],["Kiribati","KIR","ASPAC","LDCs - ASPAC"],["Kuwait","KWT","Arab",""],["Kyrgyzstan","KGZ","Transition",""],["Lao People's Democratic Republic","LAO","ASPAC","LDCs - ASPAC"],["Latvia","LVA","Transition",""],["Lebanon","LBN","Arab",""],["Lesotho","LSO","Africa","LDC - AFRICA"],["Liberia","LBR","Africa","LDC - AFRICA"],["Libya","LBY","Arab",""],["Liechtenstein","LIE","Developed",""],["Lithuania","LTU","Transition",""],["Luxembourg","LUX","Developed",""],["Madagascar","MDG","Africa","LDC - AFRICA"],["Malawi","MWI","Africa","LDC - AFRICA"],["Malaysia","MYS","ASPAC",""],["Maldives","MDV","ASPAC",""],["Mali","MLI","Africa","LDC - AFRICA"],["Malta","MLT","Developed",""],["Marshall Islands","MHL","ASPAC",""],["Mauritania","MRT","Arab","LDC - AFRICA"],["Mauritius","MUS","Africa",""],["Mexico","MEX","LAC",""],["Micronesia (Federated States of)","FSM","ASPAC",""],["Monaco","MCO","Developed",""],["Mongolia","MNG","ASPAC",""],["Montenegro","MNE","Transition",""],["Morocco","MAR","Arab",""],["Mozambique","MOZ","Africa","LDC - AFRICA"],["Myanmar","MMR","ASPAC","LDCs - ASPAC"],["Namibia","NAM","Africa",""],["Nauru","NRU","ASPAC",""],["Nepal","NPL","ASPAC","LDCs - ASPAC"],["Netherlands","NLD","Developed",""],["New Zealand","NZL","Developed",""],["Nicaragua","NIC","LAC",""],["Niger","NER","Africa","LDC - AFRICA"],["Nigeria","NGA","Africa",""],["Niue","NIU","ASPAC",""],["North Macedonia","MKD","Transition",""],["Norway","NOR","Developed",""],["Oman","OMN","Arab",""],["Pakistan","PAK","ASPAC",""],["Palau","PLW","ASPAC",""],["Panama","PAN","LAC",""],["Papua New Guinea","PNG","ASPAC",""],["Paraguay","PRY","LAC",""],["Peru","PER","LAC",""],["Philippines","PHL","ASPAC",""],["Poland","POL","Transition",""],["Portugal","PRT","Developed",""],["Qatar","QAT","Arab",""],["Republic of Korea","KOR","ASPAC",""],["Republic of Moldova","MDA","Transition",""],["Romania","ROU","Transition",""],["Russian Federation","RUS","Transition",""],["Rwanda","RWA","Africa","LDC - AFRICA"],["Saint Kitts and Nevis","KNA","LAC",""],["Saint Lucia","LCA","LAC",""],["Saint Vincent and the Grenadines","VCT","LAC",""],["Samoa","WSM","ASPAC",""],["San Marino","SMR","Developed",""],["Sao Tome and Principe","STP","Africa","LDC - AFRICA"],["Saudi Arabia","SAU","Arab",""],["Senegal","SEN","Africa","LDC - AFRICA"],["Serbia","SRB","Transition",""],["Seychelles","SYC","Africa",""],["Sierra Leone","SLE","Africa","LDC - AFRICA"],["Singapore","SGP","ASPAC",""],["Slovakia","SVK","Transition",""],["Slovenia","SVN","Transition",""],["Solomon Islands","SLB","ASPAC","LDCs - ASPAC"],["Somalia","SOM","Arab","LDC - AFRICA"],["South Africa","ZAF","Africa",""],["South Sudan","SSD","Africa","LDC - AFRICA"],["Spain","ESP","Developed",""],["Sri Lanka","LKA","ASPAC",""],["Sudan","SDN","Arab","LDC - AFRICA"],["Suriname","SUR","LAC",""],["Sweden","SWE","Developed",""],["Switzerland","CHE","Developed",""],["Syrian Arab Republic","SYR","Arab",""],["Tajikistan","TJK","Transition",""],["Thailand","THA","ASPAC",""],["Timor-Leste","TLS","ASPAC","LDCs - ASPAC"],["Togo","TGO","Africa","LDC - AFRICA"],["Tonga","TON","ASPAC",""],["Trinidad and Tobago","TTO","LAC",""],["Tunisia","TUN","Arab",""],["Türkiye","TUR","Transition",""],["Turkmenistan","TKM","Transition",""],["Tuvalu","TUV","ASPAC","LDCs - ASPAC"],["Uganda","UGA","Africa","LDC - AFRICA"],["Ukraine","UKR","Transition",""],["United Arab Emirates","ARE","Arab",""],["United Kingdom","GBR","Developed",""],["United Republic of Tanzania","TZA","Africa","LDC - AFRICA"],["United States of America","USA","Developed",""],["Uruguay","URY","LAC",""],["Uzbekistan","UZB","Transition",""],["Vanuatu","VUT","ASPAC",""],["Venezuela (Bolivarian Republic of)","VEN","LAC",""],["Viet Nam","VNM","ASPAC",""],["Yemen","YEM","Arab","LDCs - AFRICA"],["Zambia","ZMB","Africa","LDC - AFRICA"],["Zimbabwe","ZWE","Africa",""]];
+const ER42_TOOLS=["NIPS Methodology", "WIPO Guides (unique downloads)", "IP Diagnostics Tool", "IP Toolkit for Universites", "IP & Tourism Toolkit", "Guidelines for producing gender analysis from innovation and IP data", "WIPO Toolkit on getting innovation ecosystem ready for AI", "WIPO Guide on Generative AI", "Creative Economy Data Model (CEDM)", "WIPO Toolkit on New Product Development and Inventions in the Public Domain", "Good Practice Toolkit for Collective Management", "GII Use", "Toolkits on Access and Preservation for Cultural Heritage Institution"];
+
+/* ---------------------------------------------------------- Excel data calls */
+let _xl=null;
+function loadExcel(){ if(window.ExcelJS) return Promise.resolve(window.ExcelJS);
+  return _xl||(_xl=new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="lib/exceljs.min.js";sc.onload=()=>window.ExcelJS?ok(window.ExcelJS):no(new Error("the Excel library did not start"));sc.onerror=()=>{_xl=null;no(new Error("lib/exceljs.min.js is missing on the website"));};document.head.appendChild(sc);})); }
+const XL_FONT={name:"Arial",size:10}, XL_HEAD={name:"Arial",size:10,bold:true}, XL_FILL={type:"pattern",pattern:"solid",fgColor:{argb:"FFD9E1F2"}};
+const xlDate=d=>d?new Date(d+"T00:00:00Z"):null;
+async function xlBlob(wb){const buf=await wb.xlsx.writeBuffer();return new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});}
+function xlHeader(ws,rowNo,heads,height){const row=ws.getRow(rowNo);heads.forEach((h,i)=>{if(h==null)return;const c=row.getCell(i+1);c.value=h;c.font=XL_HEAD;c.fill=XL_FILL;c.alignment={wrapText:true,vertical:"top"};c.border={bottom:{style:"thin"}};});if(height)row.height=height;}
+function xlRow(ws,rowNo,vals){const row=ws.getRow(rowNo);vals.forEach((v,i)=>{const c=row.getCell(i+1);c.value=v===""?null:v;c.font=XL_FONT;c.alignment={wrapText:true,vertical:"top"};if(v instanceof Date)c.numFmt="dd/mm/yyyy";});}
+const inYear=(r,y)=>(r.start||"")<=y+"-12-31"&&((r.end||r.expEnd||r.start||"")>=y+"-01-01");
+const WPR_STATUS={IN_PROGRESS:"ongoing",COMPLETED:"completed",NOT_STARTED:"planning",ON_HOLD:"on hold"};
+const XL={
+  async er41(q){
+    const ExcelJS=await loadExcel(), [,qEnd]=qRange(q), y=q.slice(0,4);
+    // cumulative, like DDC's tracker: every ER 4.1 project started by the end of the quarter, plus planned ones without a start date
+    const rows=DB.filter(r=>r.er==="4.1"&&r.type!=="COMPONENT"&&r.type!=="SUPPORT"&&(!r.start||r.start<=qEnd))
+      .sort((a,b)=>(a.start||"9999").localeCompare(b.start||"9999")||a.title.localeCompare(b.title));
+    const wb=new ExcelJS.Workbook(); wb.creator="WeCheck"; const ws=wb.addWorksheet("Tracking ");
+    const H=["Project","Budget Unit","Division/Unit","Expected Result ","Project Title","Areas/Topics \n(e.g. women / local communities / youth / people with disabilities / SMEs ) ","Beneficiaries (number of beneficiaries) ","Start Date","End Date ","Expected date of completion ","Role (Lead, Co-Lead, Supporting)","Lead/Co-Lead Implementing Area (if supporting)","Status\n(on going or completed) ","Project Document Available? \nY/N (Y* - other document)","Date of last version of project document","Project Doc Identifier \n(BudgetUnit_Number_Country) - example: 0421_01_Tunisia","Brief Project Description","Indicate if copyright project transferred from CCIS","Indicate if copyright project ","Milestones/Benefits/Progress","Has it been reported for WPR 2022/23 \n(Y/N)","Has it been reported for WPR 2024 \n(Y/N)","Is this the first time it is being reported for WPR 2025\n(Y/N)","Comments"];
+    [15,20,30,24,63,54,53,16,15,40,20,20,18,23,24,45,65,30,30,106,27,27,26,28].forEach((w,i)=>ws.getColumn(i+1).width=w);
+    const n=ws.getCell("U1"); n.value="For reporting purposes, within a biennium a project will only be counted once."; n.font=XL_HEAD;
+    xlHeader(ws,2,H,90); ws.views=[{state:"frozen",ySplit:2}];
+    rows.forEach((r,i)=>{
+      const docs=r.docs||[], hasPD=docs.some(d=>d.type==="PROJECT_DOC"), u=lastUpd(r), kids=DB.filter(k=>k.parentId===r.id);
+      // milestones and beneficiaries recorded on components belong to the project line
+      const ms=[r].concat(kids).flatMap(x=>(x.milestones||[]).filter(m=>m.st==="ACHIEVED"&&m.date&&m.date<=qEnd).map(m=>({...m,name:x===r?m.name:x.title+": "+m.name})))
+        .sort((a,b)=>a.date.localeCompare(b.date));
+      const prog=[u?`Progress (${niceDate(u.date)}, ${L.rag[u.rag]||""}): ${u.note}${u.next?" Next: "+u.next:""}`:"",
+        ms.length?"Milestones achieved: "+ms.map(m=>`${m.name} (${niceDate(m.date)})`).join("; ")+".":""].filter(Boolean).join("\n");
+      xlRow(ws,i+3,[i+1,"0033",DIVISION,r.er,r.inWorkplan&&r.workplanTitle?r.workplanTitle:r.title,(r.themes||[]).map(t=>L.theme[t]).join(" / "),
+        benefText([r].concat(kids),"TOTAL",{qual:true}),xlDate(r.start),r.status==="COMPLETED"?xlDate(r.end):null,xlDate(r.expEnd||r.end),"","",WPR_STATUS[r.status]||"",
+        hasPD?"Y":docs.length?"Y*":"N","","",r.desc,"",r.copyright?"Y":"N",prog,"","","",r.status==="ON_HOLD"&&r.holdReason?"On hold: "+r.holdReason:""]);
+    });
+    return [await xlBlob(wb),`DAP ER 4.1 WPR ${qShort(q)}.xlsx`];
+  },
+  async er42(q){
+    const ExcelJS=await loadExcel(), y=q.slice(0,4);
+    const use={}; DB.filter(r=>inYear(r,y)).forEach(r=>(r.tools||[]).forEach(t=>{(use[t.iso]=use[t.iso]||new Set()).add(t.tool);}));
+    const wb=new ExcelJS.Workbook(); wb.creator="WeCheck"; const ws=wb.addWorksheet("Tools_Tracking_"+y);
+    xlHeader(ws,1,["Country","ISO Code","Regions","LDCs",null].concat(ER42_TOOLS),80);
+    const r2=ws.getRow(2); ER42_TOOLS.forEach((_,i)=>{const c=r2.getCell(6+i);c.value=Number(y);c.font=XL_HEAD;c.alignment={horizontal:"center"};});
+    [34,10,12,16,4].concat(ER42_TOOLS.map(()=>16)).forEach((w,i)=>ws.getColumn(i+1).width=w);
+    ER42_COUNTRIES.forEach(([name,iso,reg,ldc],i)=>{const u=use[iso];
+      // T02 is "WIPO Guides (unique downloads)": a download count from analytics, not a use mark, so it stays empty
+      xlRow(ws,i+3,[`    ${name} (${iso})`,iso,reg,ldc,""].concat(TOOLS.map(([k])=>k!=="T02"&&u&&u.has(k)?"X":"")));});
+    ws.views=[{state:"frozen",xSplit:1,ySplit:2}];
+    return [await xlBlob(wb),`DAP ER 4.2 Tools and Methodologies ${y}.xlsx`];
+  },
+  async er43(q){
+    const ExcelJS=await loadExcel(), [qs,qe]=qRange(q);
+    // every event with survey results that started in the quarter, whatever its Expected Result
+    const ev=DB.filter(r=>hasSurvey(r)&&r.start&&r.start>=qs&&r.start<=qe).sort((a,b)=>a.start.localeCompare(b.start));
+    const N=v=>v===""||v==null?null:Number(v);
+    const wb=new ExcelJS.Workbook(); wb.creator="WeCheck";
+    const base=["Tab No.","Name of Activity/Event ","Copyright Development","Year","Date(s)","No. of Participants ","How many received the questionnaire?","Number of Respondents","Platform used to collect feedback (physical distribution, SurveyMonkey etc…)","Supporting Doc. Name","Response rate"];
+    const first=(r,i)=>[String(i+1).padStart(2,"0"),r.title,r.copyright?"Y":"N",Number(r.start.slice(0,4)),niceRange(r.start,r.end||r.expEnd),N(r.participants),N(r.questionnaires),N(r.respondents),r.platform||"",r.surveyDoc||"",
+      N(r.questionnaires)&&N(r.respondents)!=null?Math.round(N(r.respondents)/N(r.questionnaires)*1000)/1000:null];
+    const widths=[8,44,12,8,22,12,14,12,24,30,10,3,12,12,12,12,12,12,3,14,3,14];
+    // satisfaction
+    const s1=wb.addWorksheet("Satisfaction"); widths.forEach((w,i)=>s1.getColumn(i+1).width=w);
+    s1.getCell("B3").value="PI: Level of satisfaction of participants in WIPO Training and skills"; s1.getCell("B3").font=XL_HEAD;
+    s1.getCell("B4").value=`${DIVISION}, ${qLabel(q)}. Exported from WeCheck on ${niceDate(todayISO())}.`; s1.getCell("B4").font=XL_FONT;
+    xlHeader(s1,8,["","Event Related Information",null,null,null,null,"Survey Information",null,null,null,null,null,"Survey Results (consolidated view)",null,null,null,null,null,null,"Total Responses\n(excl the N/A)",null,"Very satisfied \n+ Satisfied (in %)"],45);
+    xlHeader(s1,9,base.concat([null,"Very satisfied","Satisfied","Neither satisfied nor dissatisfied","Dissatisfied","Very dissatisfied","Don’t know/Not Applicable",null,"Total Responses\n(excl the N/A)",null,"Very satisfied \n+ Satisfied (in %)"]),60);
+    const tot={};
+    ev.forEach((r,i)=>{const c=["satVS","satS","satN","satD","satVD","satDK"].map(k=>N(r[k])); const t=c.slice(0,5).some(v=>v!=null)?c.slice(0,5).reduce((a,v)=>a+(v||0),0):null;
+      const pct=t?Math.round(((c[0]||0)+(c[1]||0))/t*1000)/1000:(r.satisfaction!==""&&r.satisfaction!=null?Number(r.satisfaction)/100:null);
+      xlRow(s1,10+i,first(r,i).concat(["",...c,"",t,"",pct]));
+      ["participants","questionnaires","respondents","satVS","satS","satN","satD","satVD","satDK"].forEach(k=>tot[k]=(tot[k]||0)+(Number(r[k])||0)); tot.t=(tot.t||0)+(t||0);});
+    const T=s1.getRow(7); T.getCell(2).value="TOTALS "; [[6,"participants"],[7,"questionnaires"],[8,"respondents"],[13,"satVS"],[14,"satS"],[15,"satN"],[16,"satD"],[17,"satVD"],[18,"satDK"]].forEach(([c,k])=>T.getCell(c).value=tot[k]||0);
+    T.getCell(11).value=tot.questionnaires?Math.round(tot.respondents/tot.questionnaires*1000)/1000:null; T.getCell(20).value=tot.t||0; T.getCell(22).value=tot.t?Math.round((tot.satVS+tot.satS)/tot.t*1000)/1000:null;
+    T.eachCell(c=>c.font=XL_HEAD);
+    [11,22].forEach(col=>s1.getColumn(col).numFmt="0.0%"); s1.views=[{state:"frozen",ySplit:9}];
+    // skills
+    const s2=wb.addWorksheet("Skills (entry-exit)"); widths.forEach((w,i)=>s2.getColumn(i+1).width=w);
+    s2.getCell("B3").value="ER 4.3 (PI: Level of skills acquired through WIPO training/programs)"; s2.getCell("B3").font=XL_HEAD;
+    xlHeader(s2,8,["","Event Related Information",null,null,null,null,"Survey Information",null,null,null,null,null,"Survey Results (consolidated view)",null,null,null,null,null,null,"CHANGE"],45);
+    xlHeader(s2,9,base.concat([null,"Entry Survey:\n\nNumber of Correct Answers","Entry Survey:\n\nTotal Number of Respondents","Entry Survey:\n\nPercentage of Correct Answers","Exit Survey:\n\nNumber of Correct Answers","Exit Survey:\n\nTotal Number of Respondents","Exit Survey:\n\nPercentage of Correct Answers",null,"Total CHANGE"]),80);
+    ev.filter(r=>N(r.exitResp)||N(r.entryResp)).forEach((r,i)=>{const e=pctOf(r.entryCorrect,r.entryResp),x=pctOf(r.exitCorrect,r.exitResp);
+      xlRow(s2,10+i,first(r,i).concat(["",N(r.entryCorrect),N(r.entryResp),e!=null?e/100:null,N(r.exitCorrect),N(r.exitResp),x!=null?x/100:null,"",e!=null&&x!=null?Math.round((x-e)*10)/1000:null]));});
+    [11,15,18,20].forEach(col=>s2.getColumn(col).numFmt="0.0%"); s2.views=[{state:"frozen",ySplit:9}];
+    // one tab per event in ODDC's event-tab layout (July 2026 file), numbered as in the sheet above
+    const TPL_GROUPS=["Awareness & Baseline Knowledge","Conceptual Understanding","Applied/Practical Understanding"], QROW=[18,19,20,24,25,26,30,31,32];
+    ev.filter(r=>N(r.exitResp)||N(r.entryResp)).forEach((r,i)=>{
+      const ws=wb.addWorksheet(String(i+1).padStart(2,"0")), qs=skillRows(r).length?r.skills:[];
+      [3,64,14,14,14,3,14,14,14,3,12].forEach((w,j)=>ws.getColumn(j+1).width=w);
+      const put=(a,v,f)=>{const c=ws.getCell(a);c.value=v===""||v==null?null:v;c.font=f||XL_FONT;c.alignment={wrapText:true,vertical:"top"};};
+      const ratio=(a,b)=>a!=null&&a!==""&&Number(b)>0?Number(a)/Number(b):null;
+      [["Training Name",r.title],["Copyright Development (Y/N)",r.copyright?"Y":"N"],["Year",Number(String(r.start||"").slice(0,4))||null],["Training Dates",r.start?niceRange(r.start,r.end||r.expEnd):""],
+       ["Number of Participants",N(r.participants)],["How many received both questionnaires? ",N(r.questionnaires)],["Number of Respondents",N(r.respondents)],
+       ["Platform used to collect feedback (physical distribution, SurveyMonkey etc…)",r.platform||""],["Supporting Documentation Name (Tab Number-Training Name)",r.surveyDoc||""]]
+        .forEach(([l,v],j)=>{put("B"+(j+1),l,XL_HEAD);put("C"+(j+1),v);});
+      put("B10","Kindly adapt the below questions to your specific training by replacing X with appropriate TOPIC/TOOL/TREATY/SUBJECT");
+      put("C11","ENTRY SURVEY RESULT CONSOLIDATION",XL_HEAD); put("G11","EXIT SURVEY RESULT CONSOLIDATION",XL_HEAD); put("K11","CALCULATION",XL_HEAD);
+      ["QUALITY","Number of Correct Answers","Total Number of Respondents","Percentage of Correct Answers",null,"Number of Correct Answers","Total Number of Respondents","Percentage of Correct Answers",null,"CHANGE"]
+        .forEach((h,j)=>{if(h)put(String.fromCharCode(66+j)+"13",h,XL_HEAD);});
+      const line=(n,label,ec,er,xc,xr,f)=>{const e=ratio(ec,er),x=ratio(xc,xr);put("B"+n,label,f);put("C"+n,N(ec));put("D"+n,N(er));put("E"+n,e);put("G"+n,N(xc));put("H"+n,N(xr));put("I"+n,x);put("K"+n,e!=null&&x!=null?x-e:null);
+        ["E","I","K"].forEach(c=>ws.getCell(c+n).numFmt="0.0%");};
+      line(14,"TOTALS (to report back on the conso sheet)",r.entryCorrect,r.entryResp,r.exitCorrect,r.exitResp,XL_HEAD);
+      TPL_GROUPS.forEach((g,gi)=>put("B"+(16+gi*6),g,XL_HEAD));
+      SKILL_QS.forEach((dq,k)=>{const q=qs[k]||{};line(QROW[k],q.question||dq,q.entryCorrect,q.entryResp,q.exitCorrect,q.exitResp);});
+      if(!qs.length) put("B34","Results per question are not recorded in WeCheck. Add them to the record, or fill them in here.",{...XL_FONT,italic:true});
+    });
+    return [await xlBlob(wb),`DAP ER 4.3 Satisfaction and Skills ${qShort(q)}.xlsx`];
+  },
+};
+
+function buildReport(x){
+  if(!window.docx) throw new Error("the Word library (lib/docx.min.js) did not load");
+  const {Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,AlignmentType,ShadingType,BorderStyle,LevelFormat,Footer,ExternalHyperlink}=window.docx;
+  const BLUE="0070C0",PURPLE="A02B93",GREEN="3A7C22",FILL="D1D1D1";
+  const T=(text,o={})=>new TextRun(Object.assign({text:String(text)},o));
+  const P=(children,o={})=>new Paragraph(Object.assign({children:Array.isArray(children)?children:[children],spacing:{after:120}},o));
+  const todo=text=>T(text,{shading:{type:ShadingType.CLEAR,fill:"FFFF00",color:"auto"}});   // yellow marker; w:highlight via docx-js emits a non-schema highlightCs
+  const sec=t=>P(T(t,{bold:true,color:BLUE}),{numbering:{reference:"sec",level:0},spacing:{before:240,after:120},keepNext:true});
+  const sub=(t,inst)=>P(T(t,{bold:true,color:PURPLE}),{numbering:{reference:"sub",level:0,instance:inst},spacing:{before:200,after:100},keepNext:true});
+  const bullet=(children,lvl=0)=>body.push(P(children,{numbering:{reference:"bul",level:lvl},spacing:{after:80}}));
+  const div=`[${DIVISION}]`;
+  const qn=x.q.slice(-1);
+  const period=r=>r.start?niceRange(r.start,r.end||r.expEnd):niceDate(r.end||r.expEnd);
+  const body=[];
+
+  body.push(P(todo(`Draft generated from WeCheck on ${niceDate(todayISO())}. Complete the sections in yellow and delete this line before submitting.`),{spacing:{after:240}}));
+  body.push(P(T("QUARTERLY REPORT",{bold:true}),{alignment:AlignmentType.CENTER,spacing:{after:0}}));
+  body.push(P(T("Regional and National Development Sector",{bold:true}),{alignment:AlignmentType.CENTER,spacing:{after:360}}));
+  body.push(P(T("[Department of Development Cooperation]",{bold:true}),{spacing:{after:0}}));
+  body.push(P(T(div,{bold:true}),{spacing:{after:240}}));
+  body.push(P([T("Period: ",{bold:true}),T(qLabel(x.q),{bold:true,underline:{}})],{spacing:{after:240}}));
+  body.push(P(T("Brief Highlights",{bold:true})));
+
+  body.push(sec("Progress towards mandate implementation"));
+  body.push(sub("Project milestones/sustainability",1));
+  body.push(P([T(div+" ",{bold:true}),T(`(${x.nCompleted} project${x.nCompleted===1?"":"s"} completed and ${x.nMs} milestone${x.nMs===1?"":"s"} achieved across ${x.nProjects} project${x.nProjects===1?"":"s"})`,{bold:true})]));
+  const projectBullets=list=>list.forEach(({r,ms,completed})=>{
+    const head=`${r.title} (${ms.length} milestone${ms.length===1?"":"s"} achieved${completed?", project completed "+niceDate(r.end):""})`;
+    bullet([T(head,{bold:true,underline:{}}),T(":")]);
+    if(ms.length) ms.forEach(m=>bullet([T(m.name+", "+niceDate(m.date)+". ",{bold:true}),T(m.desc||"",{italics:!m.desc}),...(m.desc?[]:[todo("Add a description of this milestone.")])],1));
+    else bullet([todo("No milestone recorded this quarter. Add the final deliverables.")],1);
+  });
+  const comp=x.rows.filter(y=>y.completed), ong=x.rows.filter(y=>!y.completed);
+  body.push(P(T(`Completed Projects (${x.msCompleted} completed milestone${x.msCompleted===1?"":"s"}):`,{bold:true,color:GREEN}),{spacing:{before:120,after:80}}));
+  if(comp.length) projectBullets(comp); else bullet([T("None this quarter.",{italics:true})]);
+  body.push(P(T(`Ongoing Projects (${x.msOngoing} completed milestone${x.msOngoing===1?"":"s"}):`,{bold:true,color:GREEN}),{spacing:{before:160,after:80}}));
+  if(ong.length) projectBullets(ong); else bullet([T("No milestones recorded this quarter.",{italics:true})]);
+
+  body.push(sub("Highlights on IP trainings (WIPO Academy)",1));
+  body.push(P([T("N/A "),todo("Change only if the WIPO Academy ran a training with DAP this quarter. WeCheck does not record Academy trainings.")]));
+
+  body.push(sub("High-level meetings / Conferences / Committees",1));
+  body.push(P([T(div+" ",{bold:true}),T(`(${x.events.length} event${x.events.length===1?"":"s"} recorded in WeCheck):`,{bold:true})]));
+  x.events.forEach(r=>{const who=benefText(r,"TOTAL",{qual:true,people:true}),c=(r.countries||[]).length;
+    const where=c?`${c} ${c===1?"country":"countries"}`:(r.otherCountries||"");
+    const e=r.end||r.expEnd||r.start, dated=!!e&&r.title.includes(MONTHS[+e.slice(5,7)-1]+" "+e.slice(0,4));   // title already gives the date
+    const line=who&&where?`: ${who} from ${where}.`:who?`: ${who}.`:where?`: participants from ${where}.`:".";
+    const ach=(r.milestones||[]).find(m=>m.st==="ACHIEVED"&&m.desc);
+    bullet([T(dated?r.title:`${r.title} (${period(r)})`,{bold:true,underline:{}}),T(line),...(who?[]:[T(" "),todo("Add the number of participants.")]),...(ach?[T(" Key outcomes: ",{italics:true}),T(ach.desc)]:[])]);});
+  body.push(P(todo("Add any meetings, conferences or committees not recorded in WeCheck.")));
+
+  body.push(sub("High-level mission by DG, DDG, Senior Director",1));
+  body.push(P([T(div+" ",{bold:true}),todo("(Insert number of missions): name, place, dates, counterparts met and key outcomes. WeCheck does not record missions.")]));
+  body.push(sub("New cooperation requests",1));
+  body.push(P([T(div+" ",{bold:true}),todo("(Insert number of new requests): requesting country, authority and subject. WeCheck does not record requests.")]));
+  body.push(sub("Beneficiary Impact Stories/Communications related Deliverables",1));
+  body.push(P(T(div,{bold:true})));
+  x.stories.forEach(({r})=>bullet([T(r.title,{bold:true}),T(": "+r.sustainability)]));
+  body.push(P(todo("Add impact stories with their IP Advantage links.")));
+
+  body.push(sec("Annexes"));
+  body.push(sub("Table with summary of quarter's activities",2));
+  body.push(P(T(div,{bold:true}),{keepNext:true}));
+  const W=[600,2900,2226,3300], TW=W.reduce((a,b)=>a+b,0);
+  const border={style:BorderStyle.SINGLE,size:4,color:"808080"}, borders={top:border,bottom:border,left:border,right:border};
+  const C=(paras,w,head)=>new TableCell({width:{size:w,type:WidthType.DXA},borders,margins:{top:60,bottom:60,left:100,right:100},
+    shading:head?{fill:FILL,type:ShadingType.CLEAR,color:"auto"}:undefined,children:paras});
+  const cp=(runs)=>new Paragraph({children:Array.isArray(runs)?runs:[runs],spacing:{after:60}});
+  const hdr=["No.","Project",`Number of milestones achieved, or projects completed during Q${qn}`,"Describe the milestone achieved or final deliverables of the completed project (50 -100 words)"];
+  const trs=[new TableRow({tableHeader:true,children:hdr.map((h,i)=>C([cp(T(h,{bold:true,size:20}))],W[i],true))})];
+  x.rows.forEach((y,i)=>{
+    const c3=[cp(T(`${y.ms.length} milestone${y.ms.length===1?"":"s"} achieved${y.completed?"; project completed":""}`,{bold:true,size:20}))].concat(y.ms.map(m=>cp(T(`${m.name} (${niceDate(m.date)})`,{size:20}))));
+    const c4=y.ms.length?y.ms.map(m=>cp(m.desc?T(m.desc,{size:20}):todo("Add a 50 to 100 word description."))):[cp(todo("Describe the final deliverables of the completed project."))];
+    trs.push(new TableRow({children:[C([cp(T(String(i+1),{size:20}))],W[0]),C([cp(T(y.r.inWorkplan&&y.r.workplanTitle?y.r.workplanTitle:y.r.title,{size:20}))],W[1]),C(c3,W[2]),C(c4,W[3])]}));
+  });
+  if(!x.rows.length) trs.push(new TableRow({children:[C([cp(T("1",{size:20}))],W[0]),C([cp(todo("No milestones recorded for this quarter."))],W[1]),C([cp(T(""))],W[2]),C([cp(T(""))],W[3])]}));
+  body.push(new Table({width:{size:TW,type:WidthType.DXA},columnWidths:W,rows:trs}));
+
+  body.push(sub("Pictures",2));
+  body.push(P(T(div,{bold:true})));
+  x.photos.forEach(({d,r})=>bullet([new ExternalHyperlink({link:d.url,children:[T(d.name||d.url,{color:"0563C1",underline:{}})]}),T(" ("+r.title+")")]));
+  body.push(P(todo("Insert pictures with captions: event, place, date and the people shown.")));
+  body.push(P(T("[End]",{bold:true}),{alignment:AlignmentType.CENTER,spacing:{before:360}}));
+
+  const doc=new Document({
+    creator:"WeCheck", title:`${DIVISION} quarterly report ${qShort(x.q)}`,
+    styles:{default:{document:{run:{font:"Arial",size:22}}}},
+    numbering:{config:[
+      {reference:"sec",levels:[{level:0,format:LevelFormat.DECIMAL,text:"%1.",alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:360,hanging:360}}}}]},
+      {reference:"sub",levels:[{level:0,format:LevelFormat.LOWER_ROMAN,text:"%1.",alignment:AlignmentType.RIGHT,style:{paragraph:{indent:{left:900,hanging:300}}}}]},
+      {reference:"bul",levels:[
+        {level:0,format:LevelFormat.BULLET,text:"•",alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:1080,hanging:360}}}},
+        {level:1,format:LevelFormat.BULLET,text:"◦",alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:1440,hanging:360}}}}]}]},
+    sections:[{
+      properties:{page:{size:{width:11906,height:16838},margin:{top:1440,right:1440,bottom:1440,left:1440}}},
+      footers:{default:new Footer({children:[new Paragraph({alignment:AlignmentType.CENTER,children:[T("WIPO FOR OFFICIAL USE ONLY",{size:16})]})]})},
+      children:body}]});
+  return Packer.toBlob(doc);
+}
+
+/* ================================================================ NAV */
+const VIEWS={form:renderForm,dash:renderDash,db:renderDB};
+function go(v){
+  VIEW=v; if(v==="dash"||v==="db") lstore.set("metrack.view",v); Object.keys(VIEWS).forEach(k=>$("#v-"+k).classList.toggle("hidden",k!==v));
+  document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-current",String(b.dataset.v===v)));
+  VIEWS[v](); window.scrollTo(0,0);
+}
+$("#nav").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.v==="form"&&editing){editing=null;draft=null;}
+  go(b.dataset.v);};
+
+function applyTheme(){const t=(store.get("metrack.theme"))||"";if(t)document.documentElement.setAttribute("data-theme",t);else document.documentElement.removeAttribute("data-theme");syncTheme();}
+function isDark(){const a=document.documentElement.getAttribute("data-theme");return a?a==="dark":window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;}
+function syncTheme(){$("#theme").textContent=isDark()?"Light":"Dark";}
+try{window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",syncTheme);}catch(e){}
+$("#theme").onclick=()=>{const t=isDark()?"light":"dark";document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("metrack.theme",JSON.stringify(t));}catch(e){}syncTheme();};
+store.get=(k=>function(key){if(key==="metrack.theme"){try{return JSON.parse(localStorage.getItem(key));}catch(e){return null;}}return k(key);})(store.get);
+
+boot();
+</script>
+</body>
+</html>
